@@ -1,9 +1,11 @@
 import { useState } from "react";
-import "./CreateTest.scss"
+import "./CreateTest.scss";
+import PreviewTest from "../PreviewTest";
 
 function CreateTest(){
 
   const [questionArray, setQuestionArray] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
   //Thêm số lượng câu hỏi
   const handleChangeNumberQuestion = (e) =>{
     const val = parseInt(e.target.value);
@@ -23,12 +25,12 @@ function CreateTest(){
   }
   //Tạo nội dung câu hỏi
   const handleChangeQuestionContent = (qIndex, content)=>{
-    if(content !== ""){
+    //if(content !== ""){
       const newQuestions = [...questionArray];
       newQuestions[qIndex].content = content;
       console.log(newQuestions[qIndex].content);
       setQuestionArray(newQuestions);
-    }
+    //}
   }
   //Thay đổi loại câu hỏi
   const handleChangeTypeQuestion = (qIndex, type) => {
@@ -134,7 +136,7 @@ function CreateTest(){
                       <div className="test__question" key={qIndex}>
                         <h5 className="test__stt">Câu {qIndex + 1}</h5>
                         <textarea 
-                        name="" id="" placeholder="Nhập câu hỏi"
+                        name={`question-${qIndex}`} id="" placeholder="Nhập câu hỏi"
                         value={questionArray[qIndex].content}
                         onChange={(e)=>handleChangeQuestionContent(qIndex, e.target.value)}>
                         </textarea>
@@ -156,6 +158,7 @@ function CreateTest(){
                                 {q.type === 1 ? (
                                   <div className="answer__box">
                                     <input type="radio" 
+                                    name={`question-${qIndex}`}
                                     onChange={() => handleCorrectRadio(qIndex, aIndex)}/>
                                     <input 
                                     type="text" 
@@ -185,11 +188,18 @@ function CreateTest(){
                     <div className="test__submit">
                       <button>Xuất bản</button>
                       <button>Lưu</button>
-                      <button onChange={handlePreview}>Xem trước</button>
+                      <button type="button" onClick={() => setShowPreview(true)}>
+                        Xem trước
+                        </button>
                     </div>
                   </form>
                 </div>
               </div>
+              {showPreview && (
+                <PreviewTest
+                data = {questionArray}
+                onClose={()=> setShowPreview(false)}></PreviewTest>
+              )}
             </div>
         </>
     );
