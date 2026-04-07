@@ -1,0 +1,245 @@
+/* Container chính bọc toàn bộ trang */
+.detail-container {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+/* ============ CỘT SIDEBAR ============ */
+.detail-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 15px;
+}
+
+.detail-sidebar-title {
+  font-size: 18px;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.detail-sidebar-item {
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+.detail-sidebar-item:hover {
+  background: #f8fafc;
+  color: #1e40af;
+}
+
+/* ============ CỘT NỘI DUNG ============ */
+.detail-content {
+  flex: 1;
+  min-width: 0; /* Fix lỗi co rút giao diện */
+}
+
+/* THÔNG TIN TỔNG QUAN KHÓA HỌC */
+.course-info-card {
+  background-color: #e0f2fe;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.course-info-title {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+  color: #1e3a8a;
+}
+
+.course-info-teacher {
+  margin: 0 0 20px 0;
+  color: #334155;
+  font-size: 15px;
+}
+
+.course-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.progress-track-large {
+  width: 300px;
+  height: 10px;
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #3b82f6;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progress-text-large {
+  font-size: 14px;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* THANH CÔNG CỤ (TÌM KIẾM & NÚT BẤM) */
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  width: 350px;
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  width: 100%;
+  font-size: 14px;
+  background: transparent;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+}
+
+/* ============ DANH SÁCH CHƯƠNG & BÀI HỌC ============ */
+.empty-chapters {
+  text-align: center;
+  padding: 40px;
+  background: white;
+  border-radius: 15px;
+  color: #64748b;
+}
+
+.chapter-item {
+  background: white;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+}
+
+.chapter-header {
+  padding: 18px 25px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: white;
+  transition: background 0.2s;
+}
+
+.chapter-header:hover, .chapter-header.active {
+  background: #f8fafc;
+}
+
+.chapter-header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.chapter-title {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.btn-add-lesson {
+  padding: 5px 12px;
+  font-size: 12px;
+  background: #e0e7ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-add-lesson:hover {
+  background: #c7d2fe;
+}
+
+/* CHI TIẾT BÀI HỌC BÊN TRONG */
+.lesson-list {
+  border-top: 1px solid #f1f5f9;
+}
+
+.lesson-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 25px;
+  border-bottom: 1px solid #f8fafc;
+}
+
+/* Bỏ dòng kẻ dưới của bài học cuối cùng trong chương */
+.lesson-item:last-child {
+  border-bottom: none;
+}
+
+.lesson-info {
+  flex: 1;
+  text-align: left;
+}
+
+.lesson-title {
+  font-weight: 600;
+  color: #334155;
+  font-size: 15px;
+  margin: 0;
+}
+
+.lesson-progress-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.progress-track-small {
+  width: 150px;
+  height: 6px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.btn-continue {
+  padding: 8px 25px;
+  font-size: 13px;
+  border-radius: 6px;
+}

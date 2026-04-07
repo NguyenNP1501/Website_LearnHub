@@ -1,9 +1,7 @@
-$font: Arial;
+$font: Arial, sans-serif;
 $colorBlue: #1460EC;
 
 .header {
-    // margin-left: auto;
-    // margin-right: auto;
     background-color: white;
     display: flex;
     align-items: center;
@@ -11,31 +9,34 @@ $colorBlue: #1460EC;
     justify-content: space-between;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     position: fixed;
-    position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     z-index: 1000;
-    &__logo{
+    box-sizing: border-box; // QUAN TRỌNG: Ngăn chặn lỗi thanh cuộn ngang
+
+    &__logo {
         display: flex;
         justify-content: space-around;
         align-items: center;
         text-decoration: none;
-        &--image{
+
+        &--image {
             width: 100px;
             height: auto;
         }
-        &--name{
+
+        &--name {
             font-size: 35px;
             font-weight: 600;
             font-family: $font;
-            margin: 0;
+            margin: 0 0 0 10px; // Thêm 10px cách lề trái để chữ không dính sát vào ảnh logo
             color: $colorBlue;
         }
     }
 
     &__tab {
-        ul{
+        ul {
             list-style: none;
             margin: 0;
             padding: 0;
@@ -45,22 +46,30 @@ $colorBlue: #1460EC;
 
         &--item {
             margin-right: 25px;
-            a{
+
+            &:last-child {
+                margin-right: 0; // Xóa margin thừa của tab cuối cùng cho cân đối
+            }
+
+            a {
                 text-decoration: none;
                 font-size: 20px;
                 color: #000;
                 font-weight: 600;
                 font-family: $font;
+                transition: color 0.2s ease;
+
+                /* Thắp sáng màu Xanh khi lướt chuột HOẶC khi đang ở đúng trang đó */
+                &:hover, &.active {
+                    color: $colorBlue;
+                }
             }
         }
     }
 }
 
-.logout__btn{
-    // top: 10px;
-    // right: 10px;
+.logout__btn {
     button {
-        //position: absolute;
         background-color: $colorBlue;
         color: white;
         padding: 10px 15px;
@@ -69,9 +78,12 @@ $colorBlue: #1460EC;
         font-size: 16px;
         font-family: $font;
         font-weight: 600;
-    }
-    button:hover{
-        background-color: white;
-        color: $colorBlue;
+        cursor: pointer; // Hiện biểu tượng bàn tay khi trỏ chuột vào nút
+        transition: all 0.2s ease;
+
+        &:hover {
+            background-color: white;
+            color: $colorBlue;
+        }
     }
 }

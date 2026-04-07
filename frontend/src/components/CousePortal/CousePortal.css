@@ -1,0 +1,133 @@
+/* Container chính bọc toàn bộ trang */
+.portal-container {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+/* ============ CỘT SIDEBAR ============ */
+.portal-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 15px;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+  padding-left: 20px;
+}
+
+.sidebar-item {
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+  background: transparent;
+  transition: all 0.2s;
+}
+
+/* Hiệu ứng khi lướt chuột qua Lớp */
+.sidebar-item:hover {
+  background: #f8fafc;
+  color: #1e40af;
+}
+
+/* Kiểu dáng cho Lớp ĐANG ĐƯỢC CHỌN */
+.sidebar-item.active {
+  background: #e0f2fe;
+  color: #1d4ed8;
+}
+
+/* ============ CỘT NỘI DUNG ============ */
+.portal-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Khu vực Header (Tiêu đề + Nút) */
+.portal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+.portal-title {
+  font-size: 24px;
+  margin: 0;
+  color: #1f2937;
+}
+
+.btn-add-course {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+}
+
+/* ============ CÁC THÀNH PHẦN KHÓA HỌC ============ */
+/* Bổ sung thêm bo tròn góc trên cho ảnh bìa */
+.course-card .thumbnail {
+  border-radius: 10px 10px 0 0; 
+}
+
+.course-title {
+  margin: 15px 0 10px 0;
+  font-size: 16px;
+  color: #1f2937;
+}
+
+.course-progress-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.progress-text {
+  font-size: 12px;
+  font-weight: bold;
+  color: #4b5563;
+}
+
+/* ============ TRẠNG THÁI TRỐNG (EMPTY STATE) ============ */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px;
+  color: #64748b;
+  background: white;
+  border-radius: 15px;
+  border: 1px dashed #cbd5e1;
+}
+
+.empty-icon {
+  width: 80px;
+  opacity: 0.3;
+  margin: 0 auto 15px auto;
+}
+
+.empty-title {
+  margin: 0;
+  font-size: 16px;
+}
+
+.empty-desc {
+  margin: 5px 0 0 0;
+  font-size: 14px;
+}
