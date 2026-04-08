@@ -36,7 +36,7 @@ function Header() {
           </li>
           <li className="header__tab--item">
             <NavLink 
-              to="/practice"
+              to="/create-test"
               className={({ isActive }) => isActive ? "active" : ""}
             >
               Luyện đề
