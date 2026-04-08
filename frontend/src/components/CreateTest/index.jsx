@@ -2,56 +2,94 @@ import { useState } from "react";
 import "./CreateTest.scss";
 import PreviewTest from "../PreviewTest";
 
-function CreateTest(){
+function CreateTest() {
 
   const [questionArray, setQuestionArray] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
-  //Thêm số lượng câu hỏi
-  const handleChangeNumberQuestion = (e) =>{
+
+  const [testInfo, setTestInfo] = useState({
+    title: "",
+    subject: "",
+    class: "",
+    lesson: "",
+    lessonid: "",
+    time: ""
+  });
+
+  const handleChangeInfo = (e) => {
+    const { name, value } = e.target;
+    setTestInfo({
+      ...testInfo,
+      [name]: value
+    });
+  };
+
+  //Submit ra JSON
+  const handleSubmitTest = (e) => {
+    e.preventDefault();
+
+    const dataSubmit = {
+      ...testInfo,
+      questions: questionArray
+    };
+
+    console.log("DATA SUBMIT:", dataSubmit);
+
+  };
+
+  //Tạo số câu hỏi
+  const handleChangeNumberQuestion = (e) => {
     const val = parseInt(e.target.value);
-    if(val > 0){
-      const newQuestions = Array.from({length: val}, ()=>(
-        {
-          content: "",
-          type: 1,
-          answer: [
-            {content:"", isCorect: false},
-            {content:"", isCorect: false}
-          ]
+    if (val > 0) {
+      const newQuestions = Array.from({ length: val }, () => ({
+        content: "",
+        image: "",
+        type: 1,
+        answer: [
+          { content: "", isCorect: false },
+          { content: "", isCorect: false }
+        ]
       }));
-      console.log(val);
       setQuestionArray(newQuestions);
     }
-  }
-  //Tạo nội dung câu hỏi
-  const handleChangeQuestionContent = (qIndex, content)=>{
-    //if(content !== ""){
-      const newQuestions = [...questionArray];
-      newQuestions[qIndex].content = content;
-      console.log(newQuestions[qIndex].content);
-      setQuestionArray(newQuestions);
-    //}
-  }
-  //Thay đổi loại câu hỏi
+  };
+
+  //Thêm nội dung cho câu hỏi
+  const handleChangeQuestionContent = (qIndex, content) => {
+    const newQuestions = [...questionArray];
+    newQuestions[qIndex].content = content;
+    setQuestionArray(newQuestions);
+  };
+
+  //Đường dẫn ảnh cho câu hỏi
+  const handleChangeQuestionImage = (qIndex, image) => {
+    const newQuestions = [...questionArray];
+    newQuestions[qIndex].image = image;
+    setQuestionArray(newQuestions);
+  };
+
+  //Thiết lập loại câu hỏi
   const handleChangeTypeQuestion = (qIndex, type) => {
     const newQuestions = [...questionArray];
     newQuestions[qIndex].type = parseInt(type);
     setQuestionArray(newQuestions);
-  }
-  //Tạo số lượng đáp án của một câu hỏi
-  const handleChangeNumberAnswer = (qIndex, value)=>{
+  };
+
+  //Thêm số đáp án cho câu hỏi
+  const handleChangeNumberAnswer = (qIndex, value) => {
     const newQuestions = [...questionArray];
-    newQuestions[qIndex].answer = Array.from({length: parseInt(value)}, ()=>(
-      {
+    newQuestions[qIndex].answer = Array.from(
+      { length: parseInt(value) },
+      () => ({
         content: "",
         isCorect: false
-      }
-    ));
-    console.log(newQuestions[qIndex].answer.length);
+      })
+    );
     setQuestionArray(newQuestions);
-  }
-  //Tạo đáp án đúng cho loại radio
-  const handleCorrectRadio = (qIndex, aIndex)=>{
+  };
+
+  //Tạo đáp án đúng cho loại 1 đáp 
+  const handleCorrectRadio = (qIndex, aIndex) => {
     const newQuestions = [...questionArray];
     newQuestions[qIndex].answer.forEach((ans, i) => {
       if(i === aIndex){
@@ -61,148 +99,195 @@ function CreateTest(){
         ans.isCorect = false;
       }
     });
-    console.log(newQuestions[qIndex].answer[aIndex]);
     setQuestionArray(newQuestions);
-    console.log(newQuestions[qIndex].answer[aIndex]);
-  }
-  //Tạo đáp án đúng cho loại check box
-  const handleCorrectCheckbox = (qIndex, aIndex)=>{
+  };
+
+  //Tạo đáp án đúng cho câu hỏi nhiều đáp án
+  const handleCorrectCheckbox = (qIndex, aIndex) => {
     const newQuestions = [...questionArray];
-    newQuestions[qIndex].answer[aIndex].isCorect = !newQuestions[qIndex].answer[aIndex].isCorect;
-    console.log(newQuestions[qIndex].answer[aIndex]);
+    newQuestions[qIndex].answer[aIndex].isCorect =
+      !newQuestions[qIndex].answer[aIndex].isCorect;
     setQuestionArray(newQuestions);
-    console.log(newQuestions[qIndex].answer[aIndex]);
-  }
-  //Thêm nội dung cho câu trả lời
-  const handleChangeAnswerContent = (qIndex, aIndex, value)=>{
+  };
+
+  //Thêm nội dung cho đáp án
+  const handleChangeAnswerContent = (qIndex, aIndex, value) => {
     const newQuestions = [...questionArray];
     newQuestions[qIndex].answer[aIndex].content = value;
-    console.log(newQuestions[qIndex].answer[aIndex].content);
     setQuestionArray(newQuestions);
-  }
-  //Thêm câu trả lời cho loại textbox
-  const handleCorrectAnswer = (qIndex, value)=>{
+  };
+
+  //Thêm đáp án đúng cho câu hỏi điền đáp án
+  const handleCorrectAnswer = (qIndex, value) => {
     const newQuestions = [...questionArray];
     newQuestions[qIndex].answer[0].content = value;
     newQuestions[qIndex].answer[0].isCorect = true;
-    console.log(newQuestions[qIndex].answer[0].content);
-    console.log(newQuestions[qIndex].answer[0].isCorect);
-    console.log(newQuestions[qIndex].answer[0]);
     setQuestionArray(newQuestions);
-  }
-    return(
-        <>
-            {/* Các thông tin cần thiết của đề */}
-            <div className="section-one">
-              <div className="container infomation-test">
-                <form className="request row" action={""} method="POST">
-                  <div className="request__title col-xl-4">
-                    <label htmlFor="title">Tiêu đề:</label>
-                    <input  type="text" name="title"></input>
-                  </div>
-                  <div className="request__subject col-xl-4">
-                    <label htmlFor="subject">Môn học:</label>
-                    <input  type="text" name="subject"></input>
-                  </div>
-                  <div className="request__class col-xl-4">
-                    <label htmlFor="class">Lớp:</label>
-                    <input  type="number" name="class"></input>
-                  </div>
-                  <div className="request__lesson col-xl-4">
-                    <label htmlFor="lesson">Tên bài:</label>
-                    <input type="text" name="lesson"></input>
-                  </div>
-                  <div className="request__lessonid col-xl-4">
-                    <label htmlFor="lessonid">Mã bài giảng:</label>
-                    <input  type="text" name="lessonid"></input>
-                  </div>
-                  <div className="request__time col-xl-4">
-                    <label htmlFor="time">Thời gian</label>
-                    <input  type="number" name="time"></input>
-                  </div>
-                </form>
-            </div>
-            </div>
-            {/* Tạo câu hỏi */}
-            <div className="section-two">
-              <div className="container">
-                <label htmlFor="">Số lượng câu hỏi cần tạo: </label>
-                <input type="number" onChange={handleChangeNumberQuestion}/>
+  };
+
+
+  return (
+    <>
+      <form onSubmit={handleSubmitTest}>
+
+        <div className="section-one">
+          <div className="container infomation-test">
+            <div className="request row">
+
+              <div className="col-xl-4">
+                <label>Tiêu đề:</label>
+                <input name="title" onChange={handleChangeInfo} />
               </div>
-              <div className="container">
-                <div className="test">
-                  <form action="">
-                    {questionArray.map((q, qIndex)=>(
-                      <div className="test__question" key={qIndex}>
-                        <h5 className="test__stt">Câu {qIndex + 1}</h5>
-                        <textarea 
-                        name={`question-${qIndex}`} id="" placeholder="Nhập câu hỏi"
-                        value={questionArray[qIndex].content}
-                        onChange={(e)=>handleChangeQuestionContent(qIndex, e.target.value)}>
-                        </textarea>
-                        <select name="" id="" onChange={(e) => handleChangeTypeQuestion(qIndex, e.target.value)}>
-                          <option value="1">Một đáp án</option>
-                          <option value="2">Nhiều đáp án</option>
-                          <option value="3">Điền đáp án</option>
-                        </select>
-                        {(q.type === 1 || q.type === 2) && (
+
+              <div className="col-xl-4">
+                <label>Môn học:</label>
+                <input name="subject" onChange={handleChangeInfo} />
+              </div>
+
+              <div className="col-xl-4">
+                <label>Lớp:</label>
+                <input name="class" type="number" onChange={handleChangeInfo} />
+              </div>
+
+              <div className="col-xl-4">
+                <label>Tên bài:</label>
+                <input name="lesson" onChange={handleChangeInfo} />
+              </div>
+
+              <div className="col-xl-4">
+                <label>Mã bài giảng:</label>
+                <input name="lessonid" onChange={handleChangeInfo} />
+              </div>
+
+              <div className="col-xl-4">
+                <label>Thời gian:</label>
+                <input name="time" type="number" onChange={handleChangeInfo} />
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+        <div className="section-two">
+          <div className="container">
+            <label>Số lượng câu hỏi:</label>
+            <input type="number" onChange={handleChangeNumberQuestion} />
+          </div>
+
+          <div className="container">
+            {questionArray.map((q, qIndex) => (
+              <div key={qIndex} className="test__question">
+
+                <h5>Câu {qIndex + 1}</h5>
+
+                <textarea
+                  value={q.content}
+                  onChange={(e) =>
+                    handleChangeQuestionContent(qIndex, e.target.value)
+                  }
+                />
+
+                <input
+                  placeholder="Image URL"
+                  onChange={(e) =>
+                    handleChangeQuestionImage(qIndex, e.target.value)
+                  }
+                />
+
+                <select onChange={(e) =>
+                  handleChangeTypeQuestion(qIndex, e.target.value)
+                }>
+                  <option value="1">1 đáp án</option>
+                  <option value="2">Nhiều đáp án</option>
+                  <option value="3">Điền</option>
+                </select>
+
+                {(q.type === 1 || q.type === 2) && (
+                  <>
+                    <input
+                      type="number"
+                      placeholder="Số đáp án"
+                      onChange={(e) =>
+                        handleChangeNumberAnswer(qIndex, e.target.value)
+                      }
+                    />
+
+                    {q.answer.map((a, aIndex) => (
+                      <div key={aIndex}>
+                        {q.type === 1 ? (
                           <>
-                            <label htmlFor="">Nhập số lượng đáp án:</label>
                             <input
-                              className="answer"
-                              type="number"
-                              onChange={(e) => handleChangeNumberAnswer(qIndex, e.target.value)}
-                            ></input>
-                            {q.answer.map((a, aIndex)=>(
-                              <div key={aIndex}>
-                                {q.type === 1 ? (
-                                  <div className="answer__box">
-                                    <input type="radio" 
-                                    name={`question-${qIndex}`}
-                                    onChange={() => handleCorrectRadio(qIndex, aIndex)}/>
-                                    <input 
-                                    type="text" 
-                                    onChange={(e) => handleChangeAnswerContent(qIndex, aIndex, e.target.value)}/>
-                                  </div>
-                                ):(
-                                  <div className="answer__box">
-                                    <input type="checkbox" 
-                                    onChange={() => handleCorrectCheckbox(qIndex, aIndex)}/>
-                                    <input type="text" onChange={(e) => handleChangeAnswerContent(qIndex, aIndex, e.target.value)} />
-                                  </div>
-                                )}
-                              </div>
-                            ))}
+                              type="radio"
+                              name={`q-${qIndex}`}
+                              onChange={() =>
+                                handleCorrectRadio(qIndex, aIndex)
+                              }
+                            />
+                            <input
+                              onChange={(e) =>
+                                handleChangeAnswerContent(
+                                  qIndex,
+                                  aIndex,
+                                  e.target.value
+                                )
+                              }
+                            />
                           </>
-                        )}
-                        {q.type === 3 && (
-                          <div>
-                            <label>Nhập đáp án: </label>
-                            <input type="text" 
-                            value={q.answer[0]?.content || ""}
-                            onChange={(e) => handleCorrectAnswer(qIndex, e.target.value)}/>
-                          </div>
+                        ) : (
+                          <>
+                            <input
+                              type="checkbox"
+                              onChange={() =>
+                                handleCorrectCheckbox(qIndex, aIndex)
+                              }
+                            />
+                            <input
+                              onChange={(e) =>
+                                handleChangeAnswerContent(
+                                  qIndex,
+                                  aIndex,
+                                  e.target.value
+                                )
+                              }
+                            />
+                          </>
                         )}
                       </div>
                     ))}
-                    <div className="test__submit">
-                      <button>Xuất bản</button>
-                      <button>Lưu</button>
-                      <button type="button" onClick={() => setShowPreview(true)}>
-                        Xem trước
-                        </button>
-                    </div>
-                  </form>
-                </div>
+                  </>
+                )}
+
+                {q.type === 3 && (
+                  <input
+                    value={q.answer[0]?.content || ""}
+                    onChange={(e) =>
+                      handleCorrectAnswer(qIndex, e.target.value)
+                    }
+                  />
+                )}
               </div>
-              {showPreview && (
-                <PreviewTest
-                data = {questionArray}
-                onClose={()=> setShowPreview(false)}></PreviewTest>
-              )}
-            </div>
-        </>
-    );
+            ))}
+          </div>
+
+          <div className="test__submit">
+            <button type="submit">Xuất bản</button>
+            <button type="button">Lưu</button>
+            <button type="button" onClick={() => setShowPreview(true)}>
+              Xem trước
+            </button>
+          </div>
+        </div>
+      </form>
+
+      {/* PREVIEW */}
+      {showPreview && (
+        <PreviewTest
+          data={questionArray}
+          onClose={() => setShowPreview(false)}
+        />
+      )}
+    </>
+  );
 }
 
 export default CreateTest;
