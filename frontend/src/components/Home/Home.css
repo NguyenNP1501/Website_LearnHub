@@ -83,19 +83,30 @@
 /* ============ CỘT PHẢI: TÌM KIẾM & KHÓA HỌC ============ */
 .search-section {
   margin-bottom: 40px;
+  width: 100%;
 }
 
 .search-input {
   width: 100%;
-  padding: 12px 15px;
-  border: 1px solid #93c5fd;
-  border-radius: 8px;
+  padding: 16px 20px;
+  border: 1px solid #dbeafe;
+  border-radius: 28px;
   outline: none;
-  font-size: 14px;
+  font-size: 16px;
+  color: #0f172a;
+  background: #f8fbff;
+  box-shadow: 0 20px 40px rgba(37, 99, 235, 0.08);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.search-input::placeholder {
+  color: #94a3b8;
 }
 
 .search-input:focus {
-  border-color: #2563eb;
+  border-color: #93c5fd;
+  background: #ffffff;
+  box-shadow: 0 24px 55px rgba(37, 99, 235, 0.12);
 }
 
 /* Lưới khóa học nổi bật (2x2) */
