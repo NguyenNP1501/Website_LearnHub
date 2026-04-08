@@ -1,100 +1,90 @@
-$primary: #1460ec;
+$primary: #1460EC;
 $white: #ffffff;
 $gray: #f5f7fb;
 $text: #333;
 
+* {
+  box-sizing: border-box;
+}
+
 body {
-  background-color: $gray;
-  font-family: "Segoe UI", sans-serif;
+  background: $gray;
 }
 
-/* ===== SECTION 1 ===== */
-.section-one {
-  margin-bottom: 20px;
-
-  .infomation-test {
-    background: $white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-
-    label {
-      font-weight: 600;
-      color: $text;
-      display: block;
-      margin-bottom: 5px;
-    }
-
-    input {
-      width: 100%;
-      padding: 8px 10px;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-      outline: none;
-
-      &:focus {
-        border-color: $primary;
-        box-shadow: 0 0 5px rgba(20, 96, 236, 0.2);
-      }
-    }
-  }
-}
-
-/* ===== SECTION 2 ===== */
+/* ===== SECTION ===== */
+.section-one,
 .section-two {
-  .container {
-    margin-bottom: 20px;
-  }
+  margin: 20px 0;
+}
+
+/* ===== CONTAINER ===== */
+.container {
+  background: $white;
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* ===== TITLE FORM ===== */
+.request {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
 
   label {
+    font-size: 14px;
     font-weight: 600;
-    margin-right: 10px;
+    color: $text;
+    margin-bottom: 5px;
   }
 
-  input[type="number"] {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: 0.2s;
 
     &:focus {
       border-color: $primary;
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(20, 96, 236, 0.2);
     }
+  }
+
+  .col-xl-4 {
+    flex: 1 1 calc(33.33% - 10px);
+    display: flex;
+    flex-direction: column;
   }
 }
 
-/* ===== TEST ===== */
-.test {
-  background: $white;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+/* ===== QUESTION ===== */
+.test__question {
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  transition: 0.2s;
 
-  &__question {
-    border: 1px solid #eee;
-    padding: 15px;
-    border-radius: 10px;
-    margin-bottom: 20px;
-    transition: 0.2s;
-
-    &:hover {
-      border-color: $primary;
-    }
+  &:hover {
+    border-color: $primary;
+    box-shadow: 0 4px 10px rgba(20, 96, 236, 0.1);
   }
 
-  &__stt {
+  h5 {
     color: $primary;
-    font-weight: 700;
     margin-bottom: 10px;
   }
 
   textarea {
     width: 100%;
     min-height: 80px;
+    padding: 10px;
     border-radius: 8px;
     border: 1px solid #ddd;
-    padding: 10px;
     margin-bottom: 10px;
-    resize: none;
 
     &:focus {
       border-color: $primary;
@@ -102,71 +92,39 @@ body {
     }
   }
 
-  select {
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-    margin-bottom: 10px;
+  select,
+  input[type="text"],
+  input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 
     &:focus {
       border-color: $primary;
+      outline: none;
     }
   }
 }
 
 /* ===== ANSWER ===== */
-.answer {
-  margin: 10px 0;
-}
-
-.answer__box {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+.test__question div {
   margin-bottom: 8px;
-  padding: 8px;
-  border-radius: 8px;
-  transition: 0.2s;
-
-  &:hover {
-    background: rgba(20, 96, 236, 0.05);
-  }
-
-  input[type="text"] {
-    flex: 1;
-    padding: 6px 10px;
-    border-radius: 6px;
-    border: 1px solid #ccc;
-
-    &:focus {
-      border-color: $primary;
-    }
-  }
-
-  input[type="radio"],
-  input[type="checkbox"] {
-    transform: scale(1.2);
-    cursor: pointer;
-  }
 }
 
-/* ===== INPUT TEXT TYPE 3 ===== */
-.test__question input[type="text"] {
-  width: 100%;
-  padding: 8px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-
-  &:focus {
-    border-color: $primary;
-  }
+input[type="radio"],
+input[type="checkbox"] {
+  margin-right: 8px;
+  transform: scale(1.2);
+  cursor: pointer;
 }
 
 /* ===== BUTTON ===== */
 .test__submit {
   display: flex;
-  justify-content: flex-end;
   gap: 10px;
+  justify-content: flex-end;
   margin-top: 20px;
 
   button {
@@ -176,25 +134,62 @@ body {
     font-weight: 600;
     cursor: pointer;
     transition: 0.2s;
+  }
 
-    &:first-child {
+  button[type="submit"] {
+    background: $primary;
+    color: $white;
+
+    &:hover {
+      background: darken($primary, 10%);
+    }
+  }
+
+  button:nth-child(2) {
+    background: #eee;
+
+    &:hover {
+      background: #ddd;
+    }
+  }
+
+  button:nth-child(3) {
+    background: transparent;
+    border: 1px solid $primary;
+    color: $primary;
+
+    &:hover {
       background: $primary;
       color: $white;
     }
+  }
+}
 
-    &:nth-child(2) {
-      background: #ddd;
-    }
+/* ===== INPUT NUMBER (SỐ CÂU HỎI) ===== */
+.section-two > .container:first-child {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 
-    &:nth-child(3) {
-      background: transparent;
-      border: 1px solid $primary;
-      color: $primary;
-    }
+  input {
+    width: 100px;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
 
-    &:hover {
-      opacity: 0.85;
-      transform: translateY(-1px);
+    &:focus {
+      border-color: $primary;
     }
+  }
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  .request .col-xl-4 {
+    flex: 1 1 100%;
+  }
+
+  .test__submit {
+    flex-direction: column;
   }
 }
