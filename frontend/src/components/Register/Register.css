@@ -1,0 +1,178 @@
+/* Nền màu gradient xanh dương bao phủ toàn bộ trang */
+.register-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%); /* Bạn có thể chỉnh lại màu gradient cho hợp tông */
+  background: linear-gradient(to bottom right, #5c8df6, #8e7bf0);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Khung form màu trắng */
+.register-card {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px;
+  padding: 40px 35px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Header */
+.register-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.register-title {
+  margin: 0 0 5px 0;
+  color: #2b5b84; /* Màu xanh đậm chữ tiêu đề */
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.register-subtitle {
+  margin: 0;
+  color: #8fa0b5;
+  font-size: 14px;
+}
+
+/* Layout Form */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+/* Row cho phép 2 ô School và Class nằm ngang */
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+/* Các kiểu Input & Icon */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #64748b;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 10px 10px 10px 38px; /* Dịch text sang phải để nhường chỗ cho icon */
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.input-with-icon input:focus, .no-icon:focus {
+  border-color: #5c8df6;
+}
+
+/* Ô nhập liệu nền xám (giống ô Major, School, Class) */
+.gray-bg input, .gray-input {
+  background-color: #e2e8f0;
+  border: 1px solid #cbd5e1;
+}
+
+.no-icon {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+}
+
+/* Dropdown Role */
+.role-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #e2e8f0; /* Nền xám như trong ảnh */
+  outline: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.checkbox-group label {
+  font-size: 13px;
+  color: #475569;
+}
+
+.blue-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.blue-link:hover {
+  text-decoration: underline;
+}
+
+/* Nút Submit */
+.btn-register {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #5c8df6, #8e7bf0);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(92, 141, 246, 0.3);
+  transition: opacity 0.2s;
+}
+
+.btn-register:hover {
+  opacity: 0.9;
+}
+
+/* Footer (Log in) */
+.register-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 13px;
+  color: #64748b;
+}

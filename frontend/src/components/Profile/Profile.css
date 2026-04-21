@@ -1,0 +1,279 @@
+/* Tổng quan Layout */
+.profile-container {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  color: #333;
+}
+
+/* ================= CỘT TRÁI ================= */
+.profile-container .profile-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-container .profile-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.profile-container .user-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.profile-container .user-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.profile-container .user-name {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile-container .user-school {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+.profile-container .profile-menu {
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-container .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.profile-container .menu-item:hover {
+  background: #f1f5f9;
+}
+
+.profile-container .menu-item.active {
+  background: #e0e7ff;
+}
+
+.profile-container .card-title {
+  margin: 0 0 16px 0;
+  font-size: 16px;
+}
+
+.profile-container .history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-container .history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-container .history-bar {
+  height: 12px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  flex-grow: 1;
+  margin-right: 16px;
+}
+
+.profile-container .history-item:nth-child(1) .history-bar {
+  max-width: 120px;
+}
+
+.profile-container .history-item:nth-child(2) .history-bar {
+  max-width: 80px;
+}
+
+.profile-container .history-item:nth-child(3) .history-bar {
+  max-width: 100px;
+}
+
+.profile-container .history-date {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+}
+
+/* ================= CỘT PHẢI ================= */
+.profile-container .profile-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.profile-container .welcome-banner {
+  background: linear-gradient(90deg, #dbeafe 0%, #e0f2fe 100%);
+  border-left: 6px solid #2563eb;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.profile-container .welcome-banner h2 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+}
+
+.profile-container .welcome-banner p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.profile-container .text-highlight {
+  color: #2563eb;
+}
+
+.profile-container .section-title {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+}
+
+.profile-container .course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.profile-container .active-course-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.profile-container .course-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.profile-container .course-color-block {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+}
+
+.profile-container .course-card-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.profile-container .progress-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.profile-container .progress-bar-bg {
+  flex-grow: 1;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.profile-container .progress-bar-fill {
+  height: 100%;
+  background-color: #2563eb;
+  border-radius: 4px;
+}
+
+.profile-container .progress-text {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.profile-container .btn-continue-learning {
+  width: 100%;
+  padding: 10px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-container .btn-continue-learning:hover {
+  background: #1d4ed8;
+}
+
+.profile-container .achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.profile-container .achievement-card {
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.profile-container .achivement-number {
+  font-size: 28px;
+  font-weight: 900;
+  margin: 12px 0 8px 0;
+}
+
+.profile-container .achievement-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.profile-container .bg-purple {
+  background-color: #f3e8ff;
+  color: #111;
+}
+
+.profile-container .bg-green {
+  background-color: #dcfce7;
+  color: #111;
+}
+
+.profile-container .bg-orange {
+  background-color: #ffedd5;
+  color: #111;
+}

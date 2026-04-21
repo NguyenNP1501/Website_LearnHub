@@ -67,7 +67,6 @@ export default function CourseDetail() {
         <div className="course-info-card">
           <h1 className="course-info-title">{courseInfo.title}</h1>
           
-          {/* SỬA LẠI DÒNG NÀY: Dùng biến {courseInfo.teacher} thay vì gõ cứng tên */}
           <p className="course-info-teacher" style={{ marginBottom: 0 }}>
             Giáo viên giảng dạy: <strong>{courseInfo.teacher || 'Đang cập nhật'}</strong>
           </p>
@@ -125,10 +124,24 @@ export default function CourseDetail() {
                   <div className="lesson-list">
                     {ch.lessons.map((ls, idx) => (
                       <div key={idx} className="lesson-item">
-                        <div className="lesson-info">
-                          <div className="lesson-title" style={{ marginBottom: 0 }}>{ls.title}</div>
-                          {/* ĐÃ XÓA THANH TIẾN ĐỘ NHỎ Ở ĐÂY */}
+                        
+                        {/* === PHẦN ĐÃ SỬA: BỔ SUNG ẢNH BÀI HỌC === */}
+                        <div className="lesson-info" style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                          <img 
+                            src={ls.thumbnail ? `http://localhost:3000${ls.thumbnail}` : 'https://placehold.co/160x90/e2e8f0/64748b?text=Chua+co+anh'} 
+                            alt={ls.title}
+                            className="lesson-thumbnail-img"
+                            onError={(e) => {
+                              e.target.onerror = null; 
+                              e.target.src = "https://placehold.co/160x90/e2e8f0/64748b?text=Loi+Anh";
+                            }}
+                          />
+                          <div className="lesson-title" style={{ marginBottom: 0, fontWeight: '500', fontSize: '15px' }}>
+                            {ls.title}
+                          </div>
                         </div>
+                        {/* ======================================= */}
+
                         <div>
                           <button
                             className="btn-blue btn-continue"

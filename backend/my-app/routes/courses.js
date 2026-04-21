@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const db = require('../config/db'); 
-const upload = require('../middlewares/upload'); // Thêm middleware xử lý file ảnh
+const upload = require('../middlewares/upload');
 
 // ==========================================
 // API 1: LẤY DANH SÁCH KHÓA HỌC THEO LỚP
@@ -12,7 +12,7 @@ router.get('/', async function(req, res) {
     const requestedGrade = req.query.grade || 'Lớp 1';
     const [rows] = await db.query('SELECT * FROM course WHERE grade_class = ?', [requestedGrade]);
 
-    const colors = ['#fde68a', '#fecaca', '#fef08a', '#bbf7d0', '#ddd6fe', '#d9f99d'];
+
 
     // 3. Chế biến lại dữ liệu trước khi gửi về React
     const formattedCourses = rows.map((courseItem, index) => {
@@ -20,9 +20,7 @@ router.get('/', async function(req, res) {
         id: courseItem.course_id,       
         title: courseItem.course_name, 
         subject: courseItem.subject,
-        progress: 0, 
-        color: colors[index % colors.length],
-        img_url: courseItem.img_url // <--- BỔ SUNG DÒNG NÀY ĐỂ LẤY ẢNH TỪ DB
+        img_url: courseItem.img_url
       };
     });
     
@@ -67,8 +65,11 @@ router.get('/:id', async function(req, res) {
       chaptersMap[lesson.chapter].lessons.push({
         id: lesson.lesson_id,
         title: lesson.title,
-        progress: 0
-        // Đã xóa hardcode '15 phút' để chuẩn form DB
+        progress: 0,
+        // ==================================================
+        // ĐÃ BỔ SUNG: Truyền link ảnh bài học xuống cho React
+        // ==================================================
+        thumbnail: lesson.img_url 
       });
     });
 
@@ -107,20 +108,18 @@ router.post('/', upload.single('thumbnail'), async function(req, res) {
     // Lấy link ảnh từ multer
     const img_url = req.file ? `/uploads/${req.file.filename}` : null;
 
-    // SỬA LẠI ĐOẠN NÀY: Khớp chính xác 100% giữa Tên cột và Biến truyền vào
     const query = `
       INSERT INTO course (course_name, subject, grade_class, description, teacher_id, img_url) 
       VALUES (?, ?, ?, ?, ?, ?)
     `;
 
-    // Phải xếp đúng thứ tự 6 biến tương ứng với 6 dấu chấm hỏi ở trên
     const [result] = await db.query(query, [
       course_name, 
       subject, 
       grade_class, 
       description, 
-      teacher_id,   // Dấu ? thứ 5
-      img_url       // Dấu ? thứ 6
+      teacher_id,   
+      img_url       
     ]);
 
     res.status(201).json({ 
