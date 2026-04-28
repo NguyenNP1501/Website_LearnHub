@@ -11,7 +11,19 @@ import PracticeExam from './components/PracticeExam';
 import CreateTest from './components/CreateTest';
 import Profile from './components/Profile/Profle';
 import Register from './components/Register/Register';
-
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import ExamList from './pages/admin/ExamList'
+import EditExam from './pages/admin/EditExam'
+import CreateExam from './pages/admin/CreateExam'
+import ViewExam from './pages/admin/ViewExam'
+import DoExam from "./pages/client/DoExam"
+import SearchExam from './pages/client/SearchExam'
+import ManageExported from './pages/admin/manage/ManageExported'
+import ManageSaved from './pages/admin/manage/ManageSaved'
+import ManageDeleted from './pages/admin/manage/ManageDeleted'
+import ViewExamClient from './pages/client/ViewExamClient'
+import HistoryExam from './pages/client/HistoryExam'
+import ResultExam from './pages/client/ResultExam'
 function App() {
   return (
     <BrowserRouter>
