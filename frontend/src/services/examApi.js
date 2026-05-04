@@ -1,8 +1,41 @@
 const ADMIN_API_URL = "http://localhost:3000/api/admin/exams";
 const CLIENT_API_URL = "http://localhost:3000/api/client";
+const AUTH_STORAGE_KEY = "learnhub_auth";
+
+const getStoredToken = () => {
+  if (typeof window === "undefined") {
+    return "";
+  }
+
+  try {
+    const rawValue = window.localStorage.getItem(AUTH_STORAGE_KEY);
+    if (!rawValue) {
+      return "";
+    }
+
+    const parsedValue = JSON.parse(rawValue);
+    return parsedValue?.token ?? "";
+  } catch {
+    return "";
+  }
+};
+
+const buildRequestOptions = (options = {}) => {
+  const headers = new Headers(options.headers ?? {});
+  const token = getStoredToken();
+
+  if (token && !headers.has("Authorization")) {
+    headers.set("Authorization", `Bearer ${token}`);
+  }
+
+  return {
+    ...options,
+    headers,
+  };
+};
 
 const requestJson = async (url, options = {}) => {
-  const response = await fetch(url, options);
+  const response = await fetch(url, buildRequestOptions(options));
   const payload = await response.json().catch(() => null);
 
   if (!response.ok) {

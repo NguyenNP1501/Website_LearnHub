@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { createExam } from "../../services/examApi";
-import ExamForm from "../../components/ExamForm/ExamForm";
+import ExamForm from "../../components/ExamForm";
 import GoBack from "../../components/GoBack/GoBack";
 
 function CreateExam() {

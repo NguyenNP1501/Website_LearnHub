@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import "./ClientExamPages.scss";
+import "./ClientExamPage.scss";
 import GoBack from "../../components/GoBack/GoBack";
 import {
   formatDateTime,
   formatDuration,
   getAttemptById,
 } from "../../services/clientExamService";
+import Header from "../../components/Header";
 
 function ResultExam() {
   const { id } = useParams();
@@ -57,7 +58,7 @@ function ResultExam() {
         <div className="result-layout">
           <GoBack />
           <div className="empty-state">
-            {error || "Không tìn thấy kết quả phù hợp. Hãy vào lịch sử để kiểm tra lại."}
+            {error || "Không tìm thấy kết quả phù hợp. Hãy vào lịch sử để kiểm tra lại."}
           </div>
         </div>
       </div>
@@ -66,13 +67,14 @@ function ResultExam() {
 
   return (
     <div className="result-shell">
+      <Header></Header>
       <div className="result-layout">
         <GoBack />
 
         <section className="result-summary">
           <div className="result-summary__headline">
             <div>
-              <span className="client-tag">{attempt.subject || "Tong hop"}</span>
+              <span className="client-tag">{attempt.subject || "Tổng hợp"}</span>
               <h2>{attempt.examTitle}</h2>
               <p>
                 {attempt.lesson || "Không có liên kết bài học"} | Lớp {attempt.grade || "N/A"}

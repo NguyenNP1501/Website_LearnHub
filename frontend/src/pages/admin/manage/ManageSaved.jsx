@@ -65,9 +65,9 @@ function ManageSaved() {
   const renderCard = (exam) => (
     <div className="list__item" key={exam.id}>
       <h4 className="list__item--title">{exam.title}</h4>
-      <p className="list__item--subject">Mon: {exam.subject}</p>
-      <p className="list__item--lesson">Bai: {exam.lesson}</p>
-      <p className="list__item--time">Thoi gian: {exam.time} phut</p>
+      <p className="list__item--subject">Môn: {exam.subject}</p>
+      <p className="list__item--lesson">Bài: {exam.lesson}</p>
+      <p className="list__item--time">Thời gian: {exam.time} phút</p>
       <div className="btn">
         <Link to={`/admin/view/${exam.id}`}>
           <button className="btn__view">Xem</button>

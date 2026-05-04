@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "./ClientExamPages.scss";
+import "./ClientExamPage.scss";
 import { getAvailableClientExams } from "../../services/clientExamService";
 
 const EXAMS_PER_SECTION = 3;

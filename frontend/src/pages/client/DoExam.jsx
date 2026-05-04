@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import ExamTest from "../../components/ExamTest/ExamTest";
-import "./ClientExamPages.scss";
+import "./ClientExamPage.scss";
 import GoBack from "../../components/GoBack/GoBack";
-import {
-  getClientExamById,
-  submitClientExam,
-} from "../../services/clientExamService";
+import { getClientExamById, submitClientExam } from "../../services/clientExamService";
+import Header from "../../components/Header/index";
 
 function DoExam() {
   const { id } = useParams();
@@ -95,6 +93,7 @@ function DoExam() {
 
   return (
     <>
+      <Header></Header>
       {submitting && (
         <div className="result-shell">
           <div className="result-layout">

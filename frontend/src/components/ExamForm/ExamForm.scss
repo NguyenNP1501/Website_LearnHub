@@ -1,0 +1,71 @@
+.container {
+  padding: 24px;
+}
+
+.exam {
+  display: grid;
+  gap: 20px;
+  padding: 24px;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 18px 40px rgb(15 23 42 / 0.08);
+}
+
+.exam__detail,
+.ques__detail {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.exam__detail label,
+.ques__detail label {
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.exam__detail--item,
+.exam__detail--fill,
+.ques__detail--item,
+.ans__detail--content,
+.exam select,
+.exam input,
+.exam textarea {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  font: inherit;
+  background: #fff;
+}
+
+.ques__detail--item {
+  min-height: 120px;
+  resize: vertical;
+}
+
+.ans__detail {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ans__detail--pick {
+  width: auto;
+}
+
+.btn__feature {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.btn__feature button {
+  border: 0;
+  border-radius: 12px;
+  padding: 12px 18px;
+  background: #2563eb;
+  color: #fff;
+  font-weight: 600;
+}

@@ -197,7 +197,7 @@ function ExamForm({ data = {}, onSubmit }) {
           </div>
 
           <div className="exam__detail col-xl-4 col-lg-4 col-md-6 col-sm-12 col-12">
-            <label>Thoi gian</label>
+            <label>Thời gian</label>
             <input
               type="number"
               className="exam__detail--item"

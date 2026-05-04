@@ -1,17 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Home from './components/Home/Home'; 
-import CoursePortal from './components/CousePortal/CoursePortal';
-import CourseDetail from './components/CourseDetail/CourseDetail';
-import UploadLesson from './components/UploadLesson/UploadLesson';
-import CreateCourse from './components/CreateCourese/CreateCourse'; 
-import LearningLesson from './components/LearningLesson/LearningLesson';
-import Discussion from './components/Discussion/Discussion';
-import PracticeExam from './components/PracticeExam';
-import CreateTest from './components/CreateTest';
-import Profile from './components/Profile/Profle';
-import Register from './components/Register/Register';
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import './App.css'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import ExamList from './pages/admin/ExamList'
 import EditExam from './pages/admin/EditExam'
 import CreateExam from './pages/admin/CreateExam'
@@ -24,27 +12,52 @@ import ManageDeleted from './pages/admin/manage/ManageDeleted'
 import ViewExamClient from './pages/client/ViewExamClient'
 import HistoryExam from './pages/client/HistoryExam'
 import ResultExam from './pages/client/ResultExam'
+import LoginPage from './pages/auth/LoginPage'
+import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute'
+import { AdminLayout, StudentLayout } from './layouts/AppLayout'
+import { useAuth } from './context/AuthContext'
+
+function AppRoutes() {
+  const { user } = useAuth();
+  const fallbackPath = user?.role === "admin" ? "/admin" : user?.role === "student" ? "/" : "/login";
+
+  return (
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+
+      <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
+        <Route element={<StudentLayout />}>
+          <Route path="/" element={<ViewExamClient />} />
+          <Route path="/search-exam" element={<SearchExam/>} />
+          <Route path="/do-exam/:id" element={<DoExam />} />
+          <Route path="/history-exam" element={<HistoryExam />} />
+          <Route path="/result-exam/:id" element={<ResultExam/>} />
+        </Route>
+      </Route>
+
+      <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>
+        <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<ExamList />} />
+          <Route path="/admin/create" element={<CreateExam />} />
+          <Route path="/admin/edit/:id" element={<EditExam />} />
+          <Route path="/admin/view/:id" element={<ViewExam />} />
+          <Route path="/admin/exported" element={<ManageExported />} />
+          <Route path="/admin/saved" element={<ManageSaved/>} />
+          <Route path="/admin/deleted" element={<ManageDeleted />} />
+        </Route>
+      </Route>
+
+      <Route path="*" element={<Navigate to={fallbackPath} replace />} />
+    </Routes>
+  )
+}
+
 function App() {
   return (
     <BrowserRouter>
-      <Header /> 
-      
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/courses" element={<CoursePortal />} />
-        <Route path="/course/:courseId" element={<CourseDetail />} />
-        <Route path="/upload/:courseId" element={<UploadLesson />} />
-        <Route path="/create-course" element={<CreateCourse />} />
-        <Route path="/lesson/:lessonId" element={<LearningLesson />} />
-        <Route path="/discuss" element={<Discussion />} />
-        <Route path="/practice" element={<PracticeExam />} />
-        <Route path="/create-test" element={<CreateTest />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/register" element={<Register />} />
-        
-      </Routes>
+      <AppRoutes />
     </BrowserRouter>
-  );
+  )
 }
 
 export default App;
