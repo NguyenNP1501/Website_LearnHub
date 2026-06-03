@@ -1,0 +1,20 @@
+:root {
+  --primary-blue: #3b82f6;
+  --bg-color: #f8fafc; /* Màu nền web sáng sủa, thân thiện */
+  --text-main: #1f2937;
+  --white: #ffffff;
+  --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased; /* Giúp chữ hiển thị sắc nét hơn */
+}
