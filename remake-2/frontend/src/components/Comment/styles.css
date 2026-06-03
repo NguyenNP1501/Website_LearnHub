@@ -1,0 +1,202 @@
+/* Container wrapping comments and the fixed input. Add bottom padding so last comments are not hidden behind the fixed input */
+.comment-wrapper {
+	position: relative;
+	padding-bottom: 160px; /* reserve space for the fixed input */
+	width: min(1000px, 100%);
+	margin: 0 auto;
+}
+
+/* Fixed comment input bar similar to Facebook */
+.comment-input {
+	position: fixed;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 0;
+	display: flex;
+	gap: 8px;
+	align-items: center;
+	padding: 14px 16px;
+	background: #ffffff;
+	border-top: 1px solid #e6e6e6;
+	box-shadow: 0 -6px 16px rgba(0,0,0,0.08);
+	z-index: 1000;
+	width: min(1000px, calc(100% - 24px));
+	border-radius: 16px 16px 0 0;
+}
+
+.comment-input textarea {
+	flex: 1;
+	resize: none;
+	min-height: 50px;
+	max-height: 140px;
+	padding: 14px 16px;
+	border-radius: 16px;
+	border: 1px solid #d9d9d9;
+	outline: none;
+	font-size: 15px;
+	background: #f8fafc;
+}
+
+.comment-section-head {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #e5e7eb;
+	margin-bottom: 18px;
+}
+
+.comment-section-count {
+	color: #64748b;
+	font-size: 14px;
+	margin: 4px 0 0;
+}
+
+.comment-card-top {
+	display: flex;
+	gap: 12px;
+	align-items: center;
+	margin-bottom: 14px;
+}
+
+.comment-avatar {
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	background: #3b82f6;
+	color: white;
+	display: grid;
+	place-items: center;
+	font-weight: 700;
+	font-size: 14px;
+}
+
+.comment-meta {
+	display: grid;
+	gap: 4px;
+}
+
+.comment-author-name {
+	font-size: 15px;
+	font-weight: 700;
+	color: #0f172a;
+}
+
+.comment-time {
+	font-size: 12px;
+	color: #64748b;
+}
+
+.comment-card-body {
+	padding: 0; /* content sits directly in the comment card like the post */
+}
+
+.comment-card-body p {
+	margin: 0;
+	color: #334155;
+	line-height: 1.8;
+}
+
+.comment-input input[type="file"] {
+	background: transparent;
+	border: none;
+}
+
+.comment-error {
+	color: red;
+	font-size: 12px;
+	margin-left: 8px;
+}
+
+@media (max-width: 640px) {
+	.comment-input {
+		left: 8px;
+		right: 8px;
+		border-radius: 12px 12px 0 0;
+		max-width: none;
+		padding: 8px;
+	}
+}
+
+.detail-background-view-post{
+  width: 1000px;
+  border: 1px solid #3b82f6;
+  border-radius: 24px;
+  padding: 34px 36px;
+  background: #ffffff;
+  /* margin-bottom: 20px;
+  margin-top: 20px;
+  margin-left: 100px;
+  margin-right: 100px; */
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  cursor: pointer;
+  background: white;
+  border-radius: 15px;
+  margin: 20px auto 20px auto;
+}
+
+/* Ensure the comments section sits close below the like/interaction line */
+.comment-section {
+	margin: 20px auto 120px auto;
+	width: min(1000px, 100%);
+	padding: 28px 32px;
+	border: 1px solid #3b82f6;
+	border-radius: 15px;
+	background: #ffffff;
+	box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+}
+
+.comment-section-title {
+	font-size: 24px;
+	font-weight: 700;
+	margin-bottom: 18px;
+	color: #0f172a;
+}
+
+.comment-empty {
+	color: #475569;
+	margin: 0;
+}
+
+.comment-list {
+	display: grid;
+	gap: 16px;
+}
+
+/* Comment card styles and animations */
+.comment-card {
+	/* Match the post card appearance */
+	border: 1px solid #3b82f6;
+	border-radius: 24px;
+	padding: 34px 36px;
+	background: #ffffff;
+	margin-bottom: 18px;
+	box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
+	transition: transform 0.28s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.28s ease, border-color 0.28s ease;
+}
+
+.comment-card:hover {
+	transform: translateY(-6px);
+	box-shadow: 0 10px 20px rgba(0,0,0,0.08);
+	border-color: #4a90e2;
+}
+
+.comment-card-content p {
+	margin: 0;
+	font-size: 15px;
+	line-height: 1.75;
+	color: #334155;
+}
+
+.comment-images {
+	margin-top: 14px;
+	display: grid;
+	gap: 12px;
+}
+
+.comment-images img {
+	max-width: 100%;
+	height: auto;
+	border-radius: 12px;
+}
+

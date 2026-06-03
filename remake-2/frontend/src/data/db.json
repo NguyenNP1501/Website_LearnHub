@@ -1,0 +1,887 @@
+{
+  "tests": [
+    {
+      "id": "test1",
+      "title": "Toán 1",
+      "subject": "Toán",
+      "lesson": "Bài 1",
+      "lessonId": "1",
+      "time": "45",
+      "grade": "1",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "1 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "1",
+              "isCorrect": false
+            },
+            {
+              "content": "2",
+              "isCorrect": true
+            },
+            {
+              "content": "3",
+              "isCorrect": false
+            },
+            {
+              "content": "4",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test2",
+      "title": "Toán 2",
+      "subject": "Toán",
+      "lesson": "Bài 2",
+      "lessonId": "2",
+      "time": "60",
+      "grade": "2",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "2 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "2",
+              "isCorrect": false
+            },
+            {
+              "content": "3",
+              "isCorrect": false
+            },
+            {
+              "content": "4",
+              "isCorrect": true
+            },
+            {
+              "content": "5",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test3",
+      "title": "Toán 3",
+      "subject": "Toán",
+      "lesson": "Bài 3",
+      "lessonId": "3",
+      "time": "45",
+      "grade": "3",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "3 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "3",
+              "isCorrect": false
+            },
+            {
+              "content": "4",
+              "isCorrect": true
+            },
+            {
+              "content": "5",
+              "isCorrect": false
+            },
+            {
+              "content": "6",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test4",
+      "title": "Toán 4",
+      "subject": "Toán",
+      "lesson": "Bài 4",
+      "lessonId": "4",
+      "time": "60",
+      "grade": "1",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "4 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "4",
+              "isCorrect": false
+            },
+            {
+              "content": "5",
+              "isCorrect": true
+            },
+            {
+              "content": "6",
+              "isCorrect": false
+            },
+            {
+              "content": "7",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test5",
+      "title": "Toán 5",
+      "subject": "Toán",
+      "lesson": "Bài 5",
+      "lessonId": "5",
+      "time": "45",
+      "grade": "5",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "5 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "6",
+              "isCorrect": false
+            },
+            {
+              "content": "7",
+              "isCorrect": true
+            },
+            {
+              "content": "8",
+              "isCorrect": false
+            },
+            {
+              "content": "9",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test21",
+      "title": "Toán 21",
+      "subject": "Toán",
+      "lesson": "Bài 21",
+      "lessonId": "21",
+      "time": "45",
+      "grade": "6",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "21 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "21",
+              "isCorrect": false
+            },
+            {
+              "content": "22",
+              "isCorrect": true
+            },
+            {
+              "content": "23",
+              "isCorrect": false
+            },
+            {
+              "content": "24",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test22",
+      "title": "Toán 22",
+      "subject": "Toán",
+      "lesson": "Bài 22",
+      "lessonId": "22",
+      "time": "60",
+      "grade": "7",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "22 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "23",
+              "isCorrect": false
+            },
+            {
+              "content": "24",
+              "isCorrect": true
+            },
+            {
+              "content": "25",
+              "isCorrect": false
+            },
+            {
+              "content": "26",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test23",
+      "title": "Toán 23",
+      "subject": "Toán",
+      "lesson": "Bài 23",
+      "lessonId": "23",
+      "time": "45",
+      "grade": "8",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "23 + 3 = ?",
+          "type": 3,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "26",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test24",
+      "title": "Toán 24",
+      "subject": "Toán",
+      "lesson": "Bài 24",
+      "lessonId": "24",
+      "time": "60",
+      "grade": "9",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "24 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "24",
+              "isCorrect": false
+            },
+            {
+              "content": "25",
+              "isCorrect": true
+            },
+            {
+              "content": "26",
+              "isCorrect": false
+            },
+            {
+              "content": "27",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test25",
+      "title": "Toán 25",
+      "subject": "Toán",
+      "lesson": "Bài 25",
+      "lessonId": "25",
+      "time": "45",
+      "grade": "10",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "25 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "26",
+              "isCorrect": false
+            },
+            {
+              "content": "27",
+              "isCorrect": true
+            },
+            {
+              "content": "28",
+              "isCorrect": false
+            },
+            {
+              "content": "29",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test26",
+      "title": "Toán 26",
+      "subject": "Toán",
+      "lesson": "Bài 26",
+      "lessonId": "26",
+      "time": "60",
+      "grade": "11",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "26 + 3 = ?",
+          "type": 3,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "29",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test27",
+      "title": "Toán 27",
+      "subject": "Toán",
+      "lesson": "Bài 27",
+      "lessonId": "27",
+      "time": "45",
+      "grade": "12",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "27 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "27",
+              "isCorrect": false
+            },
+            {
+              "content": "28",
+              "isCorrect": true
+            },
+            {
+              "content": "29",
+              "isCorrect": false
+            },
+            {
+              "content": "30",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test28",
+      "title": "Toán 28",
+      "subject": "Toán",
+      "lesson": "Bài 28",
+      "lessonId": "28",
+      "time": "60",
+      "grade": "3",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "28 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "29",
+              "isCorrect": false
+            },
+            {
+              "content": "30",
+              "isCorrect": true
+            },
+            {
+              "content": "31",
+              "isCorrect": false
+            },
+            {
+              "content": "32",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test29",
+      "title": "Toán 29",
+      "subject": "Toán",
+      "lesson": "Bài 29",
+      "lessonId": "29",
+      "time": "45",
+      "grade": "4",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "29 + 3 = ?",
+          "type": 3,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "32",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test30",
+      "title": "Toán 30",
+      "subject": "Toán",
+      "lesson": "Bài 30",
+      "lessonId": "30",
+      "time": "60",
+      "grade": "5",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "30 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "30",
+              "isCorrect": false
+            },
+            {
+              "content": "31",
+              "isCorrect": true
+            },
+            {
+              "content": "32",
+              "isCorrect": false
+            },
+            {
+              "content": "33",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test31",
+      "title": "Toán 31",
+      "subject": "Toán",
+      "lesson": "Bài 31",
+      "lessonId": "31",
+      "time": "45",
+      "grade": "1",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "31 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "31",
+              "isCorrect": false
+            },
+            {
+              "content": "32",
+              "isCorrect": true
+            },
+            {
+              "content": "33",
+              "isCorrect": false
+            },
+            {
+              "content": "34",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test32",
+      "title": "Toán 32",
+      "subject": "Toán",
+      "lesson": "Bài 32",
+      "lessonId": "32",
+      "time": "60",
+      "grade": "2",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "32 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "33",
+              "isCorrect": false
+            },
+            {
+              "content": "34",
+              "isCorrect": true
+            },
+            {
+              "content": "35",
+              "isCorrect": false
+            },
+            {
+              "content": "36",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test33",
+      "title": "Toán 33",
+      "subject": "Toán",
+      "lesson": "Bài 33",
+      "lessonId": "33",
+      "time": "45",
+      "grade": "3",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "33 + 3 = ?",
+          "type": 3,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "36",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test34",
+      "title": "Toán 34",
+      "subject": "Toán",
+      "lesson": "Bài 34",
+      "lessonId": "34",
+      "time": "60",
+      "grade": "4",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "34 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "34",
+              "isCorrect": false
+            },
+            {
+              "content": "35",
+              "isCorrect": true
+            },
+            {
+              "content": "36",
+              "isCorrect": false
+            },
+            {
+              "content": "37",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test35",
+      "title": "Toán 35",
+      "subject": "Toán",
+      "lesson": "Bài 35",
+      "lessonId": "35",
+      "time": "45",
+      "grade": "5",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "35 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "36",
+              "isCorrect": false
+            },
+            {
+              "content": "37",
+              "isCorrect": true
+            },
+            {
+              "content": "38",
+              "isCorrect": false
+            },
+            {
+              "content": "39",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test36",
+      "title": "Toán 36",
+      "subject": "Toán",
+      "lesson": "Bài 36",
+      "lessonId": "36",
+      "time": "60",
+      "grade": "1",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "36 + 3 = ?",
+          "type": 3,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "39",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test37",
+      "title": "Toán 37",
+      "subject": "Toán",
+      "lesson": "Bài 37",
+      "lessonId": "37",
+      "time": "45",
+      "grade": "2",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "37 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "37",
+              "isCorrect": false
+            },
+            {
+              "content": "38",
+              "isCorrect": true
+            },
+            {
+              "content": "39",
+              "isCorrect": false
+            },
+            {
+              "content": "40",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test38",
+      "title": "Toán 38",
+      "subject": "Toán",
+      "lesson": "Bài 38",
+      "lessonId": "38",
+      "time": "60",
+      "grade": "3",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "38 + 2 = ?",
+          "type": 2,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "39",
+              "isCorrect": false
+            },
+            {
+              "content": "40",
+              "isCorrect": true
+            },
+            {
+              "content": "41",
+              "isCorrect": false
+            },
+            {
+              "content": "42",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test39",
+      "title": "Toán 39",
+      "subject": "Toán",
+      "lesson": "Bài 39",
+      "lessonId": "39",
+      "time": "45",
+      "grade": "4",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "39 + 3 = ?",
+          "type": 3,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "42",
+              "isCorrect": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "test40",
+      "title": "Toán 40",
+      "subject": "Toán",
+      "lesson": "Bài 40",
+      "lessonId": "40",
+      "time": "60",
+      "grade": "5",
+      "exported": false,
+      "saved": true,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "40 + 1 = ?",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "40",
+              "isCorrect": false
+            },
+            {
+              "content": "41",
+              "isCorrect": true
+            },
+            {
+              "content": "42",
+              "isCorrect": false
+            },
+            {
+              "content": "43",
+              "isCorrect": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Kiếm tra giữa kỳ 1 - Năm học 2025-2026",
+      "subject": "Giải tích",
+      "lesson": "",
+      "lessonId": "",
+      "time": "90",
+      "grade": "",
+      "exported": true,
+      "saved": false,
+      "deleted": false,
+      "questions": [
+        {
+          "content": "",
+          "type": 1,
+          "imgUrl": "",
+          "answer": [
+            {
+              "content": "",
+              "isCorrect": false
+            },
+            {
+              "content": "",
+              "isCorrect": false
+            }
+          ]
+        }
+      ],
+      "id": "VADhmYgWNDI"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}

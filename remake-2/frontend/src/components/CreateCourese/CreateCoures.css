@@ -1,0 +1,136 @@
+/* ============ BỐ CỤC CHÍNH ============ */
+.create-course-wrapper {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.create-course-header {
+  background: #f0f7ff;
+  padding: 20px 30px;
+  border-bottom: 1px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  border-radius: 12px 12px 0 0;
+}
+
+.create-course-title {
+  margin: 0;
+  font-size: 24px;
+  color: #1e40af;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.create-course-form {
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 30px;
+}
+
+/* ============ NÚT QUAY LẠI ============ */
+.btn-circle-back {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-circle-back:hover {
+  background-color: #f1f5f9;
+}
+
+/* ============ KHU VỰC NHẬP LIỆU (FORM) ============ */
+.form-label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+  color: #334155;
+}
+
+.required-star {
+  color: red;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+/* Hiệu ứng viền xanh khi đang gõ chữ */
+.form-control:focus {
+  outline: none;
+  border-color: #3b82f6; 
+}
+
+.form-textarea {
+  resize: vertical;
+}
+
+.form-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+/* ============ KHU VỰC UPLOAD ẢNH ============ */
+.custom-dropzone {
+  height: 220px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.dropzone-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.dropzone-placeholder {
+  text-align: center;
+  color: #64748b;
+}
+
+/* ============ KHU VỰC NÚT BẤM ============ */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 55px;
+}
+
+.btn-outline {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  color: #475569;
+  transition: background-color 0.2s;
+}
+
+.btn-outline:hover {
+  background-color: #f8fafc;
+}
+
+.btn-submit {
+  padding: 10px 20px;
+}
