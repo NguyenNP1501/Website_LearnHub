@@ -18,12 +18,12 @@ export default function LearningLesson() {
   const currentTimeRef = useRef(0);
   const durationRef = useRef(0);
   const maxSavedTimeRef = useRef(0);
+  const hasSeekedRef = useRef(false);
 
   const [lesson, setLesson] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isSwitching, setIsSwitching] = useState(false);
 
-  // useForm — dự phòng mở rộng thêm các trường filter/search bài học sau này
   const { } = useForm();
 
   const token = getStoredToken();
@@ -68,6 +68,7 @@ export default function LearningLesson() {
     durationRef.current = 0;
     lastSavedTime.current = 0;
     maxSavedTimeRef.current = 0;
+    hasSeekedRef.current = false;
   }, [lessonId]);
 
   // Tự động pause khi đổi tab
@@ -103,12 +104,13 @@ export default function LearningLesson() {
   };
 
   // ==================== 4. XỬ LÝ SỰ KIỆN VIDEO ====================
-  const handleLoadedMetadata = () => {
-    if (!videoRef.current) return;
+  const handleCanPlay = () => {
+    if (!videoRef.current || hasSeekedRef.current) return;
+    
     const duration = videoRef.current.duration;
     const savedTime = maxSavedTimeRef.current;
     durationRef.current = duration;
-
+    hasSeekedRef.current = true;
     if (savedTime > 0) {
       if (savedTime >= duration - 5) {
         videoRef.current.currentTime = 0;
@@ -204,8 +206,9 @@ export default function LearningLesson() {
 
       {/* KHU VỰC TRÌNH PHÁT VIDEO */}
       <div className="video-wrapper">
-        {lesson.video_url ? (
+       {lesson.video_url ? (
           <video
+            key={lessonId}
             ref={videoRef}
             controls
             autoPlay
@@ -213,7 +216,7 @@ export default function LearningLesson() {
             src={lesson.video_url}
             onTimeUpdate={(e) => updateRefsAndSave(e.target, false)}
             onPause={(e) => updateRefsAndSave(e.target, true)}
-            onLoadedMetadata={handleLoadedMetadata}
+            onCanPlay={handleCanPlay}
             onEnded={handleVideoEnded}
           >
             Trình duyệt của bạn không hỗ trợ thẻ video.

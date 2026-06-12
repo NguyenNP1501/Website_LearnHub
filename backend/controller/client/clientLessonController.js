@@ -1,4 +1,3 @@
-// File: backend/controllers/KhoaHoc/clientLessonController.js
 const LessonModel = require('../../models/KhoaHoc/LessonModel');
 const ProgressModel = require('../../models/KhoaHoc/ProgressModel');
 
@@ -18,7 +17,7 @@ const clientLessonController = {
 
             const lesson = rows[0];
 
-            //BẢO MẬT PHÍA CLIENT: Học viên không được phép truy cập các bài giảng đang tạm ẩn
+            //Học viên không được phép truy cập các bài giảng đang tạm ẩn
             if (lesson.status === 'Inactive') {
                 return res.status(403).json({
                     success: false,
@@ -26,7 +25,7 @@ const clientLessonController = {
                 });
             }
 
-            const studentId = req.user?.id || 1;
+            const studentId =req.auth?.id || req.auth?.user_id || req.auth?.userId;
             const progressData = await ProgressModel.getLessonProgress(studentId, lessonId);
             const navigation = await LessonModel.findNextAndPrev(lesson.course_id, lessonId);
 
@@ -51,7 +50,7 @@ const clientLessonController = {
         try {
             const lessonId = req.params.id;
             const { watch_time, duration } = req.body;
-            const studentId = req.user?.id || 1;
+            const studentId = req.auth?.id || req.auth?.user_id || req.auth?.userId;
 
             // BỔ SUNG CHECK ACTIVE: Tìm thông tin bài học trước khi xử lý lưu tiến độ
             const lessonRows = await LessonModel.findById(lessonId);
@@ -64,7 +63,7 @@ const clientLessonController = {
 
             const lesson = lessonRows[0];
 
-            // BẢO MẬT: Nếu bài giảng đã bị đưa vào trạng thái Inactive, chặn không cho lưu tiến độ
+            // Nếu bài giảng đã bị đưa vào trạng thái Inactive, chặn không cho lưu tiến độ
             if (lesson.status === 'Inactive') {
                 return res.status(403).json({
                     success: false,
@@ -72,10 +71,9 @@ const clientLessonController = {
                 });
             }
 
-            // 1. Gọi hàm UPSERT xử lý cập nhật dữ liệu tiến độ bài học đơn lẻ
+            // Gọi hàm UPSERT xử lý cập nhật dữ liệu tiến độ bài học đơn lẻ
             await ProgressModel.updateLessonProgress(studentId, lessonId, watch_time, duration);
 
-            // TỰ ĐỘNG HÓA: Sử dụng luôn course_id thu được từ biến lesson ở trên
             const courseId = lesson.course_id;
             if (courseId) {
                 await ProgressModel.calculateAndUpdateCourseProgress(studentId, courseId);

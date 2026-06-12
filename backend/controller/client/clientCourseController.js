@@ -37,11 +37,13 @@ const clientCourseController = {
       res.status(500).json({ success: false, message: "Lỗi kết nối CSDL!" });
     }
   },
+  
+  
   // API 2: LẤY CHI TIẾT KHÓA HỌC + KIỂM TRA ĐĂNG KÝ + LẤY TIẾN ĐỘ THỰC TẾ
   getCourseDetail: async (req, res) => {
     try {
       const courseId = req.params.id;
-      const studentId = req.user?.id || req.user?.user_id || 1; 
+      const studentId = req.auth?.id || req.auth?.user_id || req.auth?.userId;
 
       // 1. Lấy thông tin cơ bản khóa học
       const courseInfoRows = await CourseModel.findById(courseId);
@@ -54,16 +56,18 @@ const clientCourseController = {
       const lessonRows = await CourseModel.findLessonsByCourseId(courseId);
 
       // 3. Tích hợp kiểm tra trạng thái đăng ký học tập của học viên
-      const enrollment = await ProgressModel.checkEnrollment(studentId, courseId);
+      // Phòng trường hợp không có studentId (chưa đăng nhập hoặc route public thiếu token)
+      const enrollment = studentId ? await ProgressModel.checkEnrollment(studentId, courseId) : null;
       const isEnrolled = !!enrollment; 
 
       // TỰ ĐỘNG CẬP NHẬT TIẾN ĐỘ THEO SỐ LƯỢNG BÀI HỌC MỚI NHẤT
       let realProgress = 0;
-      if (isEnrolled) {
+      if (isEnrolled && studentId) {
          await ProgressModel.calculateAndUpdateCourseProgress(studentId, courseId);
-
          const progressData = await ProgressModel.getCourseProgress(studentId, courseId);
          realProgress = progressData ? progressData.progress : 0;
+      } else if (enrollment) {
+         realProgress = enrollment.progress || 0;
       }
 
       // 4. Gom nhóm bài học theo tên chương mục (Chapter)
@@ -127,7 +131,16 @@ const clientCourseController = {
     try {
       const courseId = req.params.id;
       const studentId = req.auth?.id || req.auth?.user_id || req.auth?.userId;
+      
+      if (!studentId) {
+        return res.status(401).json({ success: false, message: "Không tìm thấy thông tin học viên!" });
+      }
+
+      // hệ thống đếm lại số bài học và update vào DB ngay khi học sinh F5 / tải trang
+      await ProgressModel.calculateAndUpdateCourseProgress(studentId, courseId);
+
       const enrollment = await ProgressModel.checkEnrollment(studentId, courseId);
+      
       res.status(200).json({ success: true, isEnrolled: !!enrollment, data: enrollment });
     } catch (error) {
       console.error("Lỗi API checkStatus:", error);
@@ -158,7 +171,7 @@ const clientCourseController = {
   getCourseProgress: async (req, res) => {
     try {
         const { courseId } = req.params;
-        const studentId = req.user?.id || req.user?.user_id || 1;
+        const studentId = req.auth?.id || req.auth?.user_id || req.auth?.userId;
         const data = await ProgressModel.getCourseProgress(studentId, courseId);
         res.json({ success: true, data });
     } catch (error) {

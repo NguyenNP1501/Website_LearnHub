@@ -42,7 +42,7 @@ const adminCourseController = {
         subject_id: Number(subject_id), 
         grade_id: Number(grade_id),     
         description: description || "",
-        teacher_id: teacher_id ? Number(teacher_id) : (req.auth?.id || null), // Lấy từ form hoặc từ token bảo mật requireAuth
+        teacher_id: teacher_id ? Number(teacher_id) : (req.auth?.id || req.auth?.user_id || req.auth?.userId||null),
         img_url
       });
 

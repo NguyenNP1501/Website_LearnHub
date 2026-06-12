@@ -1,4 +1,3 @@
-// File: src/pages/client/CourseDetail.jsx
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
@@ -46,8 +45,7 @@ export default function CourseDetail() {
     fetchGrades();
     return () => { isMounted = false; };
   }, []);
-
- // ==================== 2. TẢI CHI TIẾT KHÓA HỌC & BÀI HỌC ====================
+// ==================== 2. TẢI CHI TIẾT KHÓA HỌC & BÀI HỌC ====================
 useEffect(() => {
   if (!courseId) return;
   let isCurrentRequest = true;
@@ -67,14 +65,17 @@ useEffect(() => {
       if (chaptersData.length > 0) {
         setOpenId(chaptersData[0].chapter_id || chaptersData[0].id);
       }
-
-      // 🌟 2. NẾU ĐÃ ĐĂNG NHẬP, GỌI TIẾP API BẢO MẬT ĐỂ CHECK TRẠNG THÁI ĐĂNG KÝ
       if (token) {
         try {
           const statusResponse = await axios.get(`${API_BASE}/client/courses/${courseId}/enroll-status`, authConfig);
           if (isCurrentRequest && statusResponse.data) {
-            setIsEnrolled(statusResponse.data.isEnrolled || false);
-            setProgress(statusResponse.data.progress || 0);
+  
+            const resData = statusResponse.data?.data || statusResponse.data?.info || statusResponse.data;
+            const checkEnroll = resData.isEnrolled || resData.is_enrolled || (resData.status && resData.status !== 'Chưa học');
+            setIsEnrolled(!!checkEnroll);
+            
+            const progressVal = resData.progress !== undefined ? resData.progress : (resData.progress_percent || 0);
+            setProgress(Number(progressVal));
           }
         } catch (error) {
           console.log("Chưa đăng ký khóa học này hoặc lỗi check status");
@@ -99,7 +100,7 @@ useEffect(() => {
 
   fetchCourseDetail();
   return () => { isCurrentRequest = false; };
-}, [courseId, token]); // Thêm token vào mảng dependency
+}, [courseId, token]);
 
   // ==================== 3. XỬ LÝ ĐĂNG KÝ KHÓA HỌC ====================
   const handleEnroll = async () => {
