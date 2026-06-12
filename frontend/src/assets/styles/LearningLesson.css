@@ -1,0 +1,182 @@
+/* Container chính của trang xem video */
+.learning-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* ============ KHU VỰC TIÊU ĐỀ & NÚT QUAY LẠI ============ */
+.learning-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.btn-back-circle {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-back-circle:hover {
+  background: #f1f5f9;
+  transform: translateX(-3px); /* Hiệu ứng đẩy nhẹ sang trái */
+}
+
+.learning-title {
+  margin: 0;
+  font-size: 22px;
+  color: #1e3a8a;
+}
+
+.learning-chapter {
+  margin: 5px 0 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ============ KHU VỰC PHÁT VIDEO ============ */
+.video-wrapper {
+  background: black;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.video-player {
+  width: 100%;
+  max-height: 550px;
+  display: block;
+}
+
+.video-fallback {
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+}
+
+/* ============ KHU VỰC NỘI DUNG BÀI HỌC (RICH TEXT) ============ */
+.content-wrapper {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.content-heading {
+  margin-top: 0;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.rich-text-content {
+  color: #334155;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* Đề phòng trường hợp trong bài giảng có chèn ảnh lớn */
+.rich-text-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+/* ===== VIDEO WRAPPER ===== */
+.video-wrapper {
+  position: relative;
+}
+
+/* ===== SWITCHING OVERLAY ===== */
+.video-switching-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  z-index: 10;
+}
+
+.video-switching-overlay-title {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.video-switching-overlay-subtitle {
+  color: #cbd5e1;
+}
+
+/* ===== LESSON NAVIGATION BAR ===== */
+.lesson-navigation-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 15px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.btn-nav-prev {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  background-color: #fff;
+  font-weight: 400;
+}
+
+.btn-nav-prev:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-nav-prev:not(:disabled) {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.btn-nav-next {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2563eb;
+  color: #fff;
+  font-weight: 500;
+}
+
+.btn-nav-next:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.btn-nav-next:not(:disabled) {
+  cursor: pointer;
+  opacity: 1;
+}
+
+/* ===== CONTENT WRAPPER ===== */
+.content-wrapper {
+  margin-top: 20px;
+}

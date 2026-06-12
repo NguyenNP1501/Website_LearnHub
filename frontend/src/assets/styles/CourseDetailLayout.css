@@ -1,0 +1,476 @@
+/* ==========================================================================
+   1. CONTAINER CHÍNH & SIDEBAR (KHỐI LỚP)
+   ========================================================================== */
+.detail-container {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+.detail-content {
+  flex: 1;
+  min-width: 0; /* Khắc phục lỗi vỡ layout trên màn hình nhỏ */
+}
+
+/* ==========================================================================
+   2. THÔNG TIN KHÓA HỌC (COURSE CARD TỔNG QUAN)
+   ========================================================================== */
+.course-info-card {
+  background-color: #e0f2fe;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.course-info-title {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+.course-info-teacher {
+  margin: 0;
+  color: #334155;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.course-description {
+  margin-top: 12px;
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.course-info-view-only {
+  color: #ef4444;
+  font-size: 13px;
+  margin-top: 10px;
+  font-style: italic;
+}
+
+.course-enroll-btn-wrapper {
+  margin-top: 20px;
+}
+
+.btn-enroll,
+.btn-enrolled {
+  padding: 10px 24px;
+  font-weight: 600;
+  border-radius: 8px;
+  font-size: 15px;
+}
+
+.btn-enroll {
+  cursor: pointer;
+}
+
+.btn-enrolled {
+  cursor: default;
+  background: #10b981;
+  color: #fff;
+  border: none;
+}
+
+/* ==========================================================================
+   3. THANH CÔNG CỤ (TÌM KIẾM & NÚT HÀNH ĐỘNG)
+   ========================================================================== */
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  width: 350px;
+  transition: all 0.2s ease;
+}
+
+.search-box-full {
+  width: 100%;
+  max-width: 400px;
+}
+
+.search-box:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  width: 100%;
+  font-size: 14px;
+  background: transparent;
+  color: #1f2937;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.action-btn:hover {
+  background-color: #2563eb;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   4. DANH SÁCH CHƯƠNG (CHAPTER ITEMS)
+   ========================================================================== */
+.empty-chapters {
+  text-align: center;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 15px;
+  color: #64748b;
+  border: 1px dashed #cbd5e1;
+}
+
+.empty-chapter-msg {
+  padding: 15px;
+  color: #94a3b8;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.chapter-item {
+  background: #ffffff;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+.chapter-header {
+  padding: 18px 25px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: #ffffff;
+  transition: background 0.2s ease;
+}
+
+.chapter-header-clickable {
+  cursor: pointer;
+}
+
+.chapter-header:hover, 
+.chapter-header.active {
+  background: #f8fafc;
+}
+
+.chapter-header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.chapter-title {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.chapter-action-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Hệ thống nút trong chương */
+.btn-add-lesson,
+.btn-custom-edit-chapter,
+.btn-custom-add-lesson {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-lesson {
+  padding: 6px 14px;
+  font-size: 13px;
+  background: #e0e7ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+}
+
+.btn-add-lesson:hover {
+  background: #c7d2fe;
+  color: #3730a3;
+}
+
+.btn-custom-edit-chapter {
+  padding: 7px 14px;
+  font-size: 13px;
+  border-radius: 8px;
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-custom-edit-chapter:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.btn-custom-add-lesson {
+  padding: 7px 14px;
+  font-size: 13px;
+  border-radius: 8px;
+  border: none;
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+}
+
+.btn-custom-add-lesson:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-custom-edit-chapter:active,
+.btn-custom-add-lesson:active {
+  transform: scale(0.97);
+}
+
+/* ==========================================================================
+   5. DANH SÁCH BÀI HỌC (LESSON ITEMS)
+   ========================================================================== */
+.lesson-list {
+  border-top: 1px solid #f1f5f9;
+  background-color: #fbfcfd;
+}
+
+.lesson-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 20px;
+  cursor: default;
+}
+
+.lesson-item:last-child {
+  border-bottom: none;
+}
+
+.lesson-item-enrolled {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.lesson-item-locked {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.lesson-left-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+  cursor: pointer;
+}
+
+.lesson-info-row {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  flex: 1;
+}
+
+.lesson-info {
+  flex: 1;
+  text-align: left;
+}
+
+.lesson-title,
+.lesson-title-text {
+  font-weight: 600;
+  color: #334155;
+  font-size: 15px;
+  margin: 0;
+}
+
+.lesson-thumbnail-img {
+  width: 120px;          
+  height: 68px;          
+  object-fit: cover;     
+  border-radius: 6px;    
+  flex-shrink: 0;        
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+  border: 1px solid #e2e8f0;
+}
+
+.lesson-actions,
+.lesson-action-wrapper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Cấu trúc nút quản lý bài học */
+.btn-lesson-view,
+.btn-lesson-edit,
+.btn-lesson-delete {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+.btn-lesson-view { background-color: #3b82f6; }
+.btn-lesson-view:hover { background-color: #2563eb; }
+
+.btn-lesson-edit { background-color: #f59e0b; }
+.btn-lesson-edit:hover { background-color: #d97706; }
+
+.btn-lesson-delete { background-color: #ef4444; }
+.btn-lesson-delete:hover { background-color: #dc2626; }
+
+.btn-lesson-view:active,
+.btn-lesson-edit:active,
+.btn-lesson-delete:active {
+  transform: scale(0.96);
+}
+
+.btn-lesson-locked {
+  padding: 6px 16px;
+  font-size: 13px;
+  border-radius: 6px;
+  pointer-events: none;
+  background-color: #e2e8f0;
+  color: #94a3b8;
+  border: none;
+}
+
+/* ==========================================================================
+   6. THANH TIẾN ĐỘ KHÓA HỌC (PROGRESS BAR)
+   ========================================================================== */
+.progress-wrapper {
+  margin: 20px 0;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.progress-text {
+  font-weight: 600;
+  color: #64748b;
+}
+
+.progress-percent {
+  font-weight: 700;
+  color: #10b981;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #10b981;
+  border-radius: 5px;
+  transition: width 0.5s ease-in-out;
+}
+
+/* ==========================================================================
+   7. TIỆN ÍCH DÙNG CHUNG (UTILITIES)
+   ========================================================================== */
+.content-card,
+.content-card-transparent {
+  padding: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+/* ==========================================================================
+   8. ĐÁP ỨNG GIAO DIỆN (RESPONSIVE)
+   ========================================================================== */
+@media (max-width: 768px) {
+  .chapter-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chapter-header-left {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chapter-action-group {
+    flex-wrap: wrap;
+  }
+
+  .btn-custom-edit-chapter,
+  .btn-custom-add-lesson {
+    width: fit-content;
+  }
+}

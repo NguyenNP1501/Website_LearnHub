@@ -1,0 +1,126 @@
+/* Container chính của Sidebar */
+.portal-sidebar {
+  width: 260px;
+  min-width: 260px;
+  background-color: #ffffff;
+  border-right: 1px solid #e2e8f0;
+  padding: 24px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  height: calc(100vh - 64px); /* Tự động tràn vừa khít màn hình trừ header */
+  position: sticky;
+  top: 64px;
+  border-radius: 8px;
+}
+
+/* Phần Header của Sidebar */
+.sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #f1f5f9;
+}
+
+.sidebar-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+}
+
+/* Nút "Thêm lớp" */
+.btn-add-grade {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background-color: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #bfdbfe;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-grade:hover {
+  background-color: #2563eb;
+  color: #ffffff;
+}
+
+/* Trạng thái trống */
+.sidebar-empty {
+  text-align: center;
+  color: #94a3b8;
+  font-size: 14px;
+  padding: 20px 0;
+}
+
+/* Từng dòng Item Khối lớp */
+.sidebar-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  color: #475569;
+  font-weight: 500;
+  font-size: 14px;
+  transition: all 0.2s ease;
+  margin-bottom: 4px;
+}
+
+/* Hover dòng */
+.sidebar-item:hover {
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* Dòng đang được chọn (Active) */
+.sidebar-item.active {
+  background-color: #3b82f6;
+  color: #ffffff;
+}
+
+.sidebar-item-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Nút Sửa (Icon Edit) ẩn bên trong dòng */
+.btn-edit-grade {
+  background: transparent;
+  border: none;
+  color: #94a3b8;
+  padding: 4px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+/* Khi hover vào dòng thì icon sửa mới hiện rõ hoặc đổi màu */
+.sidebar-item:hover .btn-edit-grade {
+  color: #64748b;
+}
+
+.sidebar-item.active .btn-edit-grade {
+  color: #bfdbfe;
+}
+
+.btn-edit-grade:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.sidebar-item.active .btn-edit-grade:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+}

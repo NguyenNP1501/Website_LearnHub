@@ -1,0 +1,300 @@
+/* ==========================================
+   1. KHUNG TRANG & BỐ CỤC CHÍNH (LAYOUT)
+   ========================================== */
+.register-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(to bottom right, #5c8df6, #8e7bf0);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+.register-card {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px;
+  padding: 40px 35px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+.register-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.register-title {
+  margin: 0 0 5px 0;
+  color: #2b5b84;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.register-subtitle {
+  margin: 0;
+  color: #8fa0b5;
+  font-size: 14px;
+}
+
+/* ==========================================
+   2. THÀNH PHẦN FORM & Ô NHẬP LIỆU (INPUTS)
+   ========================================== */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #64748b;
+}
+
+/* Gom nhóm các thuộc tính chung của tất cả các loại Input */
+.input-with-icon input, .no-icon, .role-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+/* Custom padding riêng cho ô có icon */
+.input-with-icon input {
+  padding-left: 38px;
+}
+
+.input-with-icon input:focus, .no-icon:focus {
+  border-color: #5c8df6;
+  box-shadow: 0 0 0 3px rgba(92, 141, 246, 0.15);
+}
+
+/* Trạng thái nền xám khóa nhập liệu */
+.gray-bg input, .gray-input, .role-select {
+  background-color: #e2e8f0;
+  border-color: #cbd5e1;
+}
+
+/* ==========================================
+   3. NÚT BẤM & LIÊN KẾT (BUTTONS & LINKS)
+   ========================================== */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.checkbox-group label {
+  font-size: 13px;
+  color: #475569;
+}
+
+.blue-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.blue-link:hover {
+  text-decoration: underline;
+}
+
+.btn-register, .btn-error-close {
+  width: 100%;
+  padding: 12px;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-register {
+  background: linear-gradient(90deg, #5c8df6, #8e7bf0);
+  font-size: 16px;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(92, 141, 246, 0.3);
+}
+
+.btn-register:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+.register-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 13px;
+  color: #64748b;
+}
+
+/* ==========================================
+   4. HỘP THOẠI POPUP (SUCCESS & ERROR MODALS)
+   ========================================== */
+.reg-success-overlay {
+  position: fixed;
+  inset: 0; /* Thay cho top, left, width, height = 0 cực gọn */
+  background-color: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeInOverlay 0.3s ease-out forwards;
+}
+
+.reg-success-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  animation: scaleUpCard 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Modifier cấu trúc cho Modal lỗi */
+.reg-error-card {
+  border-top: 5px solid #ef4444 !important;
+  /* Chạy cả hiệu ứng phóng to lướt nhẹ và hiệu ứng rung lắc báo lỗi cùng lúc */
+  animation: scaleUpCard 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, modalShake 0.4s ease-in-out;
+}
+
+/* Gom nhóm thiết kế Icon Wrapper */
+.reg-success-icon-wrapper, .reg-error-icon-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.reg-success-icon-wrapper {
+  background-color: #dcfce7;
+  color: #16a34a;
+  animation: pulseIcon 1.5s infinite;
+}
+
+.reg-error-icon-wrapper {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+/* Gom nhóm tiêu đề Modal */
+.reg-success-title, .reg-error-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #0f172a;
+  margin: 0 0 12px 0;
+}
+
+/* Gom nhóm mô tả Modal */
+.reg-success-desc, .reg-error-desc {
+  color: #475569;
+  font-size: 14px;
+  line-height: 1.6;
+  margin: 0 0 24px 0;
+  padding: 0 10px;
+}
+
+.reg-redirect-status {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.reg-loading-bar-bg {
+  width: 100%;
+  height: 5px;
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.reg-loading-bar-fill {
+  height: 100%;
+  background-color: #2563eb;
+  width: 0%;
+  border-radius: 10px;
+  animation: progressRun 2.5s linear forwards;
+}
+
+.btn-error-close {
+  background-color: #ef4444;
+  font-size: 14px;
+}
+
+.btn-error-close:hover {
+  background-color: #dc2626;
+  box-shadow: 0 4px 12px rgba(239, 68, 68, 0.2);
+}
+
+/* ==========================================
+   5. HIỆU ỨNG CHUYỂN ĐỘNG (ANIMATIONS)
+   ========================================== */
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUpCard {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(22, 163, 74, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+@keyframes progressRun {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes modalShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}

@@ -1,0 +1,202 @@
+.login-page {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(360px, 460px);
+  gap: 24px;
+  padding: 28px;
+  background:
+    radial-gradient(circle at top left, rgba(14, 165, 233, 0.16), transparent 30%),
+    radial-gradient(circle at bottom right, rgba(249, 115, 22, 0.12), transparent 26%),
+    #0f172a;
+}
+
+.login-page__hero,
+.login-card {
+  border-radius: 30px;
+  overflow: hidden;
+}
+
+.login-page__hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 36px;
+  color: #e2e8f0;
+  background:
+    linear-gradient(135deg, rgba(15, 23, 42, 0.85), rgba(29, 78, 216, 0.75)),
+    linear-gradient(160deg, #0f172a, #1d4ed8);
+  box-shadow: 0 30px 70px rgba(2, 6, 23, 0.34);
+}
+
+.login-page__eyebrow {
+  margin: 0 0 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  color: #93c5fd;
+}
+
+.login-page__copy h1 {
+  margin: 0;
+  max-width: 10ch;
+  font-size: clamp(2.6rem, 5vw, 4.6rem);
+  line-height: 0.95;
+}
+
+.login-page__copy p {
+  margin: 16px 0 0;
+  max-width: 560px;
+  font-size: 1rem;
+  line-height: 1.65;
+  color: rgba(226, 232, 240, 0.86);
+}
+
+.login-page__credentials {
+  display: grid;
+  gap: 14px;
+}
+
+.login-page__credentials h2 {
+  margin: 0;
+  font-size: 1rem;
+}
+
+.login-page__credential-card {
+  display: grid;
+  gap: 4px;
+  padding: 16px 18px;
+  border-radius: 20px;
+  background: rgba(148, 163, 184, 0.16);
+  border: 1px solid rgba(148, 163, 184, 0.25);
+}
+
+.login-card {
+  padding: 30px;
+  background: #ffffff;
+  box-shadow: 0 30px 70px rgba(2, 6, 23, 0.28);
+}
+
+.login-card__header h2,
+.login-card__header p {
+  margin: 0;
+}
+
+.login-card__header p {
+  margin-top: 10px;
+  color: #64748b;
+}
+
+.login-form {
+  display: grid;
+  gap: 16px;
+  margin-top: 24px;
+}
+
+.login-form label {
+  display: grid;
+  gap: 8px;
+  color: #0f172a;
+  font-weight: 600;
+}
+
+.login-form input {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  padding: 14px 16px;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+.login-form__roles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  padding: 6px;
+  border-radius: 18px;
+  background: #e2e8f0;
+}
+
+.login-form__roles button,
+.login-form__submit {
+  border: 0;
+  cursor: pointer;
+}
+
+.login-form__roles button {
+  border-radius: 14px;
+  padding: 12px 14px;
+  font-weight: 700;
+  color: #334155;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.login-form__roles button.is-active {
+  color: #eff6ff;
+  background: linear-gradient(135deg, #0f172a, #1d4ed8);
+  box-shadow: 0 12px 26px rgba(29, 78, 216, 0.28);
+}
+
+.login-form__submit {
+  border-radius: 16px;
+  padding: 14px 18px;
+  font-weight: 800;
+  color: #eff6ff;
+  background: linear-gradient(135deg, #ea580c, #f97316);
+  box-shadow: 0 16px 30px rgba(249, 115, 22, 0.28);
+}
+
+.login-form__submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.login-form__register {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  color: #64748b;
+  font-size: 0.95rem;
+}
+
+.login-form__register a {
+  font-weight: 700;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+.login-form__register a:hover {
+  text-decoration: underline;
+}
+
+.login-form__error {
+  padding: 12px 14px;
+  border-radius: 14px;
+  color: #b91c1c;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+}
+
+@media (max-width: 980px) {
+  .login-page {
+    grid-template-columns: 1fr;
+    padding: 18px;
+  }
+
+  .login-page__copy h1 {
+    max-width: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-page__hero,
+  .login-card {
+    padding: 22px;
+  }
+}
+
+.hide{
+  display: none;
+}

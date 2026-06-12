@@ -1,0 +1,728 @@
+/* ================= TỔNG QUAN LAYOUT & TRẠNG THÁI TẢI TRANG ================= */
+.profile-container {
+  display: flex;
+  gap: 24px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 0 20px;
+  color: #333;
+}
+
+.profile-loading {
+  text-align: center;
+  margin-top: 100px;
+  font-size: 16px;
+  color: #64748b;
+}
+
+/* ================= CỘT TRÁI (SIDEBAR) ================= */
+.profile-container .profile-sidebar {
+  width: 300px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-container .profile-card {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.profile-container .user-info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 24px;
+  text-align: left;
+}
+
+.profile-container .user-avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 12px;
+}
+
+.profile-container .user-name {
+  margin: 0 0 4px 0;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.profile-container .user-school {
+  margin: 2px 0;
+  font-size: 14px;
+  color: #666;
+}
+
+/* Khu vực Avatar Text (Trường hợp không có ảnh đại diện) */
+.avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.avatar-text {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background-color: #e0f2fe;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  font-weight: bold;
+  border: 2px solid #bae6fd;
+}
+
+/* Badge phân quyền vai trò người dùng */
+.badge-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+
+.role-badge {
+  padding: 3px 12px;
+  border-radius: 9999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.role-badge.admin {
+  background-color: #fee2e2;
+  color: #dc2626;
+}
+
+.role-badge.teacher {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.role-badge.student {
+  background-color: #dbeafe;
+  color: #2563eb;
+}
+
+/* Thông tin chi tiết Metadata trong Sidebar */
+.profile-container .user-metadata-details {
+  padding: 4px 8px;
+  margin-bottom: 20px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-container .metadata-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.profile-container .metadata-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  background: #eff6ff;
+  padding: 6px;
+  border-radius: 8px;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+}
+
+.profile-container .metadata-icon-wrapper svg {
+  display: block;
+}
+
+.profile-container .metadata-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  flex: 1;
+  min-width: 0;
+}
+
+.profile-container .metadata-label {
+  font-weight: 700;
+  color: #64748b;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.profile-container .metadata-value {
+  color: #1e293b;
+  font-size: 14px;
+  font-weight: 600;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.profile-container .metadata-value.email-text {
+  color: #475569;
+  font-weight: 500;
+  word-break: break-all;
+}
+
+/* Thanh Menu Sidebar */
+.profile-container .profile-menu {
+  width: 100%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.profile-container .menu-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 16px;
+  border: none;
+  background: transparent;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: left;
+}
+
+.profile-container .menu-item:hover {
+  background: #f1f5f9;
+}
+
+.profile-container .menu-item.active {
+  background: #e0e7ff;
+}
+
+/* Khối lịch sử thi cử ở Sidebar */
+.profile-container .card-title {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.profile-container .history-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-container .history-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  gap: 12px;
+  border-bottom: 1px dashed #e2e8f0;
+  padding-bottom: 10px;
+}
+
+.profile-container .history-exam-title {
+  font-size: 13px;
+  font-weight: 500;
+  color: #334155;
+  flex: 1;
+  min-width: 0;
+  word-break: break-word;
+  line-height: 1.4;
+}
+
+.profile-container .history-date {
+  font-size: 13px;
+  font-weight: bold;
+  color: #333;
+}
+
+.history-empty {
+  font-size: 13px;
+  color: #94a3b8;
+  font-style: italic;
+}
+
+.history-score {
+  color: #16a34a;
+  font-weight: bold;
+  white-space: nowrap;
+}
+
+
+/* ================= CỘT PHẢI (NỘI DUNG CHÍNH) ================= */
+.profile-container .profile-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.profile-container .welcome-banner {
+  background: linear-gradient(90deg, #dbeafe 0%, #e0f2fe 100%);
+  border-left: 6px solid #2563eb;
+  padding: 30px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.profile-container .welcome-banner h2 {
+  margin: 0 0 8px 0;
+  font-size: 22px;
+}
+
+.profile-container .welcome-banner p {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+.profile-container .text-highlight {
+  color: #2563eb;
+}
+
+.profile-container .section-title {
+  margin: 0 0 20px 0;
+  font-size: 20px;
+}
+
+/* Thanh tìm kiếm & bộ lọc Khóa học */
+.courses-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.courses-header .section-title {
+  margin: 0;
+}
+
+.courses-filters {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-wrapper {
+  position: relative;
+}
+
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #94a3b8;
+}
+
+.search-input {
+  padding: 6px 12px 6px 32px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  outline: none;
+}
+
+.filter-select {
+  padding: 6px 12px;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+  font-size: 14px;
+  color: #334155;
+  outline: none;
+}
+
+.courses-empty {
+  grid-column: 1/-1;
+  color: #64748b;
+  font-style: italic;
+  padding: 30px 0;
+  text-align: center;
+}
+
+/* Danh sách Grid & Card Khóa học */
+.profile-container .course-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.profile-container .active-course-card {
+  background: white;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.profile-container .course-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  min-width: 0;
+}
+
+.profile-container .course-color-block {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background-color: #f1f5f9;
+  display: block;
+}
+
+.profile-container .course-card-title {
+  font-weight: bold;
+  font-size: 16px;
+  color: #1e293b;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; 
+  line-clamp: 2;      
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Tiến độ học tập trong khóa học */
+.profile-container .progress-section {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 20px;
+  width: 100%;
+}
+
+.profile-container .progress-bar-bg {
+  width: 100%;
+  height: 8px;
+  background-color: #e2e8f0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.profile-container .progress-bar-fill {
+  height: 100%;
+  background-color: #2563eb;
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.profile-container .progress-text {
+  font-size: 13px;
+  font-weight: bold;
+}
+
+.progress-text-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  font-size: 12px;
+  color: #64748b;
+  margin-top: 4px;
+}
+
+.progress-percentage {
+  font-weight: bold;
+  color: #1e293b;
+}
+
+.profile-container .btn-continue-learning {
+  width: 100%;
+  padding: 10px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-container .btn-continue-learning:hover {
+  background: #1d4ed8;
+}
+
+.active-course-card .btn-continue-learning {
+  margin-top: 12px;
+}
+
+
+/* ================= TAB THÀNH TÍCH & KHỐI HUY HIỆU ================= */
+.profile-container .achievement-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 768px) {
+  .profile-container .achievement-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-container .achievement-card {
+  padding: 24px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+}
+
+.profile-container .achivement-number {
+  font-size: 28px;
+  font-weight: 900;
+  margin: 12px 0 8px 0;
+}
+
+.profile-container .achievement-label {
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.profile-container .bg-purple { background-color: #f3e8ff; color: #111; }
+.profile-container .bg-green  { background-color: #dcfce7; color: #111; }
+.profile-container .bg-orange { background-color: #ffedd5; color: #111; }
+
+/* Chi tiết bộ sưu tập danh hiệu */
+.badges-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+}
+
+.badges-container .section-title {
+  margin-bottom: 16px;
+}
+
+.badges-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.badge-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+}
+
+.badge-item.is-locked {
+  opacity: 0.5;
+}
+
+.badge-icon.icon-yellow { color: #eab308; }
+.badge-icon.icon-green  { color: #16a34a; }
+.badge-icon.icon-blue   { color: #3b82f6; }
+
+.badge-title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.badge-desc {
+  margin: 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+
+/* ================= TAB CÀI ĐẶT TÀI KHOẢN & FORM ================= */
+.profile-container .settings-tab-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.profile-container .settings-card-form {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  border: 1px solid #f1f5f9;
+}
+
+.profile-container .settings-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #f1f5f9;
+  padding-bottom: 12px;
+}
+
+.profile-container .settings-card-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.profile-container .settings-form-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.profile-container .form-row-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) {
+  .profile-container .form-row-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.profile-container .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.profile-container .form-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #475569;
+}
+
+.profile-container .form-input {
+  padding: 10px 14px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  color: #1e293b;
+  transition: all 0.2s;
+}
+
+.profile-container .form-input:focus {
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+/* Các loại nút submit form */
+.profile-container .btn-submit-settings {
+  align-self: flex-start;
+  padding: 10px 24px;
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.profile-container .btn-submit-settings:hover {
+  background-color: #1d4ed8;
+}
+
+.profile-container .btn-submit-settings:disabled {
+  background-color: #94a3b8;
+  cursor: not-allowed;
+}
+
+.profile-container .btn-danger-settings {
+  background-color: #dc2626;
+}
+
+.profile-container .btn-danger-settings:hover {
+  background-color: #b91c1c;
+}
+
+.staff-notice {
+  color: #64748b;
+  font-size: 14px;
+  font-style: italic;
+  margin: 0;
+}
+
+.icon-danger {
+  color: #dc2626;
+}
+
+
+/* ================= KHỐI TRẠNG THÁI AN TOÀN BẢO MẬT ================= */
+.status-container {
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 12px;
+  margin-top: 20px;
+  text-align: center;
+}
+
+.status-icon {
+  color: #2563eb;
+  margin-bottom: 10px;
+}
+
+.status-title {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.status-desc {
+  color: #64748b;
+  font-size: 14px;
+}
+
+.status-meta-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 15px;
+}
+
+.status-meta-item {
+  background: #f8fafc;
+  padding: 10px 20px;
+  border-radius: 8px;
+}
+
+.status-meta-label {
+  display: block;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.status-meta-value {
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.status-meta-value.text-success {
+  color: #16a34a;
+}
+
+
+/* ================= TIỆN ÍCH KHOẢNG CÁCH (UTILITIES) ================= */
+.mb-24 {
+  margin-bottom: 24px;
+}

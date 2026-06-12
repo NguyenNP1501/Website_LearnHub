@@ -1,0 +1,288 @@
+.create-exam-page {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.create-exam__intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(280px, 0.9fr);
+  gap: 20px;
+  padding: 28px;
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.95), transparent 34%),
+    linear-gradient(135deg, #0f4dc4 0%, #1460ec 42%, #7cc7ff 100%);
+  color: #fff;
+  box-shadow: 0 18px 45px rgba(15, 77, 196, 0.2);
+}
+
+.create-exam__eyebrow {
+  margin: 0 0 8px;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.create-exam__intro h1 {
+  margin: 0 0 12px;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1.15;
+}
+
+.create-exam__lead {
+  margin: 0;
+  max-width: 680px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.create-exam__intro-card {
+  align-self: stretch;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 20px;
+  background: rgba(7, 24, 66, 0.2);
+  backdrop-filter: blur(8px);
+}
+
+.create-exam__intro-card span {
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.create-exam__intro-card strong {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 28px;
+  line-height: 1.1;
+}
+
+.create-exam__intro-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.88);
+  line-height: 1.6;
+}
+
+.create-exam__section {
+  padding: 22px;
+  border: 1px solid #dbe4ff;
+  border-radius: 22px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+  box-shadow: 0 12px 32px rgba(15, 77, 196, 0.08);
+}
+
+.create-exam__section-heading {
+  margin-bottom: 18px;
+}
+
+.create-exam__section-heading p {
+  margin: 0 0 6px;
+  color: #1460ec;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.create-exam__section-heading h2 {
+  margin: 0;
+  color: #0f172a;
+  font-size: 24px;
+}
+
+.import-panel {
+  position: relative;
+  overflow: hidden;
+}
+
+.import-panel::after {
+  content: "";
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(124, 199, 255, 0.2), transparent 70%);
+  pointer-events: none;
+}
+
+.import-panel__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  margin-bottom: 18px;
+}
+
+.import-panel__header h3 {
+  margin: 0 0 8px;
+  color: #123c9c;
+}
+
+.import-panel__header p {
+  margin: 0;
+  color: #475569;
+  line-height: 1.7;
+}
+
+.import-panel__meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.import-panel__meta-chip {
+  display: inline-flex;
+  align-items: center;
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: #eaf2ff;
+  color: #123c9c;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.import-panel__body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: end;
+}
+
+.import-panel__field {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.import-panel__field label {
+  font-weight: 700;
+  color: #1e293b;
+}
+
+.import-panel__field input[type="file"] {
+  display: none;
+}
+
+.import-panel__picker {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 18px 20px;
+  border: 1px dashed #93c5fd;
+  border-radius: 16px;
+  background: #fff;
+  cursor: pointer;
+  transition: border-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.import-panel__picker:hover {
+  border-color: #1460ec;
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px rgba(20, 96, 236, 0.08);
+}
+
+.import-panel__picker span {
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.import-panel__picker small,
+.import-panel__file-name {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.import-panel__actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.import-panel__actions button {
+  min-width: 180px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  padding: 14px 18px;
+  font-weight: 700;
+  transition: transform 0.2s ease, background 0.2s ease, opacity 0.2s ease;
+}
+
+.import-panel__actions button:first-child {
+  background: #1460ec;
+  color: #fff;
+}
+
+.import-panel__actions button:first-child:hover {
+  background: #0f4dc4;
+}
+
+.import-panel__secondary {
+  background: #e9eefc;
+  color: #123c9c;
+}
+
+.import-panel__secondary:hover {
+  background: #dbe4ff;
+}
+
+.import-panel__actions button:hover {
+  transform: translateY(-1px);
+}
+
+.import-panel__actions button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+@media (max-width: 900px) {
+  .create-exam__intro {
+    grid-template-columns: 1fr;
+  }
+
+  .import-panel__body {
+    grid-template-columns: 1fr;
+    align-items: stretch;
+  }
+}
+
+@media (max-width: 768px) {
+  .create-exam-page {
+    gap: 18px;
+  }
+
+  .create-exam__intro,
+  .create-exam__section {
+    padding: 18px;
+    border-radius: 18px;
+  }
+
+  .import-panel__header {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .import-panel__meta {
+    justify-content: flex-start;
+  }
+
+  .import-panel__actions {
+    flex-direction: column;
+  }
+
+  .import-panel__actions button {
+    width: 100%;
+  }
+}

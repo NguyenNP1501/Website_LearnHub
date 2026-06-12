@@ -1,0 +1,257 @@
+/* ==========================================================================
+   1. BỐ CỤC CHÍNH (LAYOUT CONTAINER)
+   ========================================================================== */
+.portal-container {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+.portal-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* ==========================================================================
+   2. HỆ THỐNG NÚT BẤM DÙNG CHUNG (SHARED BUTTONS)
+   ========================================================================== */
+/* Gộp các nút sử dụng chung tông màu xanh thương hiệu */
+.btn-blue,
+.btn-add-course,
+.filter-chip-btn.active {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+}
+
+.btn-blue:hover,
+.btn-add-course:hover {
+  background-color: #2563eb;
+}
+
+.btn-blue {
+  transition: background-color 0.2s ease;
+}
+/* ==========================================================================
+   4. KHU VỰC TIÊU ĐỀ NỘI DUNG (PORTAL HEADER)
+   ========================================================================== */
+.portal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+.portal-title {
+  font-size: 24px;
+  margin: 0;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.btn-add-course {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   5. THANH BỘ LỌC MÔN HỌC (SUBJECT FILTER)
+   ========================================================================== */
+.modern-filter-wrapper {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.modern-filter-track {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
+  flex-wrap: wrap;
+  padding-bottom: 8px;
+}
+
+.modern-filter-track::-webkit-scrollbar {
+  height: 5px; 
+}
+
+.modern-filter-track::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.filter-chip-btn {
+  padding: 8px 20px;
+  border-radius: 20px; 
+  border: 1px solid #e2e8f0; 
+  background-color: #ffffff; 
+  color: #64748b; 
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.filter-chip-btn:hover {
+  background-color: #f8fafc;
+  color: #334155;
+}
+
+.filter-chip-btn.active {
+  border-color: #3b82f6;
+}
+
+.filter-chip-interactive {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 8px; 
+  padding-right: 12px; 
+}
+
+.sub-action-btn {
+  display: inline-flex; 
+  align-items: center; 
+  opacity: 0.7; 
+  cursor: pointer;
+  color: #6b7280;
+  transition: color 0.2s;
+}
+
+.filter-chip-btn.active .sub-action-btn {
+  color: #ffffff;
+}
+
+.btn-add-subject {
+  display: inline-flex; 
+  align-items: center; 
+  gap: 4px; 
+  border: 1px dashed #3b82f6; 
+  color: #3b82f6; 
+  background: transparent; 
+  font-weight: bold;
+}
+
+.btn-add-subject:hover {
+  background: #eff6ff;
+  border-color: #2563eb;
+  color: #2563eb;
+}
+
+/* ==========================================================================
+   6. LƯỚI KHÓA HỌC & TRẠNG THÁI TRỐNG (GRID & EMPTY STATE)
+   ========================================================================== */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px;
+  color: #64748b;
+  background: white;
+  border-radius: 15px;
+  border: 1px dashed #cbd5e1;
+}
+
+.empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.empty-desc {
+  font-size: 14px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ==========================================================================
+   7. GIAO DIỆN BÁO LỖI HỆ THỐNG (ERROR SECTION)
+   ========================================================================== */
+.portal-error-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 75vh;
+  gap: 16px;
+  font-family: sans-serif;
+}
+
+.portal-error-text {
+  color: #ef4444;
+  font-weight: bold;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 0 20px;
+  line-height: 1.5;
+}
+
+.btn-login-redirect {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   8. ĐÁP ỨNG MÀN HÌNH DI ĐỘNG (RESPONSIVE)
+   ========================================================================== */
+@media (max-width: 1024px) {
+  .course-grid {
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portal-container {
+    flex-direction: column; 
+    gap: 20px;
+  }
+  
+  .portal-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-right: 0;
+    padding-bottom: 15px;
+  }
+  
+  .course-grid {
+    grid-template-columns: 1fr; 
+  }
+  
+  .portal-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .btn-add-course {
+    width: 100%;
+    justify-content: center;
+  }
+}
