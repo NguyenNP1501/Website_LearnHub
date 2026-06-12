@@ -72,11 +72,11 @@ const normalizeQuestionType = (value) => {
     return 2;
   }
 
-  if (["3", "fill", "fill_blank", "text", "input", "dien"].includes(rawValue)) {
-    return 3;
-  }
-
-  return Number(rawValue) === 2 ? 2 : Number(rawValue) === 3 ? 3 : 1;
+  // if (["3", "fill", "fill_blank", "text", "input", "dien"].includes(rawValue)) {
+  //   return 3;
+  // }
+  return Number(rawValue) === 2 ? 2 : 1;
+  //return Number(rawValue) === 2 ? 2 : Number(rawValue) === 3 ? 3 : 1;
 };
 
 const extractCell = (row, fieldName) => {

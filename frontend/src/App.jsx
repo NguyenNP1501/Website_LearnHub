@@ -23,23 +23,24 @@ import HistoryExam from "./pages/client/HistoryExam";
 import ResultExam from "./pages/client/ResultExam";
 import SearchExam from "./pages/client/SearchExam";
 import ViewExamClient from "./pages/client/ViewExamClient";
-import Profile from './pages/profile/Profile';
 
 // ============ IMPORT COMPONENT CỦA COURSE ============
-import CoursePortal from './pages/client/KhoaHoc/CoursePortal';
-import ClientCourseDetail from './pages/client/KhoaHoc/CourseDetail';
-import LearningLesson from './pages/client/KhoaHoc/LearningLesson';
+import CoursePortal from './pages/client/KhoaHoc/CoursePortal'
+import ClientCourseDetail from './pages/client/KhoaHoc/CourseDetail'
+import LearningLesson from './pages/client/KhoaHoc/LearningLesson'
 
-import AdminCoursePortal from './pages/admin/KhoaHoc/AdminCoursePortal';
-import CreateCourse from './pages/admin/KhoaHoc/CreateCourse';
-import EditCourse from './pages/admin/KhoaHoc/EditCourse';
-import AdminCourseDetail from './pages/admin/KhoaHoc/AdminCourseDetail';
-import UploadLesson from './pages/admin/KhoaHoc/UploadLesson';
-import EditLesson from './pages/admin/KhoaHoc/EditLesson'; 
+import AdminCoursePortal from './pages/admin/KhoaHoc/AdminCoursePortal'
+import CreateCourse from './pages/admin/KhoaHoc/CreateCourse'
+import EditCourse from './pages/admin/KhoaHoc/EditCourse'
+import AdminCourseDetail from './pages/admin/KhoaHoc/AdminCourseDetail'
+import UploadLesson from './pages/admin/KhoaHoc/UploadLesson'
+import EditLesson from './pages/admin/KhoaHoc/EditLesson'
 
-import Register from './pages/auth/Register';
+// ============ 🌟 DÙNG CHUNG MỘT COMPONENT PROFILE NÀY ============
+import Profile from './pages/profile/Profile'; 
 
-// Danh sách trang không hiển thị Header toàn cục
+import Register from './pages/auth/Register'
+
 const AUTH_PAGES = new Set(["/login", "/register", "/forgot-password", "/forgot", "/reset-password"]);
 
 function AppRoutes() {
@@ -71,8 +72,8 @@ function AppRoutes() {
           ========================================= */}
       <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
         <Route element={<StudentLayout />}>
-          <Route path="/" element={<ViewExamClient />} />
-          <Route path="/search-exam" element={<SearchExam />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/view-exam" element={<ViewExamClient />} />
           <Route path="/do-exam/:id" element={<DoExam />} />
           <Route path="/history-exam" element={<HistoryExam />} />
           <Route path="/result-exam/:id" element={<ResultExam />} />
@@ -84,7 +85,7 @@ function AppRoutes() {
           ========================================= */}
       <Route element={<ProtectedRoute allowedRoles={["student", "admin", "teacher"]} />}>
         <Route element={<StudentLayout />}>
-          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
           
           <Route 
             path="/courses" 
@@ -94,6 +95,12 @@ function AppRoutes() {
           <Route path="/course/:courseId" element={<ClientCourseDetail />} />
           <Route path="/lesson/:lessonId" element={<LearningLesson />} />
           
+          {/* 🌟 ĐÃ SỬA: Hết lỗi vòng lặp vô tận, tự động đẩy Admin qua đúng path riêng của Admin Layout */}
+          <Route 
+            path="/profile" 
+            element={isAdminOrTeacher ? <Navigate to="/admin/profile" replace /> : <Profile />} 
+          />
+          
           {/* Hệ thống Diễn đàn & Thảo luận */}
           <Route path="/posts" element={<ViewPost />} />
           <Route path="/view-post" element={<ViewPost />} />
@@ -101,8 +108,6 @@ function AppRoutes() {
           <Route path="/view-post/:post_id" element={<PostDetail />} />
           <Route path="/discussion/new" element={<Discussion />} />
           <Route path="/discuss" element={<Discussion />} />
-
-          <Route path="/profile" element={<Profile />} />
         </Route>
       </Route>
 
@@ -112,8 +117,9 @@ function AppRoutes() {
       <Route element={<ProtectedRoute allowedRoles={["admin", "teacher"]} />}>
         <Route element={<AdminLayout />}>
           {/* Quản lý Đề thi (Exam) */}
-          <Route path="/admin" element={<ExamList />} />
-          <Route path="/admin/create" element={<CreateExam />} />
+          <Route path="/admin" element={<Home />} />
+          <Route path="/admin/view-list-exam" element={<ExamList />} />
+          <Route path="/admin/create" element={<CreateExam />}/>
           <Route path="/admin/edit/:id" element={<EditExam />} />
           <Route path="/admin/view/:id" element={<ViewExam />} />
           <Route path="/admin/exported" element={<ManageExported />} />
@@ -127,6 +133,9 @@ function AppRoutes() {
           <Route path="/admin/course/:courseId" element={<AdminCourseDetail />} />
           <Route path="/admin/upload/:courseId" element={<UploadLesson />} />
           <Route path="/admin/edit-lesson/:lessonId" element={<EditLesson />} />
+
+          {/* 🌟 ĐÃ SỬA: Gọi chung cấu phần component Profile vào đây, hiển thị mượt mà trong khung Admin */}
+          <Route path="/admin/profile" element={<Profile />} />
         </Route>
       </Route>
 
@@ -138,8 +147,6 @@ function AppRoutes() {
 
 function AppShell() {
   const { pathname } = useLocation();
-  
-  // 🛠️ TỐI ƯU: Loại bỏ dấu gạch chéo cuối đường dẫn (nếu có) để nhận diện chính xác các trang Auth
   const normalizedPathname = pathname.length > 1 ? pathname.replace(/\/$/, "") : pathname;
   const showHeader = !AUTH_PAGES.has(normalizedPathname);
 

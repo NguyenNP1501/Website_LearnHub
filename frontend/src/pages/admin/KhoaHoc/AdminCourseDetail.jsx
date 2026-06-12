@@ -181,7 +181,7 @@ export default function AdminCourseDetail() {
           {canEdit && (
             <div className="toolbar-actions">
               <button className="action-btn" onClick={handleAddChapter}><Plus size={18} /> Thêm chương</button>
-              <button className="action-btn" onClick={() => navigate(`/admin/upload/${courseId}`)}><Upload size={18} /> Upload video</button>
+              <button className="action-btn" onClick={() => navigate(`/admin/upload/${courseId}`)}><Upload size={18} /> Đăng bài giảng</button>
             </div>
           )}
         </div>
@@ -189,7 +189,7 @@ export default function AdminCourseDetail() {
         <div className="content-card">
           {chapters.length === 0 ? (
             <div className="empty-chapters">
-              Khóa học này chưa có bài học nào. {canEdit && 'Hãy bấm "Upload video" hoặc "Thêm chương" để bắt đầu!'}
+              Khóa học này chưa có bài học nào. {canEdit && 'Hãy bấm "Đăng bài giảng" hoặc "Thêm chương" để bắt đầu!'}
             </div>
           ) : chapters.map((ch, idx) => {
             const chTitle = ch.chapter_name || ch.title || 'Chương không rõ tên';

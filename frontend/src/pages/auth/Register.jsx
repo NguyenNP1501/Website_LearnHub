@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { User, Mail, Lock, Building, Eye, EyeOff, CheckCircle2, XCircle } from 'lucide-react';
+import { User, Mail, Lock, Building, BookOpen, Eye, EyeOff, CheckCircle2 } from 'lucide-react'; // ĐÃ THÊM: CheckCircle2
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import './Register.css';
@@ -8,51 +7,76 @@ import './Register.css';
 export default function Register() {
   const navigate = useNavigate();
 
-  // State quản lý UI bật/tắt mật khẩu
+  // 1. Quản lý toàn bộ State
+  const [role, setRole] = useState('teacher');
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  
+  // State dành riêng cho Học sinh
+  const [school, setSchool] = useState('');
+  const [className, setClassName] = useState('');
+  
+  // State dành riêng cho Giáo viên
+  const [major, setMajor] = useState('');
+
+  // State hỗ trợ ẩn/hiện mật khẩu
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  
-  // Trạng thái thông báo
+
+  // State thông báo lỗi/thành công thông thường
   const [message, setMessage] = useState('');
+  const [isError, setIsError] = useState(false);
+
+  // ĐÃ THÊM: State quản lý bật/tắt Modal thông báo thành công xịn xò
   const [showSuccessModal, setShowSuccessModal] = useState(false);
-  const [showErrorModal, setShowErrorModal] = useState(false); // <--- Thêm State quản lý Modal Lỗi
 
-  // Khởi tạo useForm (Cố định role ban đầu là student)
-  const { register, handleSubmit, watch, formState: { errors } } = useForm({
-    defaultValues: {
-      role: 'student'
-    }
-  });
-
-  // Sử dụng watch để theo dõi ô mật khẩu nhằm validate ô "Xác nhận mật khẩu"
-  const password = watch('password');
-
-  // Hàm xử lý khi form hợp lệ và được bấm Submit
-  const onSubmit = async (data) => {
+  // 2. Hàm xử lý khi bấm nút Đăng ký
+  const handleRegister = async (e) => {
+    e.preventDefault(); 
     setMessage('');
+    setIsError(false);
+
+    // Kiểm tra mật khẩu khớp nhau
+    if (password !== confirmPassword) {
+      setIsError(true);
+      setMessage('Mật khẩu xác nhận không khớp!');
+      return;
+    }
+
+    // Đóng gói dữ liệu chuẩn bị gửi đi
+    const userData = {
+      full_name: fullName,
+      email: email,
+      password: password,
+      role: role, 
+      school: role === 'student' ? school : null,
+      class_name: role === 'student' ? className : null,
+      major: role === 'teacher' ? major : null
+    };
 
     try {
-      // Gửi dữ liệu đăng ký lên Server Backend
-      const response = await axios.post('http://localhost:3000/api/auth/register', data);
+      // 3. Bắn dữ liệu sang API Backend
+      const response = await axios.post('http://localhost:3000/api/auth/register', userData);
       
-      // Mở Modal Thành công
+      // ĐÃ SỬA: Kích hoạt hiện Modal thông báo thành công hoành tráng
+      setIsError(false);
       setShowSuccessModal(true);
       
+      // Đợi 2.5 giây để người dùng trải nghiệm hiệu ứng và tự động chuyển sang đăng nhập
       setTimeout(() => {
         setShowSuccessModal(false);
         navigate('/login');
       }, 2500);
 
     } catch (error) {
-      // Nếu có lỗi, lấy message từ Backend hoặc gán câu thông báo mặc định
+      setIsError(true);
       if (error.response && error.response.data) {
         setMessage(error.response.data.message);
       } else {
-        setMessage('Hệ thống đang bận hoặc lỗi kết nối đến máy chủ!');
+        setMessage('Lỗi kết nối đến máy chủ!');
       }
-      
-      // Kích hoạt Modal Lỗi hiển thị lên màn hình giống Modal Thành công
-      setShowErrorModal(true);
     }
   };
 
@@ -65,10 +89,23 @@ export default function Register() {
           <p className="register-subtitle">Tham gia LearnHub bằng cách tạo tài khoản mới</p>
         </div>
 
-        {/* Bọc hàm xử lý qua handleSubmit của useForm */}
-        <form className="register-form" onSubmit={handleSubmit(onSubmit)}>
-          
-          {/* Họ và tên */}
+        {/* Hiển thị thông báo Lỗi thông thường */}
+        {message && isError && (
+          <div style={{ 
+            padding: '10px', 
+            marginBottom: '15px', 
+            borderRadius: '5px', 
+            textAlign: 'center',
+            backgroundColor: '#fee2e2',
+            color: '#dc2626',
+            fontWeight: 'bold',
+            fontSize: '14px'
+          }}>
+            {message}
+          </div>
+        )}
+
+        <form className="register-form" onSubmit={handleRegister}>
           <div className="form-group">
             <label>Họ và tên</label>
             <div className="input-with-icon">
@@ -76,13 +113,13 @@ export default function Register() {
               <input 
                 type="text" 
                 placeholder="Nhập họ và tên" 
-                {...register('full_name', { required: 'Vui lòng nhập họ và tên!' })}
+                required
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
               />
             </div>
-            {errors.full_name && <span style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.full_name.message}</span>}
           </div>
 
-          {/* Email */}
           <div className="form-group">
             <label>Email</label>
             <div className="input-with-icon">
@@ -90,59 +127,72 @@ export default function Register() {
               <input 
                 type="email" 
                 placeholder="email@gmail.com" 
-                {...register('email', { 
-                  required: 'Vui lòng nhập email!',
-                  pattern: { value: /^\S+@\S+$/i, message: 'Email không đúng định dạng!' }
-                })}
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
-            {errors.email && <span style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.email.message}</span>}
           </div>
 
-          {/* Vai trò tĩnh */}
           <div className="form-group">
             <label>Vai trò</label>
-            <div className="input-with-icon gray-bg">
-              <User className="input-icon" size={18} />
-              <input 
-                type="text" 
-                value="Học sinh" 
-                readOnly 
-                className="gray-input"
-                style={{ cursor: 'not-allowed', color: '#64748b', fontWeight: '500' }}
-              />
-            </div>
+            <select 
+              className="role-select" 
+              value={role} 
+              onChange={(e) => setRole(e.target.value)}
+            >
+              <option value="teacher">Giáo viên</option>
+              <option value="student">Học sinh</option>
+            </select>
           </div>
 
-          {/* Trường học & Lớp học */}
-          <div className="form-row">
-            <div className="form-group half-width">
-              <label>Trường học</label>
-              <div className="input-with-icon">
-                <Building className="input-icon" size={18} />
+          {role === 'student' && (
+            <div className="form-row">
+              <div className="form-group half-width">
+                <label>Trường học</label>
+                <div className="input-with-icon gray-bg">
+                  <Building className="input-icon" size={18} />
+                  <input 
+                    type="text" 
+                    placeholder="Tên trường" 
+                    className="gray-input"
+                    required
+                    value={school}
+                    onChange={(e) => setSchool(e.target.value)}
+                  />
+                </div>
+              </div>
+              <div className="form-group half-width">
+                <label>Lớp học</label>
                 <input 
                   type="text" 
-                  placeholder="Tên trường" 
-                  className="input"
-                  {...register('school', { required: 'Vui lòng nhập tên trường!' })}
+                  placeholder="Tên lớp" 
+                  className="gray-input no-icon"
+                  required
+                  value={className}
+                  onChange={(e) => setClassName(e.target.value)}
                 />
               </div>
-              {errors.school && <span style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.school.message}</span>}
             </div>
+          )}
 
-            <div className="form-group half-width">
-              <label>Lớp học</label>
-              <input 
-                type="text" 
-                placeholder="Tên lớp" 
-                className="input no-icon"
-                {...register('class_name', { required: 'Vui lòng nhập tên lớp!' })}
-              />
-              {errors.class_name && <span style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.class_name.message}</span>}
+          {role === 'teacher' && (
+            <div className="form-group">
+              <label>Chuyên ngành / Môn giảng dạy</label>
+              <div className="input-with-icon gray-bg">
+                <BookOpen className="input-icon" size={18} />
+                <input 
+                  type="text" 
+                  placeholder="Nhập chuyên môn của bạn" 
+                  className="gray-input"
+                  required
+                  value={major}
+                  onChange={(e) => setMajor(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
+          )}
 
-          {/* Mật khẩu */}
           <div className="form-group">
             <label>Mật khẩu</label>
             <div className="input-with-icon">
@@ -150,10 +200,10 @@ export default function Register() {
               <input 
                 type={showPassword ? "text" : "password"} 
                 placeholder="Nhập mật khẩu" 
-                {...register('password', { 
-                  required: 'Vui lòng nhập mật khẩu!', 
-                  minLength: { value: 6, message: 'Mật khẩu phải từ 6 ký tự trở lên!' } 
-                })}
+                required
+                minLength="6"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
               <span 
                 className="eye-toggle-icon" 
@@ -163,10 +213,8 @@ export default function Register() {
                 {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </span>
             </div>
-            {errors.password && <span style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.password.message}</span>}
           </div>
 
-          {/* Xác nhận mật khẩu */}
           <div className="form-group">
             <label>Xác nhận mật khẩu</label>
             <div className="input-with-icon">
@@ -174,10 +222,9 @@ export default function Register() {
               <input 
                 type={showConfirmPassword ? "text" : "password"} 
                 placeholder="Nhập lại mật khẩu" 
-                {...register('confirmPassword', { 
-                  required: 'Vui lòng xác nhận lại mật khẩu!',
-                  validate: value => value === password || 'Mật khẩu xác nhận không khớp!'
-                })}
+                required
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
               />
               <span 
                 className="eye-toggle-icon" 
@@ -187,7 +234,6 @@ export default function Register() {
                 {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
               </span>
             </div>
-            {errors.confirmPassword && <span style={{ color: '#dc2626', fontSize: '12px', marginTop: '4px' }}>{errors.confirmPassword.message}</span>}
           </div>
 
           <div className="checkbox-group">
@@ -206,7 +252,9 @@ export default function Register() {
 
       </div>
 
-      {/* ==================== MODAL POPUP ĐĂNG KÝ THÀNH CÔNG ==================== */}
+      {/* ======================================================= */}
+      {/* ĐÃ THÊM: GIAO DIỆN MODAL POPUP ĐĂNG KÝ THÀNH CÔNG XỊN XÒ */}
+      {/* ======================================================= */}
       {showSuccessModal && (
         <div className="reg-success-overlay">
           <div className="reg-success-card">
@@ -220,32 +268,10 @@ export default function Register() {
             <div className="reg-redirect-status">
               Đang chuyển hướng sang trang đăng nhập...
             </div>
+            {/* Thanh loading bar chạy lùi/tiến trực quan */}
             <div className="reg-loading-bar-bg">
               <div className="reg-loading-bar-fill"></div>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* ==================== MODAL POPUP ĐĂNG KÝ THẤT BẠI (MỚI) ==================== */}
-      {showErrorModal && (
-        <div className="reg-success-overlay">
-          <div className="reg-success-card reg-error-card">
-            <div className="reg-error-icon-wrapper">
-              <XCircle className="reg-error-icon" size={56} />
-            </div>
-            <h3 className="reg-error-title">Đăng ký thất bại</h3>
-            <p className="reg-error-desc">
-              {message || "Đã xảy ra sai sót trong quá trình tạo tài khoản."}
-            </p>
-            
-            <button 
-              type="button" 
-              className="btn-error-close" 
-              onClick={() => setShowErrorModal(false)}
-            >
-              Thử lại ngay
-            </button>
           </div>
         </div>
       )}
