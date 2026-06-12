@@ -135,8 +135,6 @@ exports.register = async (req, res) => {
     }
 
     // 4. Gọi Model lưu thông tin
-    // ĐÃ SỬA: Đồng bộ tên thuộc tính (userName, password, gradeClass, specialization)
-    // khớp hoàn toàn với cấu trúc hiển thị ở hàm buildUserProfile phía trên.
     await userModel.createUser({
       userName: full_name,
       email: email,

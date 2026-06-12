@@ -1,5 +1,4 @@
-// File: backend/models/ProgressModel.js
-const db = require('../../configs/database.config'); // Nhớ trỏ đúng đường dẫn db
+const db = require('../../configs/database.config');
 
 const ProgressModel = {
     // 1. Dành cho student_course: Đăng ký khóa học

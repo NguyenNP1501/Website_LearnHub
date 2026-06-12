@@ -126,7 +126,7 @@ const clientCourseController = {
   checkStatus: async (req, res) => {
     try {
       const courseId = req.params.id;
-      const studentId = req.user?.id || req.user?.user_id || 1; 
+      const studentId = req.auth?.id || req.auth?.user_id || req.auth?.userId;
       const enrollment = await ProgressModel.checkEnrollment(studentId, courseId);
       res.status(200).json({ success: true, isEnrolled: !!enrollment, data: enrollment });
     } catch (error) {
@@ -139,7 +139,7 @@ const clientCourseController = {
   enroll: async (req, res) => {
     try {
       const courseId = req.params.id;
-      const studentId = req.user?.id || req.user?.user_id || 1; 
+      const studentId = req.auth?.id || req.auth?.user_id || req.auth?.userId;
       
       const enrollmentId = await ProgressModel.enrollCourse(studentId, courseId);
       

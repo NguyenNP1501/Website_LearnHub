@@ -47,41 +47,59 @@ export default function CourseDetail() {
     return () => { isMounted = false; };
   }, []);
 
-  // ==================== 2. TẢI CHI TIẾT KHÓA HỌC & BÀI HỌC ====================
-  useEffect(() => {
-    if (!courseId) return;
-    let isCurrentRequest = true;
+ // ==================== 2. TẢI CHI TIẾT KHÓA HỌC & BÀI HỌC ====================
+useEffect(() => {
+  if (!courseId) return;
+  let isCurrentRequest = true;
 
-    const fetchCourseDetail = async () => {
-      setIsLoading(true);
-      try {
-        const response = await axios.get(`${API_BASE}/client/courses/${courseId}`, authConfig);
-        if (!isCurrentRequest) return;
+  const fetchCourseDetail = async () => {
+    setIsLoading(true);
+    try {
+      // 1. Gọi API lấy thông tin khóa học công khai
+      const response = await axios.get(`${API_BASE}/client/courses/${courseId}`, authConfig);
+      if (!isCurrentRequest) return;
 
-        const rawCourseData = response.data?.info || response.data?.data || response.data;
-        setCourseInfo(Array.isArray(rawCourseData) ? rawCourseData[0] : rawCourseData);
-        setIsEnrolled(response.data?.isEnrolled || false);
-        setProgress(response.data?.progress || 0);
+      const rawCourseData = response.data?.info || response.data?.data || response.data;
+      setCourseInfo(Array.isArray(rawCourseData) ? rawCourseData[0] : rawCourseData);
+      
+      const chaptersData = response.data?.chapters || [];
+      setChapters(chaptersData);
+      if (chaptersData.length > 0) {
+        setOpenId(chaptersData[0].chapter_id || chaptersData[0].id);
+      }
 
-        const chaptersData = response.data?.chapters || [];
-        setChapters(chaptersData);
-        if (chaptersData.length > 0) {
-          setOpenId(chaptersData[0].chapter_id || chaptersData[0].id);
+      // 🌟 2. NẾU ĐÃ ĐĂNG NHẬP, GỌI TIẾP API BẢO MẬT ĐỂ CHECK TRẠNG THÁI ĐĂNG KÝ
+      if (token) {
+        try {
+          const statusResponse = await axios.get(`${API_BASE}/client/courses/${courseId}/enroll-status`, authConfig);
+          if (isCurrentRequest && statusResponse.data) {
+            setIsEnrolled(statusResponse.data.isEnrolled || false);
+            setProgress(statusResponse.data.progress || 0);
+          }
+        } catch (error) {
+          console.log("Chưa đăng ký khóa học này hoặc lỗi check status");
+          setIsEnrolled(false);
+          setProgress(0);
         }
-      } catch {
-        if (!isCurrentRequest) return;
-        setCourseInfo({ course_name: "Khóa học chưa sẵn sàng dữ liệu", teacher_name: "Đang cập nhật" });
-        setChapters([]);
+      } else {
         setIsEnrolled(false);
         setProgress(0);
-      } finally {
-        if (isCurrentRequest) setIsLoading(false);
       }
-    };
 
-    fetchCourseDetail();
-    return () => { isCurrentRequest = false; };
-  }, [courseId]);
+    } catch {
+      if (!isCurrentRequest) return;
+      setCourseInfo({ course_name: "Khóa học chưa sẵn sàng dữ liệu", teacher_name: "Đang cập nhật" });
+      setChapters([]);
+      setIsEnrolled(false);
+      setProgress(0);
+    } finally {
+      if (isCurrentRequest) setIsLoading(false);
+    }
+  };
+
+  fetchCourseDetail();
+  return () => { isCurrentRequest = false; };
+}, [courseId, token]); // Thêm token vào mảng dependency
 
   // ==================== 3. XỬ LÝ ĐĂNG KÝ KHÓA HỌC ====================
   const handleEnroll = async () => {
