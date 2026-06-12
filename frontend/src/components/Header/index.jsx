@@ -7,7 +7,7 @@ function Header() {
   const { logout, user } = useAuth();
   const isAdminOrTeacher = user?.role === "admin" || user?.role === "teacher";
   const homePath = isAdminOrTeacher ? "/admin" : "/";
-  const practicePath = isAdminOrTeacher ? "/admin/view-list-exam" : "/search-exam";
+  const practicePath = isAdminOrTeacher ? "/admin/view-list-exam" : "/view-exam";
   const profilePath = isAdminOrTeacher ? "/admin" : "/history-exam";
 
   const handleLogout = () => {

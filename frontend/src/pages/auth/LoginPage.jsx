@@ -120,9 +120,14 @@ function LoginPage() {
           <button className="login-form__submit" type="submit" disabled={submitting}>
             {submitting ? "Đang đăng nhập..." : "Đăng nhập"}
           </button>
-          <div className="login-form__register"
-          className={formData.role == "admin" ? "hide" : ""}>
-            <Link to="/register">Đăng ký</Link>
+          <div className="login-parent">
+            <div className="login-form__register"
+              className={formData.role == "admin" ? "hide" : ""}>
+              <Link to="/register">Đăng ký</Link>
+            </div>
+            <div className="login-fogot">
+              <Link to="/forgot-password">Quên mật khẩu</Link>
+            </div>
           </div>
         </form>
       </section>

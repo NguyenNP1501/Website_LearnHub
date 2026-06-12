@@ -78,7 +78,7 @@ function AppRoutes() {
       <Route element={<ProtectedRoute allowedRoles={["student"]} />}>
         <Route element={<StudentLayout />}>
           <Route path="/" element={<Home />} />
-          <Route path="/search-exam" element={<SearchExam />} />
+          <Route path="/view-exam" element={<ViewExamClient />} />
           <Route path="/do-exam/:id" element={<DoExam />} />
           <Route path="/history-exam" element={<HistoryExam />} />
           <Route path="/result-exam/:id" element={<ResultExam />} />

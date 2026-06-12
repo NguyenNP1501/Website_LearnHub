@@ -69,26 +69,7 @@ function CreateExam() {
       <GoBack />
 
       <ActionNotice notice={notice} onClose={() => setNotice(null)} />
-
-      {/* <section className="create-exam__intro">
-        {/* <div>
-          <p className="create-exam__eyebrow">Quản lý đề thi</p>
-          <h1>Tạo đề thi theo cách bạn thấy thuận tay nhất</h1>
-          <p className="create-exam__lead">
-            Import từ file để lên nhanh nhiều câu hỏi, hoặc nhập thủ công bên dưới
-            khi cần chỉnh sửa chi tiết.
-          </p>
-        </div>
-        <div className="create-exam__intro-card">
-          <span>Hỗ trợ định dạng</span>
-          <strong>CSV, XLSX, XLS</strong>
-          <p>
-            Mỗi dòng trong file nên đại diện cho một đáp án, để hệ thống nhóm thành
-            câu hỏi đúng cấu trúc.
-          </p>
-        </div> */}
-      {/* </section> */}
-
+        
       <section className="create-exam__section import-panel">
         <div className="create-exam__section-heading">
           <p>Cách 1</p>
