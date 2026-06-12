@@ -1,0 +1,226 @@
+/* File: src/assets/styles/PortalLayout.css */
+
+/* Container chính bọc toàn bộ trang Portal */
+.portal-container {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+/* ============ NÚT BẤM TIỆN ÍCH DÙNG CHUNG ============ */
+.btn-blue {
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  transition: background-color 0.2s ease;
+}
+
+.btn-blue:hover {
+  background-color: #2563eb;
+}
+
+/* ============ CỘT SIDEBAR QUẢN LÝ LỚP ============ */
+.portal-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 15px;
+}
+
+.sidebar-title {
+  font-size: 18px;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  font-weight: 700;
+}
+
+.sidebar-item {
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.sidebar-item:hover {
+  background: #f8fafc;
+  color: #1e40af;
+}
+
+.sidebar-item.active {
+  background: #e0f2fe;
+  color: #1d4ed8;
+}
+
+/* ============ CỘT NỘI DUNG CHÍNH ============ */
+.portal-content {
+  flex: 1;
+  min-width: 0;
+}
+
+/* Khu vực Header (Tiêu đề + Nút thêm khóa học) */
+.portal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+  background: white;
+  padding: 20px;
+  border-radius: 15px;
+  border: 1px solid #e2e8f0;
+}
+
+.portal-title {
+  font-size: 24px;
+  margin: 0;
+  color: #1f2937;
+  font-weight: 600;
+}
+
+.btn-add-course {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: #3b82f6;
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  color: #ffffff;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-add-course:hover {
+  background: #2563eb;
+}
+
+/* ============ THANH FILTER MÔN HỌC ============ */
+.modern-filter-wrapper {
+  width: 100%;
+  margin-bottom: 24px;
+}
+
+.modern-filter-track {
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.modern-filter-track::-webkit-scrollbar {
+  height: 5px; 
+}
+
+.modern-filter-track::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 10px;
+}
+
+.filter-chip-btn {
+  padding: 8px 20px;
+  border-radius: 20px; 
+  border: 1px solid #e2e8f0; 
+  background-color: #ffffff; 
+  color: #64748b; 
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.filter-chip-btn:hover {
+  background-color: #f8fafc;
+  color: #334155;
+}
+
+.filter-chip-btn.active {
+  background-color: #3b82f6; 
+  color: #ffffff;
+  border-color: #3b82f6;
+}
+
+/* ============ LƯỚI CHỨA CARD KHÓA HỌC (3 CỘT) ============ */
+.course-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 25px;
+}
+
+/* LƯU Ý: Các thuộc tính định dạng chi tiết bên trong thẻ .course-card 
+  đã được xóa bỏ tại đây để nhường quyền xử lý hoàn toàn cho file CourseCard.css,
+  tránh xung đột hiển thị đè mã lên nhau!
+*/
+
+/* ============ TRẠNG THÁI TRỐNG (EMPTY STATE) ============ */
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 50px;
+  color: #64748b;
+  background: white;
+  border-radius: 15px;
+  border: 1px dashed #cbd5e1;
+}
+
+.empty-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.empty-desc {
+  font-size: 14px;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* ============ ĐÁP ỨNG GIAO DIỆN MÀN HÌNH (RESPONSIVE) ============ */
+@media (max-width: 1024px) {
+  .course-grid {
+    grid-template-columns: repeat(2, 1fr); /* Giảm còn 2 cột ở tablet */
+    gap: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .portal-container {
+    flex-direction: column; /* Đẩy sidebar lên trên nội dung chính trên mobile */
+    gap: 20px;
+  }
+  
+  .portal-sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #e2e8f0;
+    padding-right: 0;
+    padding-bottom: 15px;
+  }
+  
+  .course-grid {
+    grid-template-columns: 1fr; /* Xuống 1 cột trên mobile */
+  }
+  
+  .portal-header {
+    flex-direction: column;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  
+  .btn-add-course {
+    width: 100%;
+    justify-content: center;
+  }
+}

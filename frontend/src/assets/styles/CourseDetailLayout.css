@@ -1,0 +1,456 @@
+/* ==========================================================================
+   1. CONTAINER CHÍNH & SIDEBAR LỌC KHỐI LỚP
+   ========================================================================== */
+.detail-container {
+  display: flex;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 30px auto;
+  padding: 0 20px;
+  box-sizing: border-box;
+  align-items: flex-start;
+}
+
+.detail-sidebar {
+  width: 220px;
+  flex-shrink: 0;
+  border-right: 1px solid #e2e8f0;
+  padding-right: 15px;
+}
+
+.detail-sidebar-title {
+  font-size: 18px;
+  color: #1e3a8a;
+  margin-bottom: 20px;
+  padding-left: 20px;
+  font-weight: 700;
+}
+
+.detail-sidebar-item {
+  padding: 12px 20px;
+  margin-bottom: 8px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  color: #475569;
+  background: transparent;
+  transition: all 0.2s ease;
+}
+
+.detail-sidebar-item:hover {
+  background: #f8fafc;
+  color: #1e40af;
+}
+
+.detail-sidebar-item.active {
+  background: #e0f2fe;
+  color: #1d4ed8;
+}
+
+.detail-content {
+  flex: 1;
+  min-width: 0; /* Khắc phục lỗi co rúm giao diện trên màn hình nhỏ */
+}
+
+/* ==========================================================================
+   2. THÔNG TIN KHÓA HỌC (COURSE CARD TỔNG QUAN)
+   ========================================================================== */
+.course-info-card {
+  background-color: #e0f2fe;
+  border-radius: 15px;
+  padding: 30px;
+  margin-bottom: 25px;
+  position: relative;
+}
+
+.course-info-title {
+  margin: 0 0 10px 0;
+  font-size: 28px;
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+.course-info-teacher {
+  margin: 0;
+  color: #334155;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+/* ==========================================================================
+   3. THANH CÔNG CỤ (TÌM KIẾM & NÚT THAO TÁC TRÊN ĐẦU)
+   ========================================================================== */
+.toolbar-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 20px;
+}
+
+.search-box {
+  display: flex;
+  align-items: center;
+  background: #ffffff;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  width: 350px;
+  transition: all 0.2s ease;
+}
+
+.search-box:focus-within {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.search-input {
+  border: none;
+  outline: none;
+  margin-left: 10px;
+  width: 100%;
+  font-size: 14px;
+  background: transparent;
+  color: #1f2937;
+}
+
+.toolbar-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* Định dạng bộ nút "Thêm chương" và "Upload video" */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background-color: #3b82f6;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.action-btn:hover {
+  background-color: #2563eb;
+}
+
+.action-btn:active {
+  transform: scale(0.98);
+}
+
+/* ==========================================================================
+   4. DANH SÁCH CHƯƠNG (CHAPTER ITEMS)
+   ========================================================================== */
+.empty-chapters {
+  text-align: center;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 15px;
+  color: #64748b;
+  border: 1px dashed #cbd5e1;
+}
+
+.chapter-item {
+  background: #ffffff;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.03);
+  border: 1px solid #e2e8f0;
+}
+
+.chapter-header {
+  padding: 18px 25px;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background: #ffffff;
+  transition: background 0.2s ease;
+}
+
+.chapter-header:hover, 
+.chapter-header.active {
+  background: #f8fafc;
+}
+
+.chapter-header-left {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.chapter-title {
+  font-weight: 600;
+  color: #1e293b;
+}
+
+.btn-add-lesson {
+  padding: 6px 14px;
+  font-size: 13px;
+  background: #e0e7ff;
+  color: #4338ca;
+  border: 1px solid #c7d2fe;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.btn-add-lesson:hover {
+  background: #c7d2fe;
+  color: #3730a3;
+}
+
+/* ==========================================================================
+   5. CHI TIẾT BÀI HỌC (LESSON ITEMS & ACTIONS)
+   ========================================================================== */
+.lesson-list {
+  border-top: 1px solid #f1f5f9;
+  background-color: #fbfcfd;
+}
+
+.lesson-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 25px;
+  border-bottom: 1px solid #f1f5f9;
+  gap: 20px;
+}
+
+.lesson-item:last-child {
+  border-bottom: none;
+}
+
+/* Khối bọc bên trái: Ảnh Thumbnail + Tiêu đề bài học */
+.lesson-left-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex: 1;
+}
+
+.lesson-info {
+  flex: 1;
+  text-align: left;
+}
+
+.lesson-title {
+  font-weight: 600;
+  color: #334155;
+  font-size: 15px;
+  margin: 0;
+}
+
+/* Ảnh đại diện video bài học */
+.lesson-thumbnail-img {
+  width: 120px;          
+  height: 68px;          
+  object-fit: cover;     
+  border-radius: 6px;    
+  flex-shrink: 0;        
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); 
+  border: 1px solid #e2e8f0;
+}
+
+/* Khối bọc nhóm nút quản lý bên phải hàng bài học */
+.lesson-actions {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+/* Định dạng nền và cỡ chữ chung cho 3 nút Xem, Sửa, Xóa */
+.btn-lesson-view,
+.btn-lesson-edit,
+.btn-lesson-delete {
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 600;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  transition: all 0.2s ease;
+}
+
+/* Màu sắc & Hiệu ứng từng nút riêng biệt */
+.btn-lesson-view {
+  background-color: #3b82f6; /* Xanh dương thương hiệu */
+}
+.btn-lesson-view:hover {
+  background-color: #2563eb;
+}
+
+.btn-lesson-edit {
+  background-color: #f59e0b; /* Màu cam ấm áp */
+}
+.btn-lesson-edit:hover {
+  background-color: #d97706;
+}
+
+.btn-lesson-delete {
+  background-color: #ef4444; /* Màu đỏ cảnh báo */
+}
+.btn-lesson-delete:hover {
+  background-color: #dc2626;
+}
+
+/* Hiệu ứng lún nhẹ khi bấm chuột */
+.btn-lesson-view:active,
+.btn-lesson-edit:active,
+.btn-lesson-delete:active {
+  transform: scale(0.96);
+}
+/* ============ THANH TIẾN ĐỘ KHÓA HỌC ============ */
+.progress-wrapper {
+  margin: 20px 0;
+  padding: 16px;
+  background: #f8fafc;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.progress-text {
+  font-weight: 600;
+  color: #64748b;
+}
+
+.progress-percent {
+  font-weight: 700;
+  color: #10b981;
+}
+
+.progress-bar-bg {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background: #10b981;
+  border-radius: 5px;
+  transition: width 0.5s ease-in-out;
+}
+/* ==========================================================================
+   6. NÚT HÀNH ĐỘNG TRONG HEADER CHƯƠNG
+   ========================================================================== */
+
+.chapter-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+/* Nhóm nút */
+.chapter-action-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Style chung */
+.btn-custom-edit-chapter,
+.btn-custom-add-lesson {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+
+  padding: 7px 14px;
+
+  border-radius: 8px;
+  border: none;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+/* ================= SỬA TÊN ================= */
+.btn-custom-edit-chapter {
+  background: #f8fafc;
+  color: #334155;
+  border: 1px solid #cbd5e1;
+}
+
+.btn-custom-edit-chapter:hover {
+  background: #e2e8f0;
+  color: #0f172a;
+  transform: translateY(-1px);
+}
+
+.btn-custom-edit-chapter:active {
+  transform: scale(0.97);
+}
+
+/* ================= THÊM BÀI ================= */
+.btn-custom-add-lesson {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+}
+
+.btn-custom-add-lesson:hover {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.btn-custom-add-lesson:active {
+  transform: scale(0.97);
+}
+
+/* ==========================================================================
+   7. RESPONSIVE MOBILE
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  .chapter-header {
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chapter-header-left {
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .chapter-action-group {
+    flex-wrap: wrap;
+  }
+
+  .btn-custom-edit-chapter,
+  .btn-custom-add-lesson {
+    width: fit-content;
+  }
+}

@@ -1,0 +1,210 @@
+/* ============ WRAPPER TỔNG ============ */
+.container-center {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.upload-card {
+  max-width: 1000px; /* Nới rộng ra để chứa đủ 2 cột */
+  margin: 20px auto;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  overflow: hidden; /* Để cái bo góc của header không bị tràn */
+  text-align: left; /* Ép toàn bộ chữ dạt sang lề trái */
+}
+
+/* ============ HEADER ============ */
+.upload-header-box {
+  background: #f0f7ff;
+  color: #1e40af;
+  padding: 25px 30px;
+  border-bottom: 1px solid #e2e8f0;
+  text-align: center; /* Riêng tiêu đề thì căn giữa cho cân đối */
+}
+
+.upload-page-title {
+  margin: 0 0 5px 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.upload-page-subtitle {
+  margin: 0;
+  font-size: 14px;
+  color: #64748b;
+}
+
+/* ============ CHIA 2 CỘT (ĐÂY LÀ CHÌA KHÓA) ============ */
+.upload-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr; /* Chia 2 cột: Cột trái to hơn cột phải một chút */
+  gap: 40px;
+  padding: 30px;
+}
+
+/* Responsive: Thu nhỏ màn hình thì gộp lại thành 1 cột */
+@media (max-width: 768px) {
+  .upload-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============ THÀNH PHẦN FORM ============ */
+.upload-section-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #1e293b;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.upload-label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #334155;
+  margin-bottom: 8px;
+}
+
+.required-star {
+  color: #ef4444; /* Màu đỏ cho dấu sao bắt buộc */
+}
+
+/* Ô nhập liệu chuẩn */
+.form-control {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  background-color: #f8fafc;
+  color: #1f2937;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+}
+
+.form-control:focus {
+  border-color: #3b82f6;
+  background-color: white;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* ============ TRÌNH SOẠN THẢO (QUILL) ============ */
+.upload-quill-group {
+  margin-bottom: 60px; /* Chừa chỗ cho thanh công cụ của Quill */
+}
+
+.upload-quill-editor {
+  height: 200px;
+  background: white;
+}
+
+/* Căn chỉnh lại border của Quill cho đẹp */
+.tox-tinymce, .ql-container { border-radius: 0 0 8px 8px !important; }
+.ql-toolbar { border-radius: 8px 8px 0 0 !important; }
+
+/* ============ UPLOAD VIDEO ============ */
+.upload-file-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border: 1px dashed #cbd5e1;
+  padding: 12px 15px;
+  border-radius: 8px;
+  background: #f8fafc;
+  transition: all 0.2s ease;
+}
+
+.upload-file-box:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+}
+
+.upload-file-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+  font-size: 14px;
+}
+
+.upload-btn-choose {
+  padding: 8px 16px;
+  font-size: 14px;
+}
+
+/* ============ UPLOAD THUMBNAIL (CỘT PHẢI) ============ */
+.upload-thumb-dropzone {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed #93c5fd;
+  border-radius: 12px;
+  background: #f8fafc;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.2s ease;
+}
+
+.upload-thumb-dropzone:hover {
+  background: #eff6ff;
+  border-color: #3b82f6;
+}
+
+.upload-thumb-placeholder {
+  text-align: center;
+  color: #64748b;
+}
+
+.upload-thumb-icon {
+  margin-bottom: 10px;
+  color: #94a3b8;
+}
+
+.upload-thumb-text {
+  font-size: 14px;
+  margin: 0;
+}
+
+.dropzone-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ============ KHU VỰC NÚT BẤM ============ */
+.upload-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+.btn-upload-cancel {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid #cbd5e1;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  color: #475569;
+  transition: background-color 0.2s;
+}
+
+.btn-upload-cancel:hover {
+  background: #f1f5f9;
+}
+
+.btn-upload-submit {
+  padding: 10px 24px;
+  font-size: 15px;
+}

@@ -1,0 +1,94 @@
+/* Container chính của trang xem video */
+.learning-container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 0 20px;
+}
+
+/* ============ KHU VỰC TIÊU ĐỀ & NÚT QUAY LẠI ============ */
+.learning-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.btn-back-circle {
+  background: white;
+  border: 1px solid #cbd5e1;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-back-circle:hover {
+  background: #f1f5f9;
+  transform: translateX(-3px); /* Hiệu ứng đẩy nhẹ sang trái */
+}
+
+.learning-title {
+  margin: 0;
+  font-size: 22px;
+  color: #1e3a8a;
+}
+
+.learning-chapter {
+  margin: 5px 0 0 0;
+  color: #64748b;
+  font-size: 14px;
+}
+
+/* ============ KHU VỰC PHÁT VIDEO ============ */
+.video-wrapper {
+  background: black;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 25px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+}
+
+.video-player {
+  width: 100%;
+  max-height: 550px;
+  display: block;
+}
+
+.video-fallback {
+  padding: 100px 20px;
+  text-align: center;
+  color: white;
+}
+
+/* ============ KHU VỰC NỘI DUNG BÀI HỌC (RICH TEXT) ============ */
+.content-wrapper {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+}
+
+.content-heading {
+  margin-top: 0;
+  color: #334155;
+  border-bottom: 1px solid #e2e8f0;
+  padding-bottom: 15px;
+  margin-bottom: 20px;
+}
+
+.rich-text-content {
+  color: #334155;
+  line-height: 1.8;
+  font-size: 16px;
+}
+
+/* Đề phòng trường hợp trong bài giảng có chèn ảnh lớn */
+.rich-text-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}

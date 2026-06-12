@@ -1,0 +1,282 @@
+/* Nền màu gradient xanh dương bao phủ toàn bộ trang */
+.register-page-wrapper {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(135deg, #6a82fb 0%, #fc5c7d 100%); /* Bạn có thể chỉnh lại màu gradient cho hợp tông */
+  background: linear-gradient(to bottom right, #5c8df6, #8e7bf0);
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Khung form màu trắng */
+.register-card {
+  background: white;
+  width: 100%;
+  max-width: 480px;
+  border-radius: 20px;
+  padding: 40px 35px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box;
+}
+
+/* Header */
+.register-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.register-title {
+  margin: 0 0 5px 0;
+  color: #2b5b84; /* Màu xanh đậm chữ tiêu đề */
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.register-subtitle {
+  margin: 0;
+  color: #8fa0b5;
+  font-size: 14px;
+}
+
+/* Layout Form */
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+/* Row cho phép 2 ô School và Class nằm ngang */
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.half-width {
+  flex: 1;
+}
+
+/* Các kiểu Input & Icon */
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  color: #64748b;
+}
+
+.input-with-icon input {
+  width: 100%;
+  padding: 10px 10px 10px 38px; /* Dịch text sang phải để nhường chỗ cho icon */
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.2s;
+}
+
+.input-with-icon input:focus, .no-icon:focus {
+  border-color: #5c8df6;
+}
+
+/* Ô nhập liệu nền xám (giống ô Major, School, Class) */
+.gray-bg input, .gray-input {
+  background-color: #e2e8f0;
+  border: 1px solid #cbd5e1;
+}
+
+.no-icon {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  outline: none;
+  box-sizing: border-box;
+  border: 1px solid #cbd5e1;
+}
+
+/* Dropdown Role */
+.role-select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  font-size: 14px;
+  background-color: #e2e8f0; /* Nền xám như trong ảnh */
+  outline: none;
+  cursor: pointer;
+  color: #333;
+}
+
+/* Checkbox */
+.checkbox-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 5px;
+}
+
+.checkbox-group label {
+  font-size: 13px;
+  color: #475569;
+}
+
+.blue-link {
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.blue-link:hover {
+  text-decoration: underline;
+}
+
+/* Nút Submit */
+.btn-register {
+  width: 100%;
+  padding: 12px;
+  background: linear-gradient(90deg, #5c8df6, #8e7bf0);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 10px;
+  box-shadow: 0 4px 10px rgba(92, 141, 246, 0.3);
+  transition: opacity 0.2s;
+}
+
+.btn-register:hover {
+  opacity: 0.9;
+}
+
+/* Footer (Log in) */
+.register-footer {
+  text-align: center;
+  margin-top: 25px;
+  font-size: 13px;
+  color: #64748b;
+}
+/* Giao diện lớp phủ che toàn màn hình */
+.reg-success-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(15, 23, 42, 0.4); /* Màu nền sẫm nhẹ */
+  backdrop-filter: blur(8px); /* Tạo hiệu ứng mờ kính cực sang trọng */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  animation: fadeInOverlay 0.3s ease-out forwards;
+}
+
+/* Thẻ hộp thoại Popup chính */
+.reg-success-card {
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 20px;
+  width: 100%;
+  max-width: 420px;
+  text-align: center;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  transform: scale(0.9);
+  animation: scaleUpCard 0.34s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Biểu tượng Check tích xanh chuyển động */
+.reg-success-icon-wrapper {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #dcfce7;
+  color: #16a34a;
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  margin-bottom: 20px;
+  animation: pulseIcon 1.5s infinite;
+}
+
+.reg-success-title {
+  color: #0f172a;
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 10px 0;
+}
+
+.reg-success-desc {
+  color: #475569;
+  font-size: 15px;
+  line-height: 1.5;
+  margin: 0 0 24px 0;
+}
+
+.reg-redirect-status {
+  color: #2563eb;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+/* Thanh tiến trình đếm ngược thời gian */
+.reg-loading-bar-bg {
+  width: 100%;
+  height: 5px;
+  background-color: #f1f5f9;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.reg-loading-bar-fill {
+  height: 100%;
+  background-color: #2563eb;
+  width: 0%;
+  border-radius: 10px;
+  animation: progressRun 2.5s linear forwards; /* Chạy đầy thanh trong đúng 2.5 giây khớp setTimeout */
+}
+
+/* ==========================================
+   CÁC KEYFRAMES HIỆU ỨNG ĐỘNG (ANIMATIONS)
+   ========================================== */
+@keyframes fadeInOverlay {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUpCard {
+  from { transform: scale(0.85); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+@keyframes pulseIcon {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.4); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 12px rgba(22, 163, 74, 0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(22, 163, 74, 0); }
+}
+
+@keyframes progressRun {
+  from { width: 0%; }
+  to { width: 100%; }
+}
