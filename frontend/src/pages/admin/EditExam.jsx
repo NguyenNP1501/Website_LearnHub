@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-// import ExamForm from "../../components/ExamForm";
+import ExamForm from "../../components/ExamForm";
 import GoBack from "../../components/GoBack/GoBack";
 import { getExamById, updateExam } from "../../services/examApi";
 import { buildNotice } from "../../utils/notice";
