@@ -21,7 +21,7 @@ export default function CourseDetail() {
   const [grades, setGrades] = useState([]);
   const [isEnrolled, setIsEnrolled] = useState(false);
   const [progress, setProgress] = useState(0);
-
+  const [lessonExams, setLessonExams] = useState({});
   const { register, watch } = useForm({
     defaultValues: { searchQuery: '' }
   });
@@ -30,6 +30,26 @@ export default function CourseDetail() {
 
   const token = getStoredToken();
   const authConfig = token ? { headers: { Authorization: `Bearer ${token}` } } : {};
+
+
+  useEffect(() => {
+    if (!chapters.length) return;
+    const allLessonIds = chapters
+      .flatMap(ch => (ch.lessons || []).map(ls => ls.lesson_id || ls.id))
+      .filter(Boolean);
+
+    Promise.all(
+      allLessonIds.map(id =>
+        axios.get(`${API_BASE}/client/lessons/${id}/exams`, authConfig)
+          .then(res => ({ id, exams: res.data || [] }))
+          .catch(() => ({ id, exams: [] }))
+      )
+    ).then(results => {
+      const map = {};
+      results.forEach(({ id, exams }) => { map[id] = exams; });
+      setLessonExams(map);
+    });
+  }, [chapters]);
 
   // ==================== 1. TẢI SIDEBAR KHỐI LỚP ====================
   useEffect(() => {
@@ -45,62 +65,62 @@ export default function CourseDetail() {
     fetchGrades();
     return () => { isMounted = false; };
   }, []);
-// ==================== 2. TẢI CHI TIẾT KHÓA HỌC & BÀI HỌC ====================
-useEffect(() => {
-  if (!courseId) return;
-  let isCurrentRequest = true;
+  // ==================== 2. TẢI CHI TIẾT KHÓA HỌC & BÀI HỌC ====================
+  useEffect(() => {
+    if (!courseId) return;
+    let isCurrentRequest = true;
 
-  const fetchCourseDetail = async () => {
-    setIsLoading(true);
-    try {
-      // 1. Gọi API lấy thông tin khóa học công khai
-      const response = await axios.get(`${API_BASE}/client/courses/${courseId}`, authConfig);
-      if (!isCurrentRequest) return;
+    const fetchCourseDetail = async () => {
+      setIsLoading(true);
+      try {
+        // 1. Gọi API lấy thông tin khóa học công khai
+        const response = await axios.get(`${API_BASE}/client/courses/${courseId}`, authConfig);
+        if (!isCurrentRequest) return;
 
-      const rawCourseData = response.data?.info || response.data?.data || response.data;
-      setCourseInfo(Array.isArray(rawCourseData) ? rawCourseData[0] : rawCourseData);
-      
-      const chaptersData = response.data?.chapters || [];
-      setChapters(chaptersData);
-      if (chaptersData.length > 0) {
-        setOpenId(chaptersData[0].chapter_id || chaptersData[0].id);
-      }
-      if (token) {
-        try {
-          const statusResponse = await axios.get(`${API_BASE}/client/courses/${courseId}/enroll-status`, authConfig);
-          if (isCurrentRequest && statusResponse.data) {
-  
-            const resData = statusResponse.data?.data || statusResponse.data?.info || statusResponse.data;
-            const checkEnroll = resData.isEnrolled || resData.is_enrolled || (resData.status && resData.status !== 'Chưa học');
-            setIsEnrolled(!!checkEnroll);
-            
-            const progressVal = resData.progress !== undefined ? resData.progress : (resData.progress_percent || 0);
-            setProgress(Number(progressVal));
+        const rawCourseData = response.data?.info || response.data?.data || response.data;
+        setCourseInfo(Array.isArray(rawCourseData) ? rawCourseData[0] : rawCourseData);
+
+        const chaptersData = response.data?.chapters || [];
+        setChapters(chaptersData);
+        if (chaptersData.length > 0) {
+          setOpenId(chaptersData[0].chapter_id || chaptersData[0].id);
+        }
+        if (token) {
+          try {
+            const statusResponse = await axios.get(`${API_BASE}/client/courses/${courseId}/enroll-status`, authConfig);
+            if (isCurrentRequest && statusResponse.data) {
+
+              const resData = statusResponse.data?.data || statusResponse.data?.info || statusResponse.data;
+              const checkEnroll = resData.isEnrolled || resData.is_enrolled || (resData.status && resData.status !== 'Chưa học');
+              setIsEnrolled(!!checkEnroll);
+
+              const progressVal = resData.progress !== undefined ? resData.progress : (resData.progress_percent || 0);
+              setProgress(Number(progressVal));
+            }
+          } catch (error) {
+            console.log("Chưa đăng ký khóa học này hoặc lỗi check status");
+            setIsEnrolled(false);
+            setProgress(0);
           }
-        } catch (error) {
-          console.log("Chưa đăng ký khóa học này hoặc lỗi check status");
+        } else {
           setIsEnrolled(false);
           setProgress(0);
         }
-      } else {
+
+      } catch {
+        if (!isCurrentRequest) return;
+        setCourseInfo({ course_name: "Khóa học chưa sẵn sàng dữ liệu", teacher_name: "Đang cập nhật" });
+        setChapters([]);
         setIsEnrolled(false);
         setProgress(0);
+      } finally {
+        if (isCurrentRequest) setIsLoading(false);
       }
+    };
 
-    } catch {
-      if (!isCurrentRequest) return;
-      setCourseInfo({ course_name: "Khóa học chưa sẵn sàng dữ liệu", teacher_name: "Đang cập nhật" });
-      setChapters([]);
-      setIsEnrolled(false);
-      setProgress(0);
-    } finally {
-      if (isCurrentRequest) setIsLoading(false);
-    }
-  };
-
-  fetchCourseDetail();
-  return () => { isCurrentRequest = false; };
-}, [courseId, token]);
+    fetchCourseDetail();
+    return () => { isCurrentRequest = false; };
+  }, [courseId, token]);
 
   // ==================== 3. XỬ LÝ ĐĂNG KÝ KHÓA HỌC ====================
   const handleEnroll = async () => {
@@ -138,12 +158,12 @@ useEffect(() => {
 
   return (
     <div className="detail-container">
-      
+
       {/* 2. SideBar*/}
-      <SidebarGrade 
+      <SidebarGrade
         grades={grades}
-        activeGradeId={courseInfo?.grade_id} 
-        isAdmin={false}                    
+        activeGradeId={courseInfo?.grade_id}
+        isAdmin={false}
         onGradeClick={(gradeId) => navigate(`/courses?grade_id=${gradeId}`)}
       />
 
@@ -243,15 +263,28 @@ useEffect(() => {
                               </div>
                             </div>
 
-                            <div className="lesson-action-wrapper">
+                            <div className="lesson-action-wrapper" style={{ display: 'flex', gap: 8 }} onClick={e => e.stopPropagation()}>
                               {isEnrolled ? (
-                                <button className="btn-blue btn-lesson-view" style={{ padding: '6px 16px', fontSize: '13px', borderRadius: '6px', pointerEvents: 'none' }}>
-                                  Vào học
-                                </button>
+                                <>
+                                  <button
+                                    className="btn-blue btn-lesson-view"
+                                    style={{ padding: '6px 16px', fontSize: '13px', borderRadius: '6px' }}
+                                    onClick={() => navigate(`/lesson/${currentLessonId}`)}
+                                  >
+                                    Vào học
+                                  </button>
+
+                                  {lessonExams[currentLessonId]?.length > 0 && (
+                                    <button
+                                      style={{ padding: '6px 16px', fontSize: '13px', borderRadius: '6px', background: '#8b5cf6', color: 'white', border: 'none', cursor: 'pointer' }}
+                                      onClick={() => navigate(`/view-exam?lessonId=${currentLessonId}`)}
+                                    >
+                                      Luyện đề
+                                    </button>
+                                  )}
+                                </>
                               ) : (
-                                <button className="btn-lesson-locked">
-                                  Bị khóa
-                                </button>
+                                <button className="btn-lesson-locked">Bị khóa</button>
                               )}
                             </div>
                           </div>

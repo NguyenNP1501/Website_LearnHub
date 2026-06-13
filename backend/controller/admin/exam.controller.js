@@ -1,6 +1,7 @@
 const practiceExamModel = require("../../models/ThiVaCauHoi/practiceExam.model");
 const { parseExamImportFile } = require("../../utils/examImport.util");
 const { hydrateExamImageUrls } = require("../../utils/assetUrl.util");
+const lessonPracticeExamModel = require("../../models/ThiVaCauHoi/lsssonPracticeExam.model");
 
 exports.getAllExams = async (req, res, next) => {
   try {
@@ -30,8 +31,21 @@ exports.getExamById = async (req, res, next) => {
 
 exports.createExam = async (req, res, next) => {
   try {
-    const result = await practiceExamModel.createExam(req.body);
+    const examData = req.body.payload
+      ? JSON.parse(req.body.payload)
+      : req.body;
+
+    const lessonId = examData.lesson_id ?? examData.lessonId ?? null;
+
+    // Tạo exam KHÔNG kèm lesson_id trong PracticeExam
+    const examDataWithoutLesson = { ...examData, lesson_id: null, lessonId: null };
+    const result = await practiceExamModel.createExam(examDataWithoutLesson);
     const exam = await practiceExamModel.getAdminExamDetail(result.examId);
+
+    // Gán vào lesson_practiceexam nếu có lessonId hợp lệ
+    if (lessonId) {
+      await lessonPracticeExamModel.add(lessonId, result.examId);
+    }
 
     return res.status(201).json(hydrateExamImageUrls(req, exam));
   } catch (error) {

@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import "./ClientExamPages.scss";
 import { getAvailableClientExams } from "../../services/clientExamService";
 
+import { getClientExamListApi } from "../../services/examApi";
+
+import { requestJson } from "../../services/apiClient";
+
+const getLessonExams = (lessonId) =>
+  requestJson(`/client/lessons/${lessonId}/exams`);
 const EXAMS_PER_SECTION = 3;
 
 const getSectionLabel = (sectionKey) => {
@@ -49,7 +55,15 @@ function SearchExam() {
     highschool: 1,
     other: 1,
   });
-
+  const [searchParams] = useSearchParams();
+const lessonId = searchParams.get("lessonId");
+const [lessonExams, setLessonExams] = useState([]);
+  useEffect(() => {
+    if (!lessonId) return;
+    requestJson(`/client/lessons/${lessonId}/exams`)
+      .then(data => setLessonExams(Array.isArray(data) ? data : []))
+      .catch(() => setLessonExams([]));
+  }, [lessonId]);
   useEffect(() => {
     let isMounted = true;
 
@@ -140,7 +154,35 @@ function SearchExam() {
           </p>
         </div>
       </div>
-
+      {lessonId && (
+        <div style={{ marginBottom: 24 }}>
+          <h2 className="client-section__title">Đề thi của bài học này</h2>
+          {lessonExams.length === 0 ? (
+            <div className="empty-state">Bài học này chưa có đề thi nào.</div>
+          ) : (
+            <div className="exam-grid">
+              {lessonExams.map(exam => (
+                <article className="exam-card" key={exam.practice_exam_id}>
+                  <div className="client-tag-list">
+                    <span className="client-tag">{exam.subject || "Tổng hợp"}</span>
+                    <span className="client-tag">Lớp {exam.grade_class || "?"}</span>
+                  </div>
+                  <h3 className="exam-card__title">{exam.title || "Đề luyện tập"}</h3>
+                  <div className="exam-card__meta">
+                    <span>Thời gian: {exam.time} phút</span>
+                  </div>
+                  <div className="exam-card__actions">
+                    <Link to={`/do-exam/${exam.practice_exam_id}`}>
+                      <button className="client-button" type="button">Làm bài</button>
+                    </Link>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+          <hr style={{ margin: '24px 0' }} />
+        </div>
+      )}
       <form className="client-search" onSubmit={handleSearch}>
         <input
           type="text"

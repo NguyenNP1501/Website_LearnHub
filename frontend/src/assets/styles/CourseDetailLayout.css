@@ -474,3 +474,13 @@
     width: fit-content;
   }
 }
+.btn-lesson-exam {
+  background-color: #8b5cf6;
+  color: white;
+  border: none;
+  padding: 6px 14px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 13px;
+}
+.btn-lesson-exam:hover { background-color: #7c3aed; }

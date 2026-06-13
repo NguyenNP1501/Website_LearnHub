@@ -149,7 +149,7 @@ export default function AdminCourseDetail() {
         grades={grades}
         activeGradeId={courseInfo?.grade_id} // <--- Thêm dòng này để truyền ID khối lớp của khóa học hiện tại
         onAddGrade={handleCreateGrade}
-        isAdmin={true} 
+        isAdmin={true}
         onEditGrade={handleUpdateGrade}
         onGradeClick={(gradeId) => navigate(`/admin/courses?grade=${gradeId}`)}
       />
@@ -248,6 +248,16 @@ export default function AdminCourseDetail() {
                               <>
                                 <button className="btn-lesson-edit" onClick={() => navigate(`/admin/edit-lesson/${lsId}`)}>Sửa</button>
                                 <button className="btn-lesson-delete" onClick={(e) => handleDeleteLesson(e, lsId)}>Xóa</button>
+                                <button
+                                  className="btn-lesson-exam"
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    navigate(`/admin/create?lessonId=${lsId}`);
+                                  }}
+                                >
+                                  Tạo đề
+                                </button>
+
                               </>
                             )}
                           </div>

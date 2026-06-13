@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import ActionNotice from "../../components/ActionNotice/ActionNotice";
 import ExamForm from "../../components/ExamForm/index";
 import GoBack from "../../components/GoBack/GoBack";
 import { createExam, importExamFile } from "../../services/examApi";
 import { buildNotice } from "../../utils/notice";
+import { getStoredToken } from "../../utils/authStorage"; 
 import "./CreateExam.scss";
 
 const buildImportNotice = (importMode) =>
@@ -17,11 +18,30 @@ const buildImportNotice = (importMode) =>
 
 function CreateExam() {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const lessonId = searchParams.get("lessonId");
+
   const [notice, setNotice] = useState(null);
   const [importFile, setImportFile] = useState(null);
   const [isImporting, setIsImporting] = useState(false);
+  const tryAssignToLesson = async (examId) => {
+    if (!lessonId || !examId) return;
+    const token = getStoredToken();
+    try {
+      await axios.post(
+        `${API_BASE}/admin/lessons/${lessonId}/exams`,
+        { practiceExamId: examId },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+    } catch {
+      setNotice(buildNotice("error", "Tạo đề thành công nhưng gán vào bài học thất bại."));
+    }
+  };
 
   const handleCreate = async (data) => {
+    const payload = lessonId
+    ? { ...data, lesson_id: Number(lessonId), lessonId: Number(lessonId) }
+    : data;
     await createExam(data);
     navigate(data.exported ? "/admin/exported" : "/admin/saved", {
       state: {
