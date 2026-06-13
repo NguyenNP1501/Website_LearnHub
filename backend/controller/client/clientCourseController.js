@@ -1,11 +1,6 @@
 const CourseModel = require('../../models/KhoaHoc/CourseModel'); 
 const ProgressModel = require('../../models/KhoaHoc/ProgressModel');
 
-const getUrl = (file) => {
-  if (!file) return null;
-  return `http://localhost:3000/${file.path.replace(/\\/g, '/')}`;
-};
-
 const clientCourseController = {
   // API 1: LẤY DANH SÁCH KHÓA HỌC THEO LỚP & MÔN
   getAllCourses: async (req, res) => {

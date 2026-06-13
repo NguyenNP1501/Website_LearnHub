@@ -10,7 +10,7 @@ const Post = {
     },
 
     getAll: async () => {
-        const [rows] = await db.query('SELECT * FROM Post ORDER BY created_at DESC');
+        const [rows] = await db.query('SELECT p.post_id, p.content, p.created_at, p.title, p.img_url, u.user_name, u.email, u.role, u.avatar_url FROM Post p INNER JOIN User u ON p.user_id = u.user_id ORDER BY p.created_at DESC');
         return rows;
     },
 

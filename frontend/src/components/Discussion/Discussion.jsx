@@ -1,15 +1,18 @@
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import "./styles.css";
+import { getStoredToken } from "../../utils/authStorage";
 
 function Discussion() {
+
+
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
-
+  const token = getStoredToken();
   const onSubmit = async (data) => {
     try {
       const formData = new FormData();
@@ -24,9 +27,7 @@ function Discussion() {
       }
 
       const response = await axios.post("http://localhost:3000/api/discussion", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+        headers: { Authorization: `Bearer ${token}` },
       });
 
       reset();

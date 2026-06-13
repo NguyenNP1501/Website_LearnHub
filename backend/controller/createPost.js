@@ -3,7 +3,7 @@ const Post = require('../models/Post');
 exports.createPost = async (req, res) => {
     try {
         const {content, title} = req.body;
-        const user_id = null;
+        const user_id = req.auth?.userId;
 
         if(!content || !title) {
             return res.status(400).json({ error: 'Content and title are required' });

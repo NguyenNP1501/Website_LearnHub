@@ -19,7 +19,7 @@
 .discussion-form-card {
   border: 1px solid #3b82f6;
   border-radius: 24px;
-  padding: 34px 36px;
+  padding: 26px 28px;
   background: #ffffff;
   margin-bottom: 20px;
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
@@ -27,9 +27,109 @@
   cursor: pointer;
   background: white;
   border-radius: 15px;
+  display: grid;
+  gap: 16px;
+}
+
+.discussion-form-card:hover{
+  transform: translateY(-4px); /* Bay lên một chút */
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1); /* Đổ bóng sâu hơn */
+  border-color: #4a90e2;
+}
+
+.discussion-form-card:active{
+  transform: translateY(-2px) scale(0.98); /* Vẫn bay lên nhưng hơi lún xuống */
+  box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+  background-color: #f8fafc;
+}
+
+.discussion-card-header {
   display: flex;
-  justify-content: space-between; /* Đẩy 2 phần tử về 2 đầu */
+  justify-content: space-between;
   align-items: flex-start;
+  gap: 16px;
+}
+
+.discussion-author-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #64748b;
+}
+
+.discussion-author-name {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.discussion-avatar-wrapper {
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.discussion-avatar,
+.discussion-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  object-fit: cover;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2e8f0;
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.discussion-avatar {
+  border: 1px solid #cbd5e1;
+}
+
+.discussion-post-title {
+  margin: 0;
+  font-size: 1.5rem;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  color: #0f172a;
+}
+
+.created-time{
+  font-size: 0.82rem;
+  color: #7b8794;
+  margin: 0;
+}
+
+.discussion-avatar-wrapper {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+}
+
+.discussion-avatar,
+.discussion-avatar-fallback {
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  object-fit: cover;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #e2e8f0;
+  color: #1f2937;
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.discussion-avatar {
+  border: 1px solid #cbd5e1;
+}
+
+.discussion-author-name {
+  font-size: 0.98rem;
+  font-weight: 600;
 }
 
 /* Khi di chuột qua: Hơi nổi lên và đậm viền */
@@ -46,8 +146,7 @@
   background-color: #f8fafc;
 }
 
-.discussion-form-card-img{
-  display: block;
+.discussion-form-card-img{display: block;
   max-height: 400px;
   object-fit: cover;
 }
@@ -239,9 +338,7 @@
   min-height: 44px;
   padding: 0 18px;
   border-radius: 24px;
-}
-
-.search-suggestions {
+}.search-suggestions {
   position: absolute;
   top: calc(100% + 8px);
   left: 0;
@@ -411,8 +508,7 @@
   color: #475569;
 }
 
-.content p{
-  margin-bottom: 15px;
+.content p{margin-bottom: 15px;
 }
 
 .comment-container{

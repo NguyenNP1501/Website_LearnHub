@@ -38,7 +38,7 @@ exports.createUser = async (userData) => {
 
       // 1. Lưu thông tin chung vào bảng `user`
       const [userResult] = await connection.query(
-        'INSERT INTO user (user_name, email, password, role) VALUES (?, ?, ?, ?)',
+        'INSERT INTO user (user_name, email, password, role, avatar_url) VALUES (?, ?, ?, ?, ?)',
         [userName, email, password, role] // Đã đổi sang biến mới truyền vào câu lệnh SQL
       );
 
