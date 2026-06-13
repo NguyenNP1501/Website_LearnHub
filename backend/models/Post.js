@@ -22,7 +22,25 @@ const Post = {
     searchByTitle: async (keyword) => {
         const [rows] = await db.query('SELECT * FROM Post WHERE title LIKE ? ORDER BY created_at DESC', [`%${keyword}%`]);
         return rows;
-    }
+    },
+    getByUserId: async (user_id) => {
+        const [rows] = await db.query(
+            `SELECT post_id, title, content, img_url, created_at 
+         FROM Post 
+         WHERE user_id = ? 
+         ORDER BY created_at DESC`,
+            [user_id]
+        );
+        return rows;
+    },
+
+    deleteById: async (post_id, user_id) => {
+        const [result] = await db.query(
+            'DELETE FROM Post WHERE post_id = ? AND user_id = ?',
+            [post_id, user_id]
+        );
+        return result.affectedRows > 0;
+    },
 }
 
 module.exports = Post;

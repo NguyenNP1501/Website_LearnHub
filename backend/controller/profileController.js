@@ -1,6 +1,7 @@
 const profileModel = require('../models/ProfileModel');
 const bcrypt = require('bcrypt');
 const path = require('path');
+const Post = require('../models/Post'); 
 const profileController = {
     getProfileDetails: async (req, res) => {
         try {
@@ -10,7 +11,6 @@ const profileController = {
                 return res.status(401).json({ success: false, message: "Không tìm thấy token định danh người dùng!" });
             }
 
-            // Thực hiện gọi song song các hàm truy vấn để tối ưu hóa thời gian phản hồi
             const [user, courses, stats, examHistory] = await Promise.all([
                 profileModel.getUserStudentInfo(userId),
                 profileModel.getEnrolledCourses(userId),
@@ -102,7 +102,7 @@ updateAvatar: async (req, res) => {
             return res.status(400).json({ success: false, message: "Vui lòng chọn ảnh để tải lên!" });
         }
 
-        const avatarUrl = '/uploads/Avatar/' + req.file.filename;
+        const avatarUrl = 'uploads/Avatar/' + req.file.filename;
         await profileModel.updateAvatarUrl(userId, avatarUrl);
 
         return res.status(200).json({
@@ -113,6 +113,31 @@ updateAvatar: async (req, res) => {
     } catch (error) {
         console.error("Lỗi updateAvatar:", error.message);
         return res.status(500).json({ success: false, message: "Lỗi hệ thống khi cập nhật ảnh!" });
+    }
+},
+
+
+getUserPosts: async (req, res) => {
+    try {
+        const userId = req.auth?.userId;
+        const posts = await Post.getByUserId(userId);
+        return res.json({ success: true, data: posts });
+    } catch (error) {
+        console.error("Lỗi getUserPosts:", error.message);
+        return res.status(500).json({ success: false, message: "Lỗi hệ thống!" });
+    }
+},
+
+deleteUserPost: async (req, res) => {
+    try {
+        const userId = req.auth?.userId;
+        const { postId } = req.params;
+        const deleted = await Post.deleteById(postId, userId);
+        if (!deleted) return res.status(404).json({ success: false, message: "Không tìm thấy bài đăng!" });
+        return res.json({ success: true, message: "Xóa bài đăng thành công!" });
+    } catch (error) {
+        console.error("Lỗi deleteUserPost:", error.message);
+        return res.status(500).json({ success: false, message: "Lỗi hệ thống!" });
     }
 }
 };

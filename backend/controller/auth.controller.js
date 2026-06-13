@@ -140,13 +140,11 @@ exports.register = async (req, res) => {
       email: email,
       password: hashedPassword, 
       role: normalizedRole,
-      avatarUrl: '/uploads/Avatar/z7933293829097_e8c8d167c696e7a52800cca3cc2162e4-1781359070864-732043927.jpg' ,
+      avatarUrl: 'uploads/Avatar/z7933293829097_e8c8d167c696e7a52800cca3cc2162e4-1781359070864-732043927.jpg' ,
       school: school || null,
       gradeClass: class_name || null,
       specialization: major || null
     });
-
-    // ĐÃ SỬA: Trả về success: true để đồng bộ cấu trúc phản hồi API của toàn bộ file
     return res.status(201).json({ 
       success: true, 
       message: "Đăng ký tài khoản thành công!" 

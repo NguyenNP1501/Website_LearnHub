@@ -34,5 +34,7 @@ router.put('/change-password', requireAuth(), profileController.changePassword);
 
 // Thêm route upload avatar
 router.put('/avatar', requireAuth(), uploadAvatar, profileController.updateAvatar);
-
+// xóa bài đăng
+router.get('/posts', requireAuth(), profileController.getUserPosts);
+router.delete('/posts/:postId', requireAuth(), profileController.deleteUserPost);
 module.exports = router;
