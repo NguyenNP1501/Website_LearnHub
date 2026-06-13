@@ -4,11 +4,13 @@ const profileModel = {
     // 1. Lấy thông tin cơ bản kèm thông tin trường lớp học sinh
     getUserStudentInfo: async (userId) => {
         const query = `
-            SELECT u.user_id, u.user_name AS username, u.email, u.role, s.school, s.grade_class
-            FROM user u
-            LEFT JOIN student s ON u.user_id = s.student_id
-            WHERE u.user_id = ?
-        `;
+        SELECT u.user_id, u.user_name AS username, u.email, u.role, 
+               u.avatar_url,
+               s.school, s.grade_class
+        FROM user u
+        LEFT JOIN student s ON u.user_id = s.student_id
+        WHERE u.user_id = ?
+    `;
         const [rows] = await db.query(query, [userId]);
         return rows[0] || null;
     },
@@ -89,6 +91,23 @@ const profileModel = {
     updatePassword: async (userId, hashedPassword) => {
         const query = `UPDATE user SET password = ? WHERE user_id = ?`;
         await db.query(query, [hashedPassword, userId]);
+        return true;
+    },
+    // 8. Lấy avatar_url
+    getAvatarUrl: async (userId) => {
+        const [rows] = await db.query(
+            'SELECT avatar_url FROM user WHERE user_id = ?',
+            [userId]
+        );
+        return rows[0]?.avatar_url || null;
+    },
+
+    // 9. Cập nhật avatar_url
+    updateAvatarUrl: async (userId, avatarUrl) => {
+        await db.query(
+            'UPDATE user SET avatar_url = ? WHERE user_id = ?',
+            [avatarUrl, userId]
+        );
         return true;
     }
 };

@@ -1,5 +1,6 @@
 const profileModel = require('../models/ProfileModel');
 const bcrypt = require('bcrypt');
+const path = require('path');
 const profileController = {
     getProfileDetails: async (req, res) => {
         try {
@@ -90,7 +91,30 @@ const profileController = {
             console.error("🔴 Lỗi changePassword:", error.message);
             return res.status(500).json({ success: false, message: "Lỗi hệ thống khi đổi mật khẩu!" });
         }
+    },
+
+// Thêm vào profileController
+updateAvatar: async (req, res) => {
+    try {
+        const userId = req.auth?.userId;
+
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "Vui lòng chọn ảnh để tải lên!" });
+        }
+
+        const avatarUrl = '/uploads/Avatar/' + req.file.filename;
+        await profileModel.updateAvatarUrl(userId, avatarUrl);
+
+        return res.status(200).json({
+            success: true,
+            message: "Cập nhật ảnh đại diện thành công!",
+            data: { avatarUrl }
+        });
+    } catch (error) {
+        console.error("Lỗi updateAvatar:", error.message);
+        return res.status(500).json({ success: false, message: "Lỗi hệ thống khi cập nhật ảnh!" });
     }
+}
 };
 
 module.exports = profileController;

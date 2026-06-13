@@ -28,42 +28,40 @@ exports.findByEmail = async (email) => {
   return rows[0] ?? null;
 };
 exports.createUser = async (userData) => {
-    // ĐÃ SỬA: Đồng bộ tên key nhận vào giống với Controller và findByEmail
-    const { userName, email, password, role, school, gradeClass, specialization } = userData;
-    
-    const connection = await db.getConnection();
+  const { userName, email, password, role, school, gradeClass, specialization, avatarUrl } = userData;
+  
+  const connection = await db.getConnection();
 
-    try {
-      await connection.beginTransaction();
+  try {
+    await connection.beginTransaction();
 
-      // 1. Lưu thông tin chung vào bảng `user`
-      const [userResult] = await connection.query(
-        'INSERT INTO user (user_name, email, password, role, avatar_url) VALUES (?, ?, ?, ?, ?)',
-        [userName, email, password, role] // Đã đổi sang biến mới truyền vào câu lệnh SQL
+    // Thêm avatar_url vào INSERT
+    const [userResult] = await connection.query(
+      'INSERT INTO user (user_name, email, password, role, avatar_url) VALUES (?, ?, ?, ?, ?)',
+      [userName, email, password, role, avatarUrl ?? null]
+    );
+
+    const newUserId = userResult.insertId;
+
+    if (role === 'admin') {
+      await connection.query(
+        'INSERT INTO teacher (teacher_id, specialization) VALUES (?, ?)',
+        [newUserId, specialization]
       );
-
-      const newUserId = userResult.insertId;
-
-      // 2. Phân luồng chính xác dựa trên Role tiếng Anh đã chuẩn hóa
-      if (role === 'admin') {
-        await connection.query(
-          'INSERT INTO teacher (teacher_id, specialization) VALUES (?, ?)',
-          [newUserId, specialization] // Đã đổi thành specialization
-        );
-      } else if (role === 'student') {
-        await connection.query(
-          'INSERT INTO student (student_id, school, grade_class) VALUES (?, ?, ?)',
-          [newUserId, school, gradeClass] // Đã đổi thành gradeClass
-        );
-      }
-
-      await connection.commit();
-      return newUserId;
-
-    } catch (error) {
-      await connection.rollback();
-      throw error; 
-    } finally {
-      connection.release();
+    } else if (role === 'student') {
+      await connection.query(
+        'INSERT INTO student (student_id, school, grade_class) VALUES (?, ?, ?)',
+        [newUserId, school, gradeClass]
+      );
     }
+
+    await connection.commit();
+    return newUserId;
+
+  } catch (error) {
+    await connection.rollback();
+    throw error;
+  } finally {
+    connection.release();
+  }
 };

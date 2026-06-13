@@ -1,8 +1,7 @@
-// File: src/pages/client/Profile.jsx
 import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { 
-  User, BookOpen, Trophy, Settings, Clock, 
+import {
+  User, BookOpen, Trophy, Settings, Clock,
   FileText, Award, Mail, GraduationCap, Medal, Search, CheckCircle, Shield, Lock
 } from 'lucide-react';
 import axios from 'axios';
@@ -21,9 +20,9 @@ export default function Profile() {
 
   // 1. ĐỌC THÔNG TIN XÁC THỰC ĐỒNG BỘ
   const { token, currentUser } = useMemo(() => {
-    return { 
-      token: getStoredToken(), 
-      currentUser: getStoredSession()?.user || null 
+    return {
+      token: getStoredToken(),
+      currentUser: getStoredSession()?.user || null
     };
   }, []);
 
@@ -38,6 +37,9 @@ export default function Profile() {
   const [achievements, setAchievements] = useState({ hours: 0, tests: 0, badges: 0 });
   const [history, setHistory] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [avatarUrl, setAvatarUrl] = useState(null);
+  const [isUploadingAvatar, setIsUploadingAvatar] = useState(false);
+  const fileInputRef = useRef(null);
 
   // Bộ lọc tìm kiếm khóa học
   const [courseSearch, setCourseSearch] = useState('');
@@ -76,14 +78,15 @@ export default function Profile() {
       if (res.data?.success && isMounted.current) {
         const { user, courses, stats, examHistory } = res.data.data;
         const isSystemStaff = user?.role === 'admin' || user?.role === 'teacher';
+        setAvatarUrl(user?.avatar_url || null);
 
         const fetchedUser = {
           name: user?.username || 'Thành viên LearnHub',
-          grade: isSystemStaff 
+          grade: isSystemStaff
             ? (user?.role === 'admin' ? 'Quản trị viên' : 'Giáo viên')
             : (user?.grade_class || 'Chưa cập nhật lớp'),
-          school: isSystemStaff 
-            ? 'Hệ thống Giáo dục LearnHub' 
+          school: isSystemStaff
+            ? 'Hệ thống Giáo dục LearnHub'
             : (user?.school || 'Chưa cập nhật trường'),
           email: user?.email || 'Chưa cập nhật email'
         };
@@ -195,19 +198,72 @@ export default function Profile() {
   if (isLoading) {
     return <div className="profile-loading">Đang tải thông tin cá nhân...</div>;
   }
+  const handleAvatarChange = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const formData = new FormData();
+    formData.append('avatar', file);
+
+    try {
+      setIsUploadingAvatar(true);
+      const res = await axios.put(`${API_BASE}/client/profile/avatar`, formData, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.data?.success) {
+        setAvatarUrl(res.data.data.avatarUrl);
+        alert("Cập nhật ảnh đại diện thành công!");
+      }
+    } catch (err) {
+      alert(err.response?.data?.message || "Lỗi khi tải ảnh lên!");
+    } finally {
+      setIsUploadingAvatar(false);
+    }
+  };
 
   return (
     <div className="profile-container">
-      
+
       {/* ================= CỘT TRÁI (SIDEBAR THÔNG TIN) ================= */}
       <div className="profile-sidebar">
         <div className="profile-card user-info-card">
-          
+
           {/* Khối Avatar Chữ Cái Đầu */}
-          <div className="avatar-wrapper">
-            <div className="avatar-text">
-              {userInfo.name ? userInfo.name.charAt(0).toUpperCase() : 'U'}
+          <div className="avatar-wrapper" style={{ position: 'relative', cursor: 'pointer' }} onClick={() => fileInputRef.current?.click()}>
+            {avatarUrl ? (
+              <img
+                src={`http://localhost:3000${avatarUrl}`}
+                alt="Avatar"
+                style={{ width: '80px', height: '80px', borderRadius: '50%', objectFit: 'cover' }}
+                onError={(e) => { e.target.style.display = 'none'; }}
+              />
+            ) : (
+              <div className="avatar-text">
+                {userInfo.name ? userInfo.name.charAt(0).toUpperCase() : 'U'}
+              </div>
+            )}
+
+            {/* Overlay khi hover */}
+            <div style={{
+              position: 'absolute', inset: 0, borderRadius: '50%',
+              background: 'rgba(0,0,0,0.4)', display: 'flex',
+              alignItems: 'center', justifyContent: 'center',
+              opacity: 0, transition: '0.2s',
+              color: 'white', fontSize: 12
+            }}
+              onMouseEnter={e => e.currentTarget.style.opacity = 1}
+              onMouseLeave={e => e.currentTarget.style.opacity = 0}
+            >
+              {isUploadingAvatar ? '...' : '📷 Đổi ảnh'}
             </div>
+
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="image/jpeg,image/png,image/webp"
+              style={{ display: 'none' }}
+              onChange={handleAvatarChange}
+            />
           </div>
 
           {/* Badge phân loại quyền người dùng */}
@@ -289,7 +345,7 @@ export default function Profile() {
 
       {/* ================= CỘT PHẢI (NỘI DUNG NĂNG ĐỘNG THEO TAB) ================= */}
       <div className="profile-content">
-        
+
         {/* TAB 1: TỔNG QUAN TÀI KHOẢN */}
         {activeTab === 'account' && (
           <>
@@ -297,7 +353,7 @@ export default function Profile() {
               <h2>Chào mừng trở lại, <span className="text-highlight">{userInfo.name || "Bạn"}</span>!</h2>
               <p>Hôm nay chúng ta sẽ tiếp tục hành trình chinh phục kiến thức chứ?</p>
             </div>
-            
+
             <div className="section-container status-container">
               <Shield size={40} className="status-icon" />
               <h4 className="status-title">Trạng thái tài khoản</h4>
@@ -321,20 +377,20 @@ export default function Profile() {
           <div className="section-container">
             <div className="courses-header">
               <h3 className="section-title">Khóa học của tôi</h3>
-              
+
               <div className="courses-filters">
                 <div className="search-wrapper">
                   <Search size={16} className="search-icon" />
-                  <input 
-                    type="text" 
-                    placeholder="Tìm khóa học..." 
+                  <input
+                    type="text"
+                    placeholder="Tìm khóa học..."
                     value={courseSearch}
                     onChange={(e) => setCourseSearch(e.target.value)}
                     className="search-input"
                   />
                 </div>
-                <select 
-                  value={courseFilter} 
+                <select
+                  value={courseFilter}
                   onChange={(e) => setCourseFilter(e.target.value)}
                   className="filter-select"
                 >
@@ -360,7 +416,7 @@ export default function Profile() {
                     )}
                     <span className="course-card-title">{course.course_name}</span>
                   </div>
-                  
+
                   <div className="progress-section">
                     <div className="progress-bar-bg">
                       <div className="progress-bar-fill" style={{ width: `${course.progress || 0}%` }}></div>
@@ -370,9 +426,9 @@ export default function Profile() {
                       <span className="progress-percentage">{Math.round(course.progress || 0)}%</span>
                     </div>
                   </div>
-                  
-                  <button 
-                    className="btn-continue-learning" 
+
+                  <button
+                    className="btn-continue-learning"
                     onClick={() => navigate(isAdminOrTeacher ? `/admin/course/${course.course_id}` : `/course/${course.course_id}`)}
                   >
                     {course.progress >= 100 ? 'Xem lại bài học' : 'Vào học tiếp'}
@@ -398,13 +454,13 @@ export default function Profile() {
                 <div className="achievement-card bg-green">
                   <FileText size={28} />
                   <div className="achivement-number">{achievements.tests}</div>
-                  <div className="achievement-label">Bài luyện đề<br/>đã tham gia</div>
+                  <div className="achievement-label">Bài luyện đề<br />đã tham gia</div>
                 </div>
 
                 <div className="achievement-card bg-orange">
                   <Award size={28} />
                   <div className="achivement-number">{achievements.badges}</div>
-                  <div className="achievement-label">Khóa học<br/>hoàn thành</div>
+                  <div className="achievement-label">Khóa học<br />hoàn thành</div>
                 </div>
               </div>
             </div>
@@ -412,7 +468,7 @@ export default function Profile() {
             <div className="section-container badges-container">
               <h3 className="section-title">Huy hiệu danh hiệu LearnHub</h3>
               <div className="badges-grid">
-                
+
                 <div className={`badge-item ${achievements.hours > 0 ? '' : 'is-locked'}`}>
                   <Medal size={32} className="badge-icon icon-yellow" />
                   <div>
@@ -445,14 +501,14 @@ export default function Profile() {
         {/* TAB 4: CÀI ĐẶT & BẢO MẬT */}
         {activeTab === 'settings' && (
           <div className="settings-tab-container">
-            
+
             {/* Form sửa thông tin */}
             <div className="settings-card-form">
               <div className="settings-card-header">
                 <User size={20} className="text-highlight" />
                 <h3>Cập nhật thông tin cá nhân</h3>
               </div>
-              
+
               {isAdminOrTeacher ? (
                 <p className="staff-notice">
                   Tài khoản quyền Quản lý/Giáo viên cần liên hệ bộ phận Kỹ thuật hệ thống LearnHub để điều chỉnh đơn vị công tác.
@@ -461,11 +517,11 @@ export default function Profile() {
                 <form onSubmit={handleUpdateInfoSubmit} className="settings-form-layout">
                   <div className="form-group">
                     <label className="form-label">Họ và tên</label>
-                    <input 
-                      type="text" 
-                      className="form-input" 
-                      value={updateInfo.name} 
-                      onChange={(e) => setUpdateInfo({...updateInfo, name: e.target.value})}
+                    <input
+                      type="text"
+                      className="form-input"
+                      value={updateInfo.name}
+                      onChange={(e) => setUpdateInfo({ ...updateInfo, name: e.target.value })}
                       placeholder="Nhập họ và tên mới..."
                     />
                   </div>
@@ -473,21 +529,21 @@ export default function Profile() {
                   <div className="form-row-grid">
                     <div className="form-group">
                       <label className="form-label">Trường học</label>
-                      <input 
-                        type="text" 
-                        className="form-input" 
-                        value={updateInfo.school} 
-                        onChange={(e) => setUpdateInfo({...updateInfo, school: e.target.value})}
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={updateInfo.school}
+                        onChange={(e) => setUpdateInfo({ ...updateInfo, school: e.target.value })}
                         placeholder="Tên trường học..."
                       />
                     </div>
                     <div className="form-group">
                       <label className="form-label">Lớp học</label>
-                      <input 
-                        type="text" 
-                        className="form-input" 
-                        value={updateInfo.grade} 
-                        onChange={(e) => setUpdateInfo({...updateInfo, grade: e.target.value})}
+                      <input
+                        type="text"
+                        className="form-input"
+                        value={updateInfo.grade}
+                        onChange={(e) => setUpdateInfo({ ...updateInfo, grade: e.target.value })}
                         placeholder="Ví dụ: Lớp 12A1..."
                       />
                     </div>
@@ -506,15 +562,15 @@ export default function Profile() {
                 <Lock size={20} className="icon-danger" />
                 <h3>Đổi mật khẩu tài khoản</h3>
               </div>
-              
+
               <form onSubmit={handleChangePasswordSubmit} className="settings-form-layout">
                 <div className="form-group">
                   <label className="form-label">Mật khẩu hiện tại</label>
-                  <input 
-                    type="password" 
-                    className="form-input" 
-                    value={passwordData.currentPassword} 
-                    onChange={(e) => setPasswordData({...passwordData, currentPassword: e.target.value})}
+                  <input
+                    type="password"
+                    className="form-input"
+                    value={passwordData.currentPassword}
+                    onChange={(e) => setPasswordData({ ...passwordData, currentPassword: e.target.value })}
                     placeholder="••••••••"
                   />
                 </div>
@@ -522,21 +578,21 @@ export default function Profile() {
                 <div className="form-row-grid">
                   <div className="form-group">
                     <label className="form-label">Mật khẩu mới</label>
-                    <input 
-                      type="password" 
-                      className="form-input" 
-                      value={passwordData.newPassword} 
-                      onChange={(e) => setPasswordData({...passwordData, newPassword: e.target.value})}
+                    <input
+                      type="password"
+                      className="form-input"
+                      value={passwordData.newPassword}
+                      onChange={(e) => setPasswordData({ ...passwordData, newPassword: e.target.value })}
                       placeholder="Tối thiểu 6 ký tự"
                     />
                   </div>
                   <div className="form-group">
                     <label className="form-label">Xác nhận mật khẩu mới</label>
-                    <input 
-                      type="password" 
-                      className="form-input" 
-                      value={passwordData.confirmPassword} 
-                      onChange={(e) => setPasswordData({...passwordData, confirmPassword: e.target.value})}
+                    <input
+                      type="password"
+                      className="form-input"
+                      value={passwordData.confirmPassword}
+                      onChange={(e) => setPasswordData({ ...passwordData, confirmPassword: e.target.value })}
                       placeholder="Nhập lại mật khẩu mới"
                     />
                   </div>
