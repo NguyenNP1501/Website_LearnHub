@@ -4,6 +4,7 @@ import '../../App.css';
 import './Home.css';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import Carousel from '../Coursel';
 
 export default function Home() {
 
@@ -46,8 +47,11 @@ export default function Home() {
 
   
   return (
-    <div className="home-page-container">
-      
+    <>
+      <div className="hero-section">
+      <Carousel />
+      </div>
+      <div className="home-page-container">
       {/* CỘT TRÁI: DANH SÁCH BÀI VIẾT */}
       <div className="left-column">
         <h2 className="section-title">Bài viết mới nhất</h2>
@@ -149,5 +153,6 @@ export default function Home() {
         
       </div>
     </div>
+    </>
   );
 }
