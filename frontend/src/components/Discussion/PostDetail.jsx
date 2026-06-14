@@ -68,9 +68,7 @@ function PostDetail() {
 
         <br />
 
-        <div>
-          <button type="button">Thích</button>
-        </div>
+        
       </div>
 
       <div>

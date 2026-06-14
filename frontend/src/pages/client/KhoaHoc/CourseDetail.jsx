@@ -155,7 +155,11 @@ export default function CourseDetail() {
       String(ls?.lesson_name || ls?.title || '').toLowerCase().includes(searchQuery.toLowerCase())
     )
   })).filter(ch => ch.lessons.length > 0 || searchQuery === '');
-
+  const sortedChapters = [...chapters].sort((a, b) => {
+    const titleA = a.chapter_name || a.title || '';
+    const titleB = b.chapter_name || b.title || '';
+    return titleA.localeCompare(titleB, 'vi', { numeric: true });
+  });
   return (
     <div className="detail-container">
 
@@ -220,7 +224,7 @@ export default function CourseDetail() {
               {searchQuery ? 'Không tìm thấy bài học phù hợp với từ khóa!' : 'Khóa học này hiện tại chưa có bài học nào đang được cập nhật.'}
             </div>
           ) : (
-            filteredChapters.map(ch => {
+            sortedChapters .map(ch => {
               const currentChapterId = ch.chapter_id || ch.id;
               const currentChapterTitle = ch.chapter_name || ch.title;
 
