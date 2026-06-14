@@ -1,11 +1,18 @@
+.hero-section {
+  max-width: 1200px;
+  margin: 30px auto 50px;
+  padding: 0 20px;
+}
+
 /* Bố cục chính 2 cột */
 .home-page-container {
   max-width: 1200px;
-  margin: 40px auto;
+  margin: 0 auto 50px;
   padding: 0 20px;
+
   display: grid;
-  grid-template-columns: 1.6fr 1fr; /* Cột trái to hơn cột phải một chút */
-  gap: 50px;
+  grid-template-columns: 1.6fr 1fr;
+  gap: 40px;
 }
 
 /* Tiêu đề chung cho các khu vực */
