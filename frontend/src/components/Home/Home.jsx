@@ -30,7 +30,7 @@ export default function Home() {
 
   useEffect(() =>{
     const loadData = async () =>{
-      const data = await fetchAPI(LATEST_POST_API_URL);
+      const data = await fetchAPI(LATEST_COURSE_API_URL);
       setLatestCourse(data);
     }
     loadData();
@@ -121,23 +121,29 @@ export default function Home() {
           <h2 className="section-title">Khoá học mới nhất</h2>
           <div className="featured-courses-grid">
             
-            {latestCourse.map((item, index) => (
-              <div key={index} className="course-card-mini">
-                <div className="course-icon-wrapper">
-                  <img src={item.img_url} />
+            {latestCourse.map((item, index) => {
+              // Xử lý link ảnh
+              const imageUrl = item.img_url 
+                ? (item.img_url.startsWith('http') ? item.img_url : `http://localhost:3000/${item.img_url.replace(/^\//, '')}`) 
+                : '/default-course-image.png'; // Thêm ảnh mặc định nếu cần
+
+              return (
+                <div key={index} className="course-card-mini">
+                  <div className="course-icon-wrapper">
+                    {/* Thêm link ảnh đã xử lý vào src */}
+                    <img src={imageUrl} alt={item.course_name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div className="course-card-mini-content">
+                    <div className="course-card-mini-title">{item.course_name}</div>
+                    <Link to={`course/${item.course_id}`}>
+                      <button className="btn-course-mini">
+                        Học ngay
+                      </button>
+                    </Link>
+                  </div>
                 </div>
-                <div className="course-card-mini-content">
-                  <div className="course-card-mini-title">{item.course_name}</div>
-                  <Link to={`course/${item.course_id}`}>
-                    <button 
-                    className="btn-course-mini"
-                    >
-                      Học ngay
-                  </button>
-                  </Link>
-                </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
         
