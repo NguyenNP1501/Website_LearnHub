@@ -84,7 +84,7 @@ export default function AdminCourseDetail() {
       const fetchedChapters = res.data.chapters || [];
       console.log(fetchedChapters);
       setChapters(fetchedChapters);
-      setCanEdit(!!(info && currentId && (info.teacher_id == currentId || currentUser?.role === 'admin')));
+      setCanEdit(!!(info && currentId && (info.teacher_id == currentId )));
 
       if (fetchedChapters.length > 0) {
         setOpenId(fetchedChapters[0].chapter_name || fetchedChapters[0].title || fetchedChapters[0].chapter_id || fetchedChapters[0].id);
