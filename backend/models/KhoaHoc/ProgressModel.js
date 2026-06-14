@@ -92,10 +92,11 @@ const ProgressModel = {
         const courseStatus = percentProgress === 100 ? 'Hoàn thành' : 'Đang học';
 
         // 3. Cập nhật trực tiếp kết quả mới nhất vào bảng tiến độ khóa học student_course
-        await db.query(
-            'UPDATE student_course SET progress = ?, status = ? WHERE student_id = ? AND course_id = ?',
-            [percentProgress, courseStatus, studentId, courseId]
-        );
+        const query3 = percentProgress === 100
+            ? 'UPDATE student_course SET progress = ?, status = ?, completed_at = COALESCE(completed_at, NOW()) WHERE student_id = ? AND course_id = ?'
+            : 'UPDATE student_course SET progress = ?, status = ? WHERE student_id = ? AND course_id = ?';
+
+        await db.query(query3, [percentProgress, courseStatus, studentId, courseId]);
     },
     // 6. Lấy tiến độ khóa học
     getCourseProgress: async (studentId, courseId) => {
@@ -130,10 +131,13 @@ const ProgressModel = {
             const courseStatus = percentProgress === 100 ? 'Hoàn thành' : 'Đang học';
 
             // 5. Cập nhật ngược lại vào DB để đồng bộ dữ liệu tĩnh (Dành cho việc làm báo cáo sau này)
-            await db.query(
-                'UPDATE student_course SET progress = ?, status = ? WHERE student_id = ? AND course_id = ?',
-                [percentProgress, courseStatus, studentId, courseId]
-            );
+             const query5 = percentProgress === 100
+                ? 'UPDATE student_course SET progress = ?, status = ?, completed_at = COALESCE(completed_at, NOW()) WHERE student_id = ? AND course_id = ?'
+                : 'UPDATE student_course SET progress = ?, status = ? WHERE student_id = ? AND course_id = ?';
+
+            await db.query(query5, [percentProgress, courseStatus, studentId, courseId]);
+
+            return { progress: percentProgress, status: courseStatus };
 
             return { progress: percentProgress, status: courseStatus };
 
