@@ -15,6 +15,8 @@ const clientExamRoutes = require("./routes/client/exam.route");
 const clientAttemptRoutes = require("./routes/client/attempt.route");
 const discussionRoutes = require("./routes/discussion");
 const commentRoutes = require("./routes/comment");
+const nearestPost = require("./routes/nearest_post.route");
+const latestCourse = require("./routes/latest_course.route");
 
 const adminCourseRoutes = require('./routes/admin/course_route');
 const clientCourseRoutes = require('./routes/client/course_route');
@@ -79,6 +81,8 @@ app.use("/api/client/exams", clientExamRoutes);
 app.use("/api/client/attempts", clientAttemptRoutes);
 app.use("/api/discussion", discussionRoutes);
 app.use("/api/comment", commentRoutes);
+app.use('/api/nearestposts', nearestPost);
+app.use('/api/latestcourses', latestCourse);
 
 app.use('/api/admin/courses', adminCourseRoutes);
 app.use('/api/client/courses', clientCourseRoutes);
@@ -90,6 +94,7 @@ app.use('/api/admin/subjects', adminSubjectRoute);
 app.use('/api/admin/grades', adminGradeRoute);
 
 app.use('/api/client/profile', profileRoute);
+
 
 app.use((req, res, next) => {
   next(createError(404, `Route not found: ${req.method} ${req.originalUrl}`));
