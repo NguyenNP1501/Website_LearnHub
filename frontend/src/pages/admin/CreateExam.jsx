@@ -100,7 +100,9 @@ function CreateExam() {
           <div>
             <h3>Nạp nhanh dữ liệu câu hỏi</h3>
             <p>
-              Các cột nên có trong file: <code>question_no</code>,{" "}
+              Các cột nên có trong file: <code>exam_title</code>, <code>subject</code>, 
+              <code>grade</code>, <code>time</code>	
+              <code>question_no</code>,{" "}
               <code>question_type</code>, <code>question_content</code>,{" "}
               <code>answer_content</code>, <code>is_correct</code>.
             </p>
