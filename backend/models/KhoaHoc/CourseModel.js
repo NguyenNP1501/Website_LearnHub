@@ -100,6 +100,11 @@ const CourseModel = {
       const [result] = await db.query(query, [course_name, Number(subject_id), Number(grade_id), description, courseId]);
       return result;
     }
+  },
+  // 7. Hàm lấy bài viết mới nhất
+  getLatestCourse: async() =>{
+    const [rows] = await db.query(`select course_id, course_name, img_url from course order by course_id desc limit 4`);
+    return rows;
   }
 };
 
