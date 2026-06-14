@@ -23,6 +23,11 @@ function parseCommentImages(imageUrl) {
   }
 }
 
+const getAvatarURL = (avatarUrl) => {
+  if (!avatarUrl) return null;
+  return /^https?:\/\//.test(avatarUrl) ? avatarUrl : `http://localhost:3000/${avatarUrl}`;
+};
+
 function ListComments({ post_id: postId, refreshTrigger }) {
   const [comments, setComments] = useState([]);
 
@@ -55,6 +60,8 @@ function ListComments({ post_id: postId, refreshTrigger }) {
     };
   }, [postId, refreshTrigger]);
 
+  console.log(comments);
+
   const formatTime = (time) => {
     if (!time) {
       return "";
@@ -68,6 +75,18 @@ function ListComments({ post_id: postId, refreshTrigger }) {
       month: "2-digit",
       year: "numeric",
     });
+  };
+
+  const timeAgo = (time) => {
+    if (!time) return '';
+    const now = Date.now();
+    const then = new Date(time).getTime();
+    if (isNaN(then)) return '';
+    const diff = Math.floor((now - then) / 1000);
+    if (diff < 60) return 'vừa xong';
+    if (diff < 3600) return `${Math.floor(diff / 60)} phút trước`;
+    if (diff < 86400) return `${Math.floor(diff / 3600)} giờ trước`;
+    return `${Math.floor(diff / 86400)} ngày trước`;
   };
 
   return (
@@ -86,7 +105,11 @@ function ListComments({ post_id: postId, refreshTrigger }) {
           {comments.map((comment, index) => {
             const images = parseCommentImages(comment.img_url);
             const author = comment.user_name || "Người dùng";
-            const time = formatTime(comment.created_at || comment.updated_at);
+            const avatarUrl = getAvatarURL(comment.avatar_url);
+            const initial = author.charAt(0).toUpperCase();
+            const rawTime = comment.created_at || comment.updated_at;
+            const time = rawTime ? formatTime(rawTime) : null;const rel = rawTime ? timeAgo(rawTime) : '';
+            const role = comment.role || null;
 
             return (
               <article
@@ -94,10 +117,23 @@ function ListComments({ post_id: postId, refreshTrigger }) {
                 className="comment-card"
               >
                 <div className="comment-card-top">
-                  <div className="comment-avatar">{author.charAt(0).toUpperCase()}</div>
+                  <div className="comment-avatar-wrapper">
+                    {avatarUrl ? (
+                      <img src={avatarUrl} alt={author} className="comment-avatar-img" />
+                    ) : (
+                      <div className="comment-avatar">{initial}</div>
+                    )}
+                  </div>
                   <div className="comment-meta">
-                    <span className="comment-author-name">{author}</span>
-                    {time && <span className="comment-time">{time}</span>}
+                    <div className="comment-author-row">
+                      <span className="comment-author-name">{author}</span>
+                      {role && <span className="comment-role">{role}</span>}
+                    </div>
+                    {time ? (
+                      <span className="comment-time" title={rawTime}>{time} · {rel}</span>
+                    ) : (
+                      <span className="comment-time">vừa xong</span>
+                    )}
                   </div>
                 </div>
 

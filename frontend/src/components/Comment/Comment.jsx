@@ -3,6 +3,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import "./styles.css";
 import ListComments from "./ListComments";
+import { getStoredToken } from "../../utils/authStorage";
 
 function Comment({ post_id: postId }) {
   const {
@@ -12,6 +13,7 @@ function Comment({ post_id: postId }) {
     reset,
   } = useForm();
   const [refreshComment, setRefreshComment] = useState(0);
+  const token = getStoredToken();
 
   const onSubmit = async (data) => {
     try {
@@ -33,6 +35,7 @@ function Comment({ post_id: postId }) {
       const response = await axios.post("http://localhost:3000/api/comment", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
+          'Authorization': `Bearer ${token}`
         },
       });
 

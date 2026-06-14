@@ -3,7 +3,7 @@ const Comment = require('../models/Comment');
 exports.createComment = async (req, res) => {
     try {
         const {post_id, content} = req.body;
-        const user_id = null;
+        const user_id = req.auth.userId;
 
         if(!content || !post_id) {
             return res.status(400).json({ error: 'Content and post_id are required' });

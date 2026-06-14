@@ -82,6 +82,7 @@ export default function AdminCourseDetail() {
       setCourseInfo(info);
 
       const fetchedChapters = res.data.chapters || [];
+      console.log(fetchedChapters);
       setChapters(fetchedChapters);
       setCanEdit(!!(info && currentId && (info.teacher_id == currentId || currentUser?.role === 'admin')));
 
@@ -141,7 +142,11 @@ export default function AdminCourseDetail() {
   };
 
   if (isLoading || !courseInfo) return <div className="container-center text-center mt-10">Đang tải chi tiết khóa học...</div>;
-
+  const sortedChapters = [...chapters].sort((a, b) => {
+    const titleA = a.chapter_name || a.title || '';
+    const titleB = b.chapter_name || b.title || '';
+    return titleA.localeCompare(titleB, 'vi', { numeric: true });
+  });
   return (
     <div className="detail-container">
       {/* SIDEBAR */}
@@ -191,7 +196,7 @@ export default function AdminCourseDetail() {
             <div className="empty-chapters">
               Khóa học này chưa có bài học nào. {canEdit && 'Hãy bấm "Đăng bài giảng" hoặc "Thêm chương" để bắt đầu!'}
             </div>
-          ) : chapters.map((ch, idx) => {
+          ) : sortedChapters.map((ch, idx) => {
             const chTitle = ch.chapter_name || ch.title || 'Chương không rõ tên';
             const chKey = ch.chapter_name || ch.title || ch.chapter_id || ch.id || idx;
             const currentLessons = ch.lessons || [];

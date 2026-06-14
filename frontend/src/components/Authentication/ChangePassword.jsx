@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import "./styles.css";
 
 function ChangePassword() {
@@ -15,6 +15,8 @@ function ChangePassword() {
   const [searchParams] = useSearchParams();
   const token = searchParams.get("token");
   const [tokenStatus, setTokenStatus] = useState(token ? "checking" : "invalid");
+  const [submitStatus, setSubmitStatus] = useState("idle");
+  const [submitMessage, setSubmitMessage] = useState("");
 
   useEffect(() => {
     if (!token) {
@@ -48,71 +50,141 @@ function ChangePassword() {
   }, [token]);
 
   const onSubmit = async (data) => {
+    setSubmitStatus("loading");
+    setSubmitMessage("");
+
     try {
       const response = await axios.post(
         "http://localhost:3000/api/authentication/reset-password",
         {
-          username: data.username,
+          email: data.email,
           token,
           newPassword: data.newPassword,
         },
       );
 
       if (response.status === 200) {
-        navigate("/login");
+        setSubmitStatus("success");
+        setSubmitMessage("Mật khẩu của bạn đã được cập nhật. Vui lòng đăng nhập lại.");
+        setTimeout(() => navigate("/login"), 1200);
       }
     } catch (error) {
       console.error("Error changing password:", error);
+      setSubmitStatus("error");
+      setSubmitMessage(
+        error?.response?.data?.message ||
+          "Không thể đổi mật khẩu. Vui lòng thử lại sau.",
+      );
     }
   };
 
   return (
-    <div>
-      <h2>Đổi mật khẩu</h2>
-      {tokenStatus === "checking" && <p>Đang xác minh liên kết đổi mật khẩu...</p>}
-      {tokenStatus === "invalid" && (
-        <p className="error">Liên kết đổi mật khẩu không hợp lệ hoặc đã hết hạn.</p>
-      )}
+    <div className="auth-page">
+      <div className="auth-card auth-card--small">
+        <div className="auth-card__header">
+          <p className="auth-eyebrow">Đặt lại mật khẩu</p>
+          <h1>Đổi mật khẩu mới</h1>
+          <p className="auth-description">
+            Sử dụng liên kết trong email để tạo mật khẩu mới cho tài khoản của bạn.
+          </p>
+        </div>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <fieldset disabled={tokenStatus !== "valid"} style={{ border: 0, margin: 0, padding: 0 }}>
-          <input
-            type="text"
-            placeholder="Tên đăng nhập"
-            {...register("username", { required: true })}
-          />
-          {errors.username && <span className="error">Vui lòng nhập tên đăng nhập</span>}
+        {tokenStatus === "checking" && (
+          <div className="auth-alert auth-alert--info">
+            Đang xác minh liên kết đổi mật khẩu...
+          </div>
+        )}
 
-          <br />
+        {tokenStatus === "invalid" && (
+          <div className="auth-alert auth-alert--error">
+            Liên kết đổi mật khẩu không hợp lệ hoặc đã hết hạn.
+          </div>
+        )}
 
-          <input
-            type="password"
-            placeholder="Mật khẩu mới"
-            {...register("newPassword", { required: true, minLength: 6 })}
-          />
-          {errors.newPassword && (
-            <span className="error">Mật khẩu mới phải có ít nhất 6 ký tự</span>
+        <form
+          className="auth-form"
+          onSubmit={handleSubmit(onSubmit)}
+          style={{ display: tokenStatus === "valid" ? "grid" : "none" }}
+        >
+          <label className="auth-label">
+            <span>Email của bạn</span>
+            <input
+              className="auth-input"
+              type="email"
+              placeholder="name@example.com"
+              autoComplete="email"
+              defaultValue=""
+              {...register("email", { required: "Email là bắt buộc" })}
+            />
+            {errors.email && (
+              <span className="auth-error">{errors.email.message}</span>
+            )}
+          </label>
+
+          <label className="auth-label">
+            <span>Mật khẩu mới</span>
+            <input
+              className="auth-input"
+              type="password"
+              placeholder="Mật khẩu mới"
+              autoComplete="new-password"
+              defaultValue=""
+              {...register("newPassword", {
+                required: "Mật khẩu mới là bắt buộc",
+                minLength: {
+                  value: 6,
+                  message: "Mật khẩu phải có ít nhất 6 ký tự",
+                },
+              })}
+            />
+            {errors.newPassword && (
+              <span className="auth-error">{errors.newPassword.message}</span>
+            )}
+          </label>
+
+          <label className="auth-label">
+            <span>Xác nhận mật khẩu</span>
+            <input
+              className="auth-input"
+              type="password"
+              placeholder="Xác nhận mật khẩu"
+              autoComplete="new-password"
+              defaultValue=""
+              {...register("confirmPassword", {
+                required: "Vui lòng xác nhận mật khẩu",
+                validate: (value) =>
+                  value === getValues("newPassword") ||
+                  "Mật khẩu xác nhận không khớp",
+              })}
+            />
+            {errors.confirmPassword && (
+              <span className="auth-error">{errors.confirmPassword.message}</span>
+            )}
+          </label>
+
+          <button
+            className="auth-button"
+            type="submit"
+            disabled={submitStatus === "loading"}
+          >
+            {submitStatus === "loading" ? "Đang cập nhật..." : "Đổi mật khẩu"}
+          </button>
+
+          {submitMessage && (
+            <div
+              className={`auth-alert auth-alert--${
+                submitStatus === "success" ? "success" : "error"
+              }`}
+            >
+              {submitMessage}
+            </div>
           )}
 
-          <br />
-
-          <input
-            type="password"
-            placeholder="Xác nhận mật khẩu"
-            {...register("confirmPassword", {
-              required: true,
-              validate: (value) => value === getValues("newPassword"),
-            })}
-          />
-          {errors.confirmPassword && (
-            <span className="error">Mật khẩu xác nhận không khớp</span>
-          )}
-
-          <br />
-
-          <button type="submit">Đổi mật khẩu</button>
-        </fieldset>
-      </form>
+          <div className="auth-footer">
+            <Link to="/login">Quay lại đăng nhập</Link>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }
