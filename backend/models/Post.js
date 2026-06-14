@@ -41,6 +41,23 @@ const Post = {
         );
         return result.affectedRows > 0;
     },
+
+    getNearestPost: async() =>{
+        const [rows] = await db.query(`select p.title, p.created_at, u.user_name, p.content, p.img_url, p.post_id
+            from post p
+            join user u
+            on p.user_id = u.user_id
+            order by created_at desc limit 3`);
+        return rows;
+    },
+
+    searchNearestPost: async(keyword) =>{
+        const [rows] = await db.query(`select p.title, p.created_at, u.user_name, p.content, p.img_url, p.post_id
+                from post p
+                join user u
+                on p.user_id = u.user_id where p.content like ? or p.title like ?`, [`%${keyword}%`, `%${keyword}%`]);
+        return rows;
+    }
 }
 
 module.exports = Post;
