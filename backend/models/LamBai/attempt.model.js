@@ -17,28 +17,37 @@ exports.createAttempt = async ({studentId = null, practiceExamId, score, timeSpe
     const attemptId = attemptResult.insertId;
 
     for (const questionResult of questionResults) {
-      const [studentAnswerResult] = await connection.query(
-        `
-          INSERT INTO student_answer (student_id, question_id, answer_id, answer_text)
-          VALUES (?, ?, ?, ?)
-        `,
-        [
-          studentId,
-          Number(questionResult.id),
-          questionResult.selectedAnswerId
-            ? Number(questionResult.selectedAnswerId)
-            : null,
-          questionResult.studentAnswerLabel || null,
-        ],
-      );
+      const selectedAnswerIds = Array.isArray(questionResult.selectedAnswerIds)
+        ? questionResult.selectedAnswerIds
+        : questionResult.selectedAnswerId
+          ? [questionResult.selectedAnswerId]
+          : [];
+      const answersToInsert = selectedAnswerIds.length > 0
+        ? selectedAnswerIds
+        : [null];
 
-      await connection.query(
-        `
-          INSERT INTO student_answer_attempt (student_answer_id, attempt_id)
-          VALUES (?, ?)
-        `,
-        [studentAnswerResult.insertId, attemptId],
-      );
+      for (const selectedAnswerId of answersToInsert) {
+        const [studentAnswerResult] = await connection.query(
+          `
+            INSERT INTO student_answer (student_id, question_id, answer_id, answer_text)
+            VALUES (?, ?, ?, ?)
+          `,
+          [
+            studentId,
+            Number(questionResult.id),
+            selectedAnswerId ? Number(selectedAnswerId) : null,
+            questionResult.studentAnswerLabel || null,
+          ],
+        );
+
+        await connection.query(
+          `
+            INSERT INTO student_answer_attempt (student_answer_id, attempt_id)
+            VALUES (?, ?)
+          `,
+          [studentAnswerResult.insertId, attemptId],
+        );
+      }
     }
 
     await connection.commit();
@@ -93,12 +102,15 @@ exports.searchHistory = async ({ studentId = null, keyword = "" } = {}) => {
           AND ans.is_correct = TRUE
       ) AS correctCount,
       (
-        SELECT COUNT(*)
+        SELECT COUNT(DISTINCT sa.question_id)
         FROM student_answer_attempt saa
         JOIN student_answer sa
           ON sa.student_answer_id = saa.student_answer_id
         WHERE saa.attempt_id = atp.attempt_id
-          AND COALESCE(sa.answer_text, '') <> ''
+          AND (
+            sa.answer_id IS NOT NULL
+            OR COALESCE(sa.answer_text, '') <> ''
+          )
       ) AS answeredCount
     FROM Attempt atp
     JOIN PracticeExam pe
@@ -133,22 +145,29 @@ exports.searchHistory = async ({ studentId = null, keyword = "" } = {}) => {
   `;
 
   const [rows] = await db.query(sql, params);
-  return rows.map((row) => ({
-    id: String(row.id),
-    examId: String(row.examId),
-    examTitle: row.examTitle,
-    subject: row.subject,
-    lesson: row.lesson,
-    grade: row.grade,
-    timeMinutes: Number(row.timeMinutes ?? 0),
-    timeSpentSeconds: Number(row.timeSpentSeconds ?? 0),
-    score: Number(row.score ?? 0),
-    submittedAt: row.submittedAt,
-    totalQuestions: Number(row.totalQuestions ?? 0),
-    correctCount: Number(row.correctCount ?? 0),
-    unansweredCount:
-      Number(row.totalQuestions ?? 0) - Number(row.answeredCount ?? 0),
-  }));
+  return rows.map((row) => {
+    const score = Number(row.score ?? 0);
+    const totalQuestions = Number(row.totalQuestions ?? 0);
+    const answeredCount = Number(row.answeredCount ?? 0);
+
+    return {
+      id: String(row.id),
+      examId: String(row.examId),
+      examTitle: row.examTitle,
+      subject: row.subject,
+      lesson: row.lesson,
+      grade: row.grade,
+      timeMinutes: Number(row.timeMinutes ?? 0),
+      timeSpentSeconds: Number(row.timeSpentSeconds ?? 0),
+      score,
+      submittedAt: row.submittedAt,
+      totalQuestions,
+      correctCount: totalQuestions
+        ? Math.round((score / 10) * totalQuestions)
+        : 0,
+      unansweredCount: Math.max(0, totalQuestions - answeredCount),
+    };
+  });
 };
 
 exports.getAttemptBaseById = async (attemptId, studentId = null) => {
