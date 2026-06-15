@@ -117,7 +117,10 @@ function ExamTestSession({ data = {}, durationSeconds, onSubmit }) {
             <div className="exam-question-nav">
               {questions.map((question, index) => {
                 const isActive = index === currentQuestionIndex;
-                const isAnswered = Boolean(String(answers[question.id] ?? "").trim());
+                const submittedAnswer = answers[question.id];
+                const isAnswered = Array.isArray(submittedAnswer)
+                  ? submittedAnswer.length > 0
+                  : Boolean(String(submittedAnswer ?? "").trim());
 
                 return (
                   <button
@@ -137,7 +140,7 @@ function ExamTestSession({ data = {}, durationSeconds, onSubmit }) {
             <div className="exam-card__header">
               <span className="exam-chip">Câu {currentQuestionIndex + 1}</span>
               <span className="exam-chip exam-chip--muted">
-                {isObjectiveQuestion(currentQuestion) ? "Chọn 1 đáp án" : "Nhập đáp án"}
+                {isObjectiveQuestion(currentQuestion) ? "Chọn 1 đáp án" : "Chọn nhiều đáp án"}
               </span>
             </div>
 
@@ -174,18 +177,40 @@ function ExamTestSession({ data = {}, durationSeconds, onSubmit }) {
                 ))}
               </div>
             ) : (
-              <div className="exam-text-answer">
-                <input
-                  placeholder="Nhập đáp án của bạn"
-                  type="text"
-                  value={answers[currentQuestion.id] ?? ""}
-                  onChange={(event) =>
-                    setAnswers((currentAnswers) => ({
-                      ...currentAnswers,
-                      [currentQuestion.id]: event.target.value,
-                    }))
-                  }
-                />
+              <div className="exam-options">
+                {currentQuestion.answers.map((answer, answerIndex) => (
+                  <label className="exam-option" key={answer.id}>
+                    <input
+                      checked={answers[currentQuestion.id]?.includes(answer.id) || false}
+                      name={currentQuestion.id}
+                      type="checkbox"
+                      onChange={() =>
+                        setAnswers((currentAnswers) => {
+                          const selectedAnswers = Array.isArray(
+                            currentAnswers[currentQuestion.id],
+                          )
+                            ? currentAnswers[currentQuestion.id]
+                            : [];
+                          const isSelected = selectedAnswers.includes(answer.id);
+                          const nextSelectedAnswers = isSelected
+                            ? selectedAnswers.filter(
+                                (selectedAnswerId) => selectedAnswerId !== answer.id,
+                              )
+                            : [...selectedAnswers, answer.id];
+
+                          return {
+                            ...currentAnswers,
+                            [currentQuestion.id]: nextSelectedAnswers,
+                          };
+                        })
+                      }
+                    />
+                    <span className="exam-option__badge">
+                      {String.fromCharCode(65 + answerIndex)}
+                    </span>
+                    <span>{answer.content}</span>
+                  </label>
+                ))}
               </div>
             )}
 
