@@ -15,6 +15,10 @@ const normalizeBoolean = (value, fallback = false) => {
     return value === 1;
   }
 
+  if (Buffer.isBuffer(value)) {
+    return value.length > 0 ? value[0] === 1 : fallback;
+  }
+
   return ["true", "1", "yes"].includes(String(value).trim().toLowerCase());
 };
 
@@ -265,7 +269,9 @@ const mapExamRows = (rows, { includeCorrectAnswers = false } = {}) => {
       questionsMap.get(row.question_id).answers.push({
         id: String(row.answer_id),
         content: row.answer_text,
-        ...(includeCorrectAnswers ? { isCorrect: Boolean(row.is_correct) } : {}),
+        ...(includeCorrectAnswers
+          ? { isCorrect: normalizeBoolean(row.is_correct, false) }
+          : {}),
       });
     }
   }
