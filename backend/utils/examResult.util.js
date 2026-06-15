@@ -2,6 +2,13 @@ const normalizeText = (value) => String(value ?? "").trim();
 const normalizeCompareText = (value) =>
   normalizeText(value).replace(/\s+/g, " ").toLowerCase();
 
+const uniqueValues = (values) => Array.from(new Set(values));
+
+const isMultipleChoiceQuestion = (question) => {
+  const type = normalizeCompareText(question?.type);
+  return ["2", "multiple", "multiple_choice", "mutiple"].includes(type);
+};
+
 const isObjectiveQuestion = (question) => {
   const type = normalizeCompareText(question?.type);
   return !["3", "fill", "fill_blank", "text", "input"].includes(type);
@@ -12,31 +19,57 @@ const evaluateExamSubmission = ({ exam, answerMap }) => {
 
   const questions = exam.questions.map((question, index) => {
     const submittedValue = safeAnswerMap[String(question.id)] ?? "";
-    const rawSubmittedValue = normalizeText(submittedValue);
+    const submittedValues = Array.isArray(submittedValue)
+      ? uniqueValues(submittedValue.map(normalizeText).filter(Boolean))
+      : normalizeText(submittedValue)
+        ? [normalizeText(submittedValue)]
+        : [];
+    const rawSubmittedValue = Array.isArray(submittedValue)
+      ? submittedValues
+      : normalizeText(submittedValue);
     const objectiveQuestion = isObjectiveQuestion(question);
+    const multipleChoiceQuestion = isMultipleChoiceQuestion(question);
     const correctAnswers = question.answers.filter((answer) => answer.isCorrect);
 
     let matchedAnswer = null;
+    let matchedAnswers = [];
     let isCorrect = false;
     let studentAnswerLabel = "";
 
     if (objectiveQuestion) {
-      matchedAnswer =
-        question.answers.find(
-          (answer) => String(answer.id) === String(rawSubmittedValue),
-        ) ?? null;
-      isCorrect = Boolean(matchedAnswer?.isCorrect);
-      studentAnswerLabel = matchedAnswer?.content ?? "";
+      if (multipleChoiceQuestion) {
+        const correctAnswerIds = correctAnswers.map((answer) => String(answer.id));
+        matchedAnswers = question.answers.filter((answer) =>
+          submittedValues.includes(String(answer.id)),
+        );
+        isCorrect =
+          submittedValues.length === correctAnswerIds.length &&
+          submittedValues.every((answerId) => correctAnswerIds.includes(answerId));
+        studentAnswerLabel = matchedAnswers.map((answer) => answer.content).join(", ");
+      } else {
+        matchedAnswer =
+          question.answers.find(
+            (answer) => String(answer.id) === String(submittedValues[0] ?? ""),
+          ) ?? null;
+        matchedAnswers = matchedAnswer ? [matchedAnswer] : [];
+        isCorrect = Boolean(matchedAnswer?.isCorrect);
+        studentAnswerLabel = matchedAnswer?.content ?? "";
+      }
     } else {
       matchedAnswer =
         question.answers.find(
           (answer) =>
             normalizeCompareText(answer.content) ===
-            normalizeCompareText(rawSubmittedValue),
+            normalizeCompareText(submittedValues[0] ?? ""),
         ) ?? null;
+      matchedAnswers = matchedAnswer ? [matchedAnswer] : [];
       isCorrect = Boolean(matchedAnswer?.isCorrect);
-      studentAnswerLabel = rawSubmittedValue;
+      studentAnswerLabel = submittedValues[0] ?? "";
     }
+
+    const selectedAnswerIds = objectiveQuestion
+      ? matchedAnswers.map((answer) => answer.id)
+      : [];
 
     return {
       id: question.id,
@@ -45,12 +78,14 @@ const evaluateExamSubmission = ({ exam, answerMap }) => {
       type: question.type,
       imgUrl: question.imgUrl,
       isObjective: objectiveQuestion,
+      isMultipleChoice: multipleChoiceQuestion,
       submittedValue: rawSubmittedValue,
-      selectedAnswerId: objectiveQuestion && matchedAnswer ? matchedAnswer.id : null,
+      selectedAnswerId: selectedAnswerIds[0] ?? null,
+      selectedAnswerIds,
       studentAnswerLabel,
       correctAnswer: correctAnswers.map((answer) => answer.content).join(", "),
       isCorrect,
-      isAnswered: Boolean(rawSubmittedValue),
+      isAnswered: submittedValues.length > 0,
     };
   });
 
@@ -110,5 +145,6 @@ const mapAttemptToClientShape = ({ attempt, exam, evaluation }) => ({
 
 module.exports = {
   evaluateExamSubmission,
+  isMultipleChoiceQuestion,
   mapAttemptToClientShape,
 };
