@@ -49,9 +49,21 @@ exports.getAttemptDetail = async (req, res, next) => {
 
     const answerRows = await attemptModel.getAnswersByAttemptId(req.params.attemptId);
     const answerMap = answerRows.reduce((accumulator, row) => {
-      accumulator[String(row.questionId)] = row.answerId
-        ? String(row.answerId)
-        : row.answerText ?? "";
+      const questionId = String(row.questionId);
+
+      if (row.answerId) {
+        const answerId = String(row.answerId);
+        const currentAnswer = accumulator[questionId];
+
+        accumulator[questionId] = currentAnswer
+          ? Array.isArray(currentAnswer)
+            ? [...currentAnswer, answerId]
+            : [currentAnswer, answerId]
+          : answerId;
+      } else if (row.answerText) {
+        accumulator[questionId] = row.answerText;
+      }
+
       return accumulator;
     }, {});
 
