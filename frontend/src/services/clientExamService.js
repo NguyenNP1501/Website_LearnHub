@@ -8,7 +8,7 @@ import {
 } from "./examApi";
 
 export const isObjectiveQuestion = (question) =>
-  !["3", "fill", "fill_blank", "text", "input"].includes(
+  !["2", "multiple", "multiple_choice", "mutiple"].includes(
     String(question?.type ?? "").trim().toLowerCase(),
   );
 
@@ -57,4 +57,8 @@ export const formatDateTime = (value) => {
 };
 
 export const getAnsweredCount = (answers) =>
-  Object.values(answers ?? {}).filter((value) => String(value ?? "").trim()).length;
+  Object.values(answers ?? {}).filter((value) =>
+    Array.isArray(value)
+      ? value.length > 0
+      : String(value ?? "").trim(),
+  ).length;
